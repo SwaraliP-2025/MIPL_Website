@@ -19,7 +19,7 @@ const services = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-slate-900 border-t border-white/10">
+    <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
@@ -35,13 +35,13 @@ export const Footer = () => {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all"
+                className="p-2 rounded-lg bg-muted hover:bg-primary/10 hover:text-primary transition-all"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all"
+                className="p-2 rounded-lg bg-muted hover:bg-primary/10 hover:text-primary transition-all"
               >
                 <Twitter className="w-5 h-5" />
               </a>
@@ -92,7 +92,7 @@ export const Footer = () => {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-white/5 border-white/10 focus:border-primary"
+                className="bg-muted border-border focus:border-primary"
               />
               <Button className="bg-primary hover:bg-blue-600 shrink-0">
                 Subscribe
@@ -116,7 +116,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>© 2024 MIPL. All rights reserved.</p>
           <div className="flex gap-6">
             <Link to="/privacy" className="hover:text-primary transition-colors">

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -33,7 +34,7 @@ export const Navbar = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "glass border-b border-white/10 shadow-lg shadow-black/20"
+          ? "glass shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -42,7 +43,7 @@ export const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="relative">
-              <Shield className="w-10 h-10 text-primary transition-all duration-300 group-hover:text-blue-400" />
+              <Shield className="w-10 h-10 text-primary transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
               <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
             <span className="text-2xl font-bold tracking-tight">
@@ -59,7 +60,7 @@ export const Navbar = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
                   location.pathname === link.href
                     ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
               >
                 {link.name}
@@ -67,8 +68,9 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* Right side: Theme Toggle + CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            <ThemeToggle />
             <Button
               asChild
               className="bg-primary hover:bg-blue-600 text-primary-foreground font-semibold px-6 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
@@ -77,13 +79,16 @@ export const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile: Theme Toggle + Menu Button */}
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-foreground hover:text-primary transition-colors"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </nav>
       </div>
 
@@ -95,7 +100,7 @@ export const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden glass border-t border-white/10"
+            className="lg:hidden glass border-t border-border"
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link, index) => (
@@ -111,7 +116,7 @@ export const Navbar = () => {
                     className={`block px-4 py-3 rounded-lg font-medium transition-all ${
                       location.pathname === link.href
                         ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
                     {link.name}
