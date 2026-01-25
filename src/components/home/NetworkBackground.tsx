@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 interface Point {
   x: number;
@@ -9,6 +10,7 @@ interface Point {
 
 export const NetworkBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -42,6 +44,10 @@ export const NetworkBackground = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      const isDark = theme === "dark";
+      const pointColor = isDark ? "rgba(59, 130, 246, 0.5)" : "rgba(37, 99, 235, 0.4)";
+      const lineBaseOpacity = isDark ? 0.3 : 0.2;
+
       // Update and draw points
       points.forEach((point) => {
         point.x += point.vx;
@@ -54,7 +60,7 @@ export const NetworkBackground = () => {
         // Draw point
         ctx.beginPath();
         ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(59, 130, 246, 0.5)";
+        ctx.fillStyle = pointColor;
         ctx.fill();
       });
 
@@ -66,11 +72,13 @@ export const NetworkBackground = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < connectionDistance) {
-            const opacity = (1 - distance / connectionDistance) * 0.3;
+            const opacity = (1 - distance / connectionDistance) * lineBaseOpacity;
             ctx.beginPath();
             ctx.moveTo(points[i].x, points[i].y);
             ctx.lineTo(points[j].x, points[j].y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
+            ctx.strokeStyle = isDark 
+              ? `rgba(59, 130, 246, ${opacity})`
+              : `rgba(37, 99, 235, ${opacity})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -93,7 +101,7 @@ export const NetworkBackground = () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas
