@@ -66,7 +66,7 @@ const Contact = () => {
     console.log('Sending data:', formData); // Debug log
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbz-uPbkix6pZUL9bEqz_JAuWE4Gy84R60UA1MX7ng7Df4mqLl9mnFHcAx-d63QYrhbgmQ/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyAAAWZbJCvjdC3rvaT9ydrHcgezmb_JuUFIWzWs-03fk4GPAIqNeA6GvmzkxqBEQ4WbQ/exec', {
         redirect: 'follow',
         method: 'POST',
         body: JSON.stringify(formData)

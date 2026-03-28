@@ -5,74 +5,20 @@ import { BookOpen, FileText, Newspaper, Download, ExternalLink } from "lucide-re
 
 const publications = [
   {
-    type: "Technical Paper",
-    title: "Advanced CCTV Surveillance Systems: Design and Implementation",
-    description: "Comprehensive guide on designing and implementing large-scale CCTV surveillance systems for urban environments and critical infrastructure.",
-    year: "2023",
-    category: "Security Technology"
-  },
-  {
-    type: "White Paper",
-    title: "Emergency Management Preparedness in Smart Cities",
-    description: "Strategic framework for integrating emergency response systems with smart city infrastructure for enhanced disaster management.",
-    year: "2023",
-    category: "Smart Cities"
-  },
+    "type": "Case Study",
+    "title": "IVSS for District & Subordinate Courts of Madhya Pradesh",
+    "description": "Comprehensive risk analysis and design of an integrated video surveillance system with distributed monitoring across 201 court premises to meet Supreme Court security mandates.",
+    "year": "2022",
+    "category": "Government Projects",
+    "pdfPath": "/publications/CASE STUDY1_MIPL.pdf"
+},
   {
     type: "Case Study",
-    title: "Nanded Safe City Project: A Model Implementation",
-    description: "Detailed analysis of the award-winning Nanded Safe City project, covering design, deployment, and operational outcomes.",
-    year: "2022",
-    category: "Safe City"
-  },
-  {
-    type: "Journal Article",
-    title: "Biometric Access Control: Challenges and Solutions at Scale",
-    description: "Insights from implementing one of India's largest biometric access control systems across multiple locations.",
-    year: "2022",
-    category: "Access Control"
-  },
-  {
-    type: "Technical Paper",
-    title: "Command & Control Centers: Best Practices for Refineries",
-    description: "Industry-first documentation on implementing integrated C&C systems in refinery environments with focus on safety and efficiency.",
-    year: "2021",
-    category: "Industrial Security"
-  },
-  {
-    type: "White Paper",
-    title: "Video Analytics and AI in Public Safety",
-    description: "Exploring the role of artificial intelligence and video analytics in enhancing public safety and security operations.",
-    year: "2021",
-    category: "AI & Analytics"
-  },
-  {
-    type: "Case Study",
-    title: "Court Security Implementation: Supreme Court Guidelines",
+    title: "ISMS for Mangalore Refineries & Petrochemicals Ltd.",
     description: "Comprehensive documentation of security rollout for court premises following Supreme Court mandates.",
     year: "2020",
-    category: "Government Projects"
-  },
-  {
-    type: "Journal Article",
-    title: "Networking Infrastructure for Large-Scale Surveillance",
-    description: "Technical insights on designing robust networking infrastructure to support city-wide surveillance systems.",
-    year: "2020",
-    category: "Network Design"
-  },
-  {
-    type: "Technical Paper",
-    title: "Integration of Physical and Cyber Security Systems",
-    description: "Framework for converging physical security systems with cybersecurity measures for comprehensive protection.",
-    year: "2019",
-    category: "Integrated Security"
-  },
-  {
-    type: "White Paper",
-    title: "eGovernance and Security: A Holistic Approach",
-    description: "Strategic recommendations for integrating security considerations into eGovernance initiatives.",
-    year: "2019",
-    category: "eGovernance"
+    category: "Government Projects",
+    pdfPath: "/publications/CASE STUDY 2_MIPL.pdf"
   },
 ];
 
@@ -196,14 +142,23 @@ const Publications = () => {
                       {publication.description}
                     </p>
                     <div className="flex gap-3">
-                      <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                      {/* <a 
+                        href={publication.pdfPath} 
+                        download
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                      >
                         <Download className="w-4 h-4" />
                         Download PDF
-                      </button>
-                      <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors">
+                      </a> */}
+                      <a 
+                        href={publication.pdfPath} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                      >
                         <ExternalLink className="w-4 h-4" />
                         View Online
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>

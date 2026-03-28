@@ -472,7 +472,7 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
       </section> */}
 
       {/* Our Team Section */}
-      <section className="py-24 relative overflow-hidden border-t border-border">
+     {/* <section className="py-24 relative overflow-hidden border-t border-border">
         <SubtleNetworkBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
@@ -488,7 +488,7 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {/* Team Member 1 */}
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -505,10 +505,9 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
               </div>
               <h3 className="font-bold text-lg mb-1">Fname Lname</h3>
               <p className="text-sm text-primary mb-2">Position</p>
-              {/* <p className="text-xs text-muted-foreground">Brief description of role and expertise</p> */}
             </motion.div>
 
-            {/* Team Member 2 */}
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -524,7 +523,7 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
               <p className="text-xs text-muted-foreground">Brief description of role and expertise</p>
             </motion.div>
 
-            {/* Team Member 3 */}
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -540,7 +539,7 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
               <p className="text-xs text-muted-foreground">Brief description of role and expertise</p>
             </motion.div>
 
-            {/* Team Member 4 */}
+           
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -563,13 +562,10 @@ Prasad is the founder Chairman of SECONA, the Security Consultants’ Associatio
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            {/* <p className="text-sm text-muted-foreground mb-4">
-              To add team member photos, place images in the <code className="px-2 py-1 bg-primary/10 rounded text-xs">public</code> folder 
-              and update the team data in <code className="px-2 py-1 bg-primary/10 rounded text-xs">src/pages/About.jsx</code>
-            </p> */}
+          
           </motion.div>
         </div>
-      </section>
+      </section>  */}
 
       {/* Journey Timeline */}
       <section className="py-24 relative overflow-hidden">

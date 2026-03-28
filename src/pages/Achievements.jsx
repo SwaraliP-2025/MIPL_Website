@@ -27,41 +27,41 @@ const achievements = [
   },
   {
     year: "2017",
-    title: "Award-Winning Nanded Safe City Project",
+    title: "Nanded Safe City Project",
     location: "Nanded, Maharashtra",
-    description: "Implemented comprehensive safe city solution recognized for its innovative approach and effectiveness.",
+    description: "Implemented comprehensive safe city solution recognized nationally and internationally for its innovative approach and effectiveness.",
     category: "Safe City Projects"
   },
   {
     year: "2017",
-    title: "Kolhapur Safe City Implementation",
+    title: "Kolhapur Safe City Project",
     location: "Kolhapur, Maharashtra",
-    description: "Delivered integrated surveillance and security management system for enhanced public safety.",
+    description: "Delivered integrated surveillance and security management system for enhanced public safety recognized nationally and internationally.",
     category: "Safe City Projects"
   },
   
-  {
-    year: "2018",
-    title: "First Command & Control System in Indian Refinery",
-    location: "India",
-    description: "Pioneered the implementation of integrated Command & Control system in the Indian refinery sector, setting new industry standards.",
-    category: "Industry Innovation"
-  },
-  {
-    year: "2019",
-    title: "Largest Biometric Access Control Project",
-    location: "Pan India - HPCL",
-    description: "Successfully delivered one of the largest biometric access control projects in the world for HPCL across India.",
-    category: "Major Implementation"
-  },
+  // {
+  //   year: "2018",
+  //   title: "First Command & Control System in Indian Refinery",
+  //   location: "India",
+  //   description: "Pioneered the implementation of integrated Command & Control system in the Indian refinery sector, setting new industry standards.",
+  //   category: "Industry Innovation"
+  // },
+  // {
+  //   year: "2019",
+  //   title: "Largest Biometric Access Control Project",
+  //   location: "Pan India - HPCL",
+  //   description: "Successfully delivered one of the largest biometric access control projects in the world for HPCL across India.",
+  //   category: "Major Implementation"
+  // },
  
-  {
-    year: "2020",
-    title: "Supreme Court-Mandated Security Rollout",
-    location: "Courts across India",
-    description: "Executed large-scale security implementation for court premises as mandated by the Supreme Court of India.",
-    category: "Government Projects"
-  },
+  // {
+  //   year: "2020",
+  //   title: "Supreme Court-Mandated Security Rollout",
+  //   location: "Courts across India",
+  //   description: "Executed large-scale security implementation for court premises as mandated by the Supreme Court of India.",
+  //   category: "Government Projects"
+  // },
 ];
 
 const highlights = [

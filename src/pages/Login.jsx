@@ -30,7 +30,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbz-uPbkix6pZUL9bEqz_JAuWE4Gy84R60UA1MX7ng7Df4mqLl9mnFHcAx-d63QYrhbgmQ/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyAAAWZbJCvjdC3rvaT9ydrHcgezmb_JuUFIWzWs-03fk4GPAIqNeA6GvmzkxqBEQ4WbQ/exec', {
         redirect: 'follow',
         method: 'POST',
         body: JSON.stringify({
@@ -43,8 +43,14 @@ const Login = () => {
       const result = await response.json();
       
       if (result.status === 'success') {
+        // Store authentication
         localStorage.setItem('mipl_auth', 'true');
         localStorage.setItem('mipl_user', email);
+        
+        // Store for dashboard profile
+        sessionStorage.setItem('loginEmail', email);
+        sessionStorage.setItem('loginName', email.split('@')[0]);
+        sessionStorage.setItem('lastLogin', new Date().toISOString());
         
         toast({
           title: "Login Successful",

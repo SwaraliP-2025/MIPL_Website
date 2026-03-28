@@ -57,7 +57,7 @@ const initiatives = [
 const impactStats = [
   { value: "500+", label: "Students Supported", icon: Users },
   { value: "50+", label: "Awareness Programs", icon: Target },
-  { value: "20+", label: "Years of Service", icon: Heart },
+  { value: "15+", label: "Years of Service", icon: Heart },
   { value: "10+", label: "Community Initiatives", icon: HandHeart },
 ];
 
@@ -229,81 +229,6 @@ const SocialActivities = () => {
               </a>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Photo Gallery */}
-      <section className="py-24 relative overflow-hidden border-t border-border">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-4">Gallery</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Moments from our social initiatives and community engagement activities
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {/* {[1, 2, 3, 4, 5, 6].map((item, index) => (
-              
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-card overflow-hidden group hover:glow-border"
-              >
-                <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-blue-600/20 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Heart className="w-16 h-16 text-primary/40" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold mb-1">Social Activity {item}</h3>
-                  <p className="text-sm text-muted-foreground">Community engagement moment</p>
-                </div>
-              </motion.div>
-            ))} */}
-            {/* Photo 1 */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.9 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  viewport={{ once: true }}
-  className="glass-card overflow-hidden group hover:glow-border"
->
-  <div className="aspect-[4/3] relative overflow-hidden">
-    <img 
-      src="social-activities\social1.jpg"  
-      alt="Aatman Academy Event"
-      className="w-full h-full object-cover"
-    />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-  </div>
-  <div className="p-4">
-    <h3 className="font-semibold mb-1">Aatman Academy Event</h3>
-    <p className="text-sm text-muted-foreground">Educational support program</p>
-  </div>
-</motion.div>
-          </div>
-
-          {/* <div className="text-center">
-            <a
-              href="/gallery"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-primary-foreground font-semibold rounded-lg transition-all"
-            >
-              View Full Gallery
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          </div> */}
         </div>
       </section>
 

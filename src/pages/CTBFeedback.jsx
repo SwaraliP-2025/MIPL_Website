@@ -429,16 +429,19 @@ const CTBFeedback = () => {
             />
           </div>
 
-          {/* Send copy checkbox */}
+          {/* Send copy toggle */}
           <div style={{ background: 'white', padding: '28px', borderRadius: '12px', marginBottom: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)', borderLeft: '4px solid #0d47a1' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <input
-                type="checkbox"
-                checked={formData.sendCopy}
-                onChange={(e) => setFormData({...formData, sendCopy: e.target.checked})}
-                style={{ width: '20px', height: '20px', cursor: 'pointer', accentColor: '#0d47a1' }}
-              />
-              <label style={{ fontSize: '14px', color: '#5f6368', cursor: 'pointer' }}>
+            <div className="toggle-switch">
+              <label className="switch">
+                <input
+                  id="sendCopy"
+                  type="checkbox"
+                  checked={formData.sendCopy}
+                  onChange={(e) => setFormData({...formData, sendCopy: e.target.checked})}
+                />
+                <span className="slider"></span>
+              </label>
+              <label htmlFor="sendCopy" className="toggle-label">
                 Send me a copy of my responses.
               </label>
             </div>

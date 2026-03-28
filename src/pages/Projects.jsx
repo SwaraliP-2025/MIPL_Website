@@ -21,7 +21,7 @@ const projects = [
     challenge: "Comprehensive smart city infrastructure with integrated security, traffic management, and citizen services.",
     solution: "End-to-end smart city solution with command & control center, city-wide surveillance, and integrated services.",
     result: "Successfully deployed smart city infrastructure enhancing urban management and citizen services.",
-    image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&auto=format",
+    image: "public/projects/0148.png",
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const projects = [
     challenge: "Comprehensive security management for one of India's largest refineries with complex infrastructure.",
     solution: "Integrated security solution with CCTV, access control, perimeter security, and command & control systems.",
     result: "Enhanced security posture with real-time monitoring and incident management capabilities.",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format",
+    image: "projects/Nayara.jpg",
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const projects = [
     challenge: "Surveillance systems for all district courts across Madhya Pradesh as per Supreme Court mandate.",
     solution: "Centralized surveillance architecture with video management systems deployed across multiple court locations.",
     result: "Comprehensive security coverage for judicial infrastructure with centralized monitoring.",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format",
+    image: "projects/MP_HIGH_COURT_JABALPUR_-_panoramio.jpg",
   },
   {
     id: 4,
@@ -51,7 +51,7 @@ const projects = [
     challenge: "Securing a large-scale refinery with high-risk operational zones and critical assets.",
     solution: "End-to-end integrated security and surveillance system covering perimeter protection, access control, and centralized monitoring.",
     result: "Improved operational safety, threat detection, and centralized security management.",
-    image: "https://images.unsplash.com/photo-1581091215367-59ab6c45cdbd?w=800&auto=format",
+    image: "projects/Hydrocracker_Units.jpg",
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ const projects = [
     challenge: "Modernization of security infrastructure for critical petroleum facility.",
     solution: "Integrated security management system with advanced CCTV, access control, and analytics.",
     result: "Enhanced security with improved incident response and compliance with safety regulations.",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format",
+    image: "projects/hpclmum.jpg",
   },
   {
     id: 6,
@@ -71,7 +71,7 @@ const projects = [
     challenge: "High-security infrastructure for world's largest diamond trading center.",
     solution: "Multi-layered security with biometric access, CCTV surveillance, and intrusion detection systems.",
     result: "World-class security infrastructure protecting high-value assets and ensuring business continuity.",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&auto=format",
+    image: "projects/suratdiam.jpg",
   },
   {
     id: 7,
@@ -81,7 +81,7 @@ const projects = [
     challenge: "Designing ELV and communication systems for a next-generation bio-refinery.",
     solution: "Security consultancy for ELV systems including surveillance, networking, and communication infrastructure.",
     result: "Reliable and scalable security architecture aligned with refinery operations.",
-    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format",
+    image: "projects/iocl.jpg",
   },
   {
     id: 8,
@@ -91,7 +91,7 @@ const projects = [
     challenge: "Ensuring secure access and compliance for a global banking environment.",
     solution: "Advanced access control and integrated security systems across facilities.",
     result: "Enhanced physical security and regulatory compliance.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format",
+    image: "projects/bnppari.jpg",
   },
   {
     id: 9,
@@ -121,7 +121,7 @@ const projects = [
     challenge: "Protecting high-value retail assets against theft and intrusion.",
     solution: "Integrated security with video surveillance, access control, and intrusion detection.",
     result: "Secure retail operations with enhanced customer confidence.",
-    image: "https://images.unsplash.com/photo-1602526219049-9e3df1c9c04c?w=800&auto=format",
+    image: "projects/ganjam.jpg",
   },
   {
     id: 12,

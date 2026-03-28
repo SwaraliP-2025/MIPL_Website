@@ -12,9 +12,7 @@ function forceDrivePermission() {
   }
 }
 
-// ============================================================================
 // MAIN HANDLER - SINGLE doPost FUNCTION
-// ============================================================================
 
 function doPost(e) {
   try {
@@ -64,9 +62,7 @@ function doPost(e) {
   }
 }
 
-// ============================================================================
 // LOGIN HANDLER
-// ============================================================================
 
 function handleLogin(data) {
   try {
@@ -122,10 +118,10 @@ function handleLogin(data) {
 function setupLoginCredentials() {
   const scriptProperties = PropertiesService.getScriptProperties();
   
-  // Add users here - format: email: password
   const users = {
     'admin@consultmipl.com': 'Admin@123',
-    'user@consultmipl.com': 'User@123'
+    'user@consultmipl.com': 'User@123',
+    'pm@aurangabadsmartcity.in' : 'pm@123'
     // Add more users as needed
   };
   
@@ -133,10 +129,6 @@ function setupLoginCredentials() {
   Logger.log('✅ Login credentials setup complete');
   Logger.log('Users configured: ' + Object.keys(users).join(', '));
 }
-
-// ============================================================================
-// CAREERS FORM - WITH DRIVE UPLOAD
-// ============================================================================
 
 function handleCareersForm(data) {
   Logger.log('Processing CAREERS form');

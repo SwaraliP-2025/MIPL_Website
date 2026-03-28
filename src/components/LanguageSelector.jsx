@@ -125,7 +125,18 @@ export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Function to get current language from hash
+  const getLangFromHash = () => {
+    const hash = window.location.hash;
+    const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+    return match ? match[1] : "en";
+  };
+
   useEffect(() => {
+    // Set initial language from hash immediately
+    const initialLang = getLangFromHash();
+    setCurrentLang(initialLang);
+
     if (!window.google?.translate) {
       const script = document.createElement("script");
       script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
@@ -144,22 +155,36 @@ export const LanguageSelector = () => {
         );
         setIsLoaded(true);
         
-        // Check if page is already translated and update state
+        // Update language after Google Translate loads
         setTimeout(() => {
-          const currentLangFromHash = window.location.hash.match(/#googtrans\(en\|([^)]+)\)/);
-          if (currentLangFromHash && currentLangFromHash[1]) {
-            setCurrentLang(currentLangFromHash[1]);
-          }
-        }, 500);
+          const lang = getLangFromHash();
+          setCurrentLang(lang);
+        }, 1000);
       };
     } else {
       setIsLoaded(true);
-      // Check current language on mount
-      const currentLangFromHash = window.location.hash.match(/#googtrans\(en\|([^)]+)\)/);
-      if (currentLangFromHash && currentLangFromHash[1]) {
-        setCurrentLang(currentLangFromHash[1]);
-      }
+      // Update language if already loaded
+      setTimeout(() => {
+        const lang = getLangFromHash();
+        setCurrentLang(lang);
+      }, 500);
     }
+
+    // Monitor hash changes to update current language display
+    const handleHashChange = () => {
+      const lang = getLangFromHash();
+      setCurrentLang(lang);
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Also check periodically in case Google Translate changes the hash
+    const intervalId = setInterval(() => {
+      const lang = getLangFromHash();
+      if (lang !== currentLang) {
+        setCurrentLang(lang);
+      }
+    }, 500);
 
     const style = document.createElement("style");
     style.innerHTML = `
@@ -261,17 +286,26 @@ export const LanguageSelector = () => {
       .notranslate * {
         translate: no !important;
       }
+      /* Force prevent translation of language selector button text */
+      button[class*="notranslate"] span {
+        font-family: inherit !important;
+      }
+      /* Prevent Google Translate from touching the button */
+      [data-lang-display] {
+        pointer-events: none;
+      }
     `;
     document.head.appendChild(style);
 
     return () => {
       if (style.parentNode) style.parentNode.removeChild(style);
+      window.removeEventListener('hashchange', handleHashChange);
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [currentLang]);
 
   const changeLanguage = (langCode) => {
-    // Set the hash FIRST, then reload
-    // This ensures Google Translate sees the hash on page load
+  
     window.location.hash = `googtrans(en|${langCode})`;
     
     // Immediately reload - the hash is already set
@@ -287,9 +321,9 @@ export const LanguageSelector = () => {
       <div id="google_translate_element_hidden"></div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="gap-1.5 notranslate hover:bg-accent px-2">
+          <Button variant="ghost" size="sm" className="gap-1.5 notranslate hover:bg-accent px-2" translate="no">
             <Globe className="w-3.5 h-3.5" />
-            <span className="text-xs font-medium notranslate hidden xl:inline">{getCurrentLanguageName()}</span>
+            <span className="text-xs font-medium notranslate hidden xl:inline" translate="no" key={currentLang}>{getCurrentLanguageName()}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64 max-h-96 overflow-y-auto notranslate">

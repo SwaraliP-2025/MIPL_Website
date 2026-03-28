@@ -60,6 +60,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <SkipToContent />
+          <ScrollToTop />
           {/* <Chatbot /> */}
           <AnimatedRoutes />
         </BrowserRouter>
