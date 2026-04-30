@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
+import { useCmsSheet } from "@/hooks/useCmsConfig";
 
 export const ClientLogos = () => {
-  const clients = [
+  const { data: cmsClients, loading } = useCmsSheet('ClientLogos', [
     { name: "HPCL", logo: "/clients/hpcl-logo.png" },
     { name: "JNPT", logo: "/clients/jnpt-logo.png" },
     { name: "Aurangabad Smart City", logo: "/clients/ascdcl-logo.png" },
@@ -12,7 +13,7 @@ export const ClientLogos = () => {
     { name: "Gujarat Police", logo: "/clients/gujarat-police-logo.jpg" },
     { name: "Surat Diamond Bourse", logo: "/clients/sdb-logo.png" },
     { name: "Maharashtra Govt", logo: "/clients/maharashtra-logo.png" },
-  ];
+  ]);
 
   return (
     <section className="py-16 bg-card/30 relative overflow-hidden">
@@ -35,9 +36,9 @@ export const ClientLogos = () => {
 
         {/* Logos Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
-          {clients.map((client, index) => (
+          {cmsClients.map((client, index) => (
             <motion.div
-              key={client.name}
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

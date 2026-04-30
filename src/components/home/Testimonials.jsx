@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useCmsSheet } from "@/hooks/useCmsConfig";
 
 export const Testimonials = () => {
-  const testimonials = [
+  const { data: cmsTestimonials, loading } = useCmsSheet('Testimonials', [
     {
       quote: "MIPL's integrated security solution has significantly enhanced our refinery's safety and operational efficiency. Their expertise in handling complex projects is unmatched.",
       author: "Senior Manager",
@@ -22,7 +23,7 @@ export const Testimonials = () => {
       company: "Jawaharlal Nehru Port Trust",
       role: "Port Security"
     }
-  ];
+  ]);
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -44,7 +45,7 @@ export const Testimonials = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {cmsTestimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
@@ -21,7 +22,7 @@ const projects = [
     challenge: "Comprehensive smart city infrastructure with integrated security, traffic management, and citizen services.",
     solution: "End-to-end smart city solution with command & control center, city-wide surveillance, and integrated services.",
     result: "Successfully deployed smart city infrastructure enhancing urban management and citizen services.",
-    image: "public/projects/0148.png",
+    image: "/projects/0148.png",
   },
   {
     id: 2,
@@ -31,7 +32,7 @@ const projects = [
     challenge: "Comprehensive security management for one of India's largest refineries with complex infrastructure.",
     solution: "Integrated security solution with CCTV, access control, perimeter security, and command & control systems.",
     result: "Enhanced security posture with real-time monitoring and incident management capabilities.",
-    image: "projects/Nayara.jpg",
+    image: "/projects/Nayara.jpg",
   },
   {
     id: 3,
@@ -41,7 +42,7 @@ const projects = [
     challenge: "Surveillance systems for all district courts across Madhya Pradesh as per Supreme Court mandate.",
     solution: "Centralized surveillance architecture with video management systems deployed across multiple court locations.",
     result: "Comprehensive security coverage for judicial infrastructure with centralized monitoring.",
-    image: "projects/MP_HIGH_COURT_JABALPUR_-_panoramio.jpg",
+    image: "/projects/MP_HIGH_COURT_JABALPUR_-_panoramio.jpg",
   },
   {
     id: 4,
@@ -51,7 +52,7 @@ const projects = [
     challenge: "Securing a large-scale refinery with high-risk operational zones and critical assets.",
     solution: "End-to-end integrated security and surveillance system covering perimeter protection, access control, and centralized monitoring.",
     result: "Improved operational safety, threat detection, and centralized security management.",
-    image: "projects/Hydrocracker_Units.jpg",
+    image: "/projects/Hydrocracker_Units.jpg",
   },
   {
     id: 5,
@@ -61,7 +62,7 @@ const projects = [
     challenge: "Modernization of security infrastructure for critical petroleum facility.",
     solution: "Integrated security management system with advanced CCTV, access control, and analytics.",
     result: "Enhanced security with improved incident response and compliance with safety regulations.",
-    image: "projects/hpclmum.jpg",
+    image: "/projects/hpclmum.jpg",
   },
   {
     id: 6,
@@ -71,7 +72,7 @@ const projects = [
     challenge: "High-security infrastructure for world's largest diamond trading center.",
     solution: "Multi-layered security with biometric access, CCTV surveillance, and intrusion detection systems.",
     result: "World-class security infrastructure protecting high-value assets and ensuring business continuity.",
-    image: "projects/suratdiam.jpg",
+    image: "/projects/suratdiam.jpg",
   },
   {
     id: 7,
@@ -81,7 +82,7 @@ const projects = [
     challenge: "Designing ELV and communication systems for a next-generation bio-refinery.",
     solution: "Security consultancy for ELV systems including surveillance, networking, and communication infrastructure.",
     result: "Reliable and scalable security architecture aligned with refinery operations.",
-    image: "projects/iocl.jpg",
+    image: "/projects/iocl.jpg",
   },
   {
     id: 8,
@@ -91,7 +92,7 @@ const projects = [
     challenge: "Ensuring secure access and compliance for a global banking environment.",
     solution: "Advanced access control and integrated security systems across facilities.",
     result: "Enhanced physical security and regulatory compliance.",
-    image: "projects/bnppari.jpg",
+    image: "/projects/bnppari.jpg",
   },
   {
     id: 9,
@@ -121,7 +122,7 @@ const projects = [
     challenge: "Protecting high-value retail assets against theft and intrusion.",
     solution: "Integrated security with video surveillance, access control, and intrusion detection.",
     result: "Secure retail operations with enhanced customer confidence.",
-    image: "projects/ganjam.jpg",
+    image: "/projects/ganjam.jpg",
   },
   {
     id: 12,
@@ -640,10 +641,23 @@ const projects = [
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
+  const { data: cmsProjects } = useCmsData("Projects", projects);
+
+  // Normalize CMS rows (strings) to match hardcoded shape
+  const allProjects = cmsProjects.map((p) => ({
+    id: p.id || p.title,
+    title: p.title || "",
+    category: p.category || "smart-city",
+    client: p.client || "",
+    challenge: p.challenge || "",
+    solution: p.solution || "",
+    result: p.result || "",
+    image: p.image || "",
+  }));
 
   const filteredProjects = activeCategory === "all"
-    ? projects
-    : projects.filter(p => p.category === activeCategory);
+    ? allProjects
+    : allProjects.filter(p => p.category === activeCategory);
 
   return (
     <Layout>
@@ -690,7 +704,7 @@ const Projects = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
                 iconImage: "pet.png",  
@@ -779,7 +793,7 @@ const Projects = () => {
       <section className="py-16 relative overflow-hidden">
         <SubtleNetworkBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
                 <motion.div
@@ -841,7 +855,7 @@ const Projects = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-card max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2"
             >
               <div className="relative h-64">
                 <img

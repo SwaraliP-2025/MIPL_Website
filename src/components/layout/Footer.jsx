@@ -1,22 +1,42 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
-
-const quickLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Our Team", href: "/about" },
-  { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "/contact" },
-];
-
-const services = [
-  { name: "Security Consultancy", href: "/services" },
-  { name: "Security Audits (TRAVA)", href: "/services" },
-  { name: "eGovernance", href: "/services" },
-  { name: "Smart City & Safe City", href: "/services" },
-];
+import { useCmsConfig } from "@/hooks/useCmsConfig";
 
 export const Footer = () => {
+  const { config: cmsConfig, loading } = useCmsConfig();
+
+  // Get footer data from CMS or use defaults
+  const footer = loading ? {} : cmsConfig.footer;
+  const logoConfig = loading ? { src: '/logo.png', alt: 'MIPL Logo', width: 96, height: 96 } :
+    (cmsConfig.logos.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 96, height: 96 });
+
+  // Quick links from CMS
+  const quickLinks = loading ? [
+    { name: "About Us", href: "/about" },
+    { name: "Our Team", href: "/about" },
+    { name: "Careers", href: "/careers" },
+    { name: "Contact", href: "/contact" },
+  ] : [
+    { name: footer.quicklinks_link_1_name || "About Us", href: footer.quicklinks_link_1_href || "/about" },
+    { name: footer.quicklinks_link_2_name || "Our Team", href: footer.quicklinks_link_2_href || "/about" },
+    { name: footer.quicklinks_link_3_name || "Careers", href: footer.quicklinks_link_3_href || "/careers" },
+    { name: footer.quicklinks_link_4_name || "Contact", href: footer.quicklinks_link_4_href || "/contact" },
+  ];
+
+  // Services from CMS
+  const services = loading ? [
+    { name: "Security Consultancy", href: "/services" },
+    { name: "Security Audits (TRAVA)", href: "/services" },
+    { name: "eGovernance", href: "/services" },
+    { name: "Smart City & Safe City", href: "/services" },
+  ] : [
+    { name: footer.services_service_1_name || "Security Consultancy", href: footer.services_service_1_href || "/services" },
+    { name: footer.services_service_2_name || "Security Audits (TRAVA)", href: footer.services_service_2_href || "/services" },
+    { name: footer.services_service_3_name || "eGovernance", href: footer.services_service_3_href || "/services" },
+    { name: footer.services_service_4_name || "Smart City & Safe City", href: footer.services_service_4_href || "/services" },
+  ];
+
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-8">
@@ -32,18 +52,19 @@ export const Footer = () => {
             <Link to="/" className="flex items-center group">
               <div className="dark:bg-white dark:p-2 dark:rounded-lg transition-colors">
                 <img 
-                  src="/logo.png" 
-                  alt="MIPL Logo" 
-                  className="h-24 w-auto transition-transform duration-300 group-hover:scale-105"
+                  src={logoConfig.src}
+                  alt={logoConfig.alt || 'MIPL Logo'}
+                  style={{ width: parseInt(logoConfig.width) || 96, height: parseInt(logoConfig.height) || 96 }}
+                  className="transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </Link>
             <p className="text-muted-foreground text-xs leading-relaxed">
-              A New Era of Security. Security & IT consultancy from India.
+              {footer.company_description || "A New Era of Security. Security & IT consultancy from India."}
             </p>
             <div className="flex gap-3">
               <motion.a
-                href="https://www.linkedin.com/company/mipl-security-&-it-consultants/about/"
+                href={footer.company_linkedin_url || "https://www.linkedin.com/company/mipl-security-&-it-consultants/about/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -53,7 +74,7 @@ export const Footer = () => {
                 <Linkedin className="w-4 h-4" />
               </motion.a>
               <motion.a
-                href="https://x.com/consultmipl"
+                href={footer.company_twitter_url || "https://x.com/consultmipl"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: -5 }}
@@ -124,15 +145,15 @@ export const Footer = () => {
             <div className="space-y-2 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Mail className="w-3 h-3 text-primary" />
-                <span>info@consultmipl.com</span>
+                <span>{footer.contact_email || "info@consultmipl.com"}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3 h-3 text-primary" />
-                <span>+91 98213 01414</span>
+                <span>{footer.contact_phone || "+91 98213 01414"}</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-3 h-3 text-primary" />
-                <span>Thane – Chhatrapati Sambhajinagar – Navi Mumbai – Dubai</span>
+                <span>{footer.contact_locations || "Thane – Chhatrapati Sambhajinagar – Navi Mumbai – Dubai"}</span>
               </div>
             </div>
           </motion.div>
@@ -140,17 +161,17 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-6 pt-4 border-t border-border flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-muted-foreground">
-          <p>© 2026 Maha Infotech Pvt. Ltd. All rights reserved.</p>
+          <p>{footer.bottom_copyright_text || "© 2026 Maha Infotech Pvt. Ltd. All rights reserved."}</p>
           <div className="flex gap-4">
             <Link 
-              to="/privacy" 
+              to={footer.bottom_privacy_href || "/privacy"}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="hover:text-primary transition-colors"
             >
               Privacy Policy
             </Link>
             <Link 
-              to="/terms" 
+              to={footer.bottom_terms_href || "/terms"}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="hover:text-primary transition-colors"
             >

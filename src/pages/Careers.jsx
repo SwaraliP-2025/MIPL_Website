@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -93,6 +94,18 @@ const jobs = [
 const Careers = () => {
   const [expandedJob, setExpandedJob] = useState(null);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const { data: cmsJobs } = useCmsData("Jobs", jobs);
+
+  // Normalize CMS rows to match sheet columns: title, description, location, experience, education, key skills
+  const allJobs = cmsJobs.map((j) => ({
+    id: j.id || j.title,
+    title: j.title || "",
+    description: j.description || "",
+    location: j.location || "",
+    experience: j.experience || "",
+    education: j.education || "",
+    keySkills: j["key skills"] || j.keySkills || "",
+  }));
   const [selectedJob, setSelectedJob] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [workStatus, setWorkStatus] = useState("");
@@ -258,7 +271,7 @@ const Careers = () => {
           </motion.div>
 
           <div className="max-w-4xl mx-auto space-y-4">
-            {jobs.map((job, index) => (
+            {allJobs.map((job, index) => (
               <motion.div
                 key={job.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -275,16 +288,12 @@ const Careers = () => {
                     <h3 className="text-lg font-semibold mb-2">{job.title}</h3>
                     <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                       <span className="flex items-center gap-1">
-                        <Briefcase className="w-4 h-4" />
-                        {job.department}
-                      </span>
-                      <span className="flex items-center gap-1">
                         <MapPin className="w-4 h-4" />
                         {job.location}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        {job.type}
+                        {job.experience}
                       </span>
                     </div>
                   </div>
@@ -303,25 +312,51 @@ const Careers = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="px-6 pb-6 border-t border-white/10 pt-6">
-                        <p className="text-muted-foreground mb-4 whitespace-pre-line">{job.description}</p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Experience: {job.experience}
-                        </p>
+                      <div className="px-6 pb-6 border-t border-white/10 pt-6 space-y-4">
+                        <p className="text-muted-foreground whitespace-pre-line">{job.description}</p>
 
-                        <h4 className="font-semibold mt-6 mb-3">Requirements</h4>
-                        <ul className="space-y-2">
-                          {job.requirements.map((req) => (
-                            <li key={req} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          {job.experience && (
+                            <div className="flex items-start gap-2">
+                              <Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                              <div>
+                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Experience</p>
+                                <p className="text-sm">{job.experience}</p>
+                              </div>
+                            </div>
+                          )}
+                          {job.location && (
+                            <div className="flex items-start gap-2">
+                              <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                              <div>
+                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Location</p>
+                                <p className="text-sm">{job.location}</p>
+                              </div>
+                            </div>
+                          )}
+                          {job.education && (
+                            <div className="flex items-start gap-2">
+                              <Briefcase className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                              <div>
+                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Education</p>
+                                <p className="text-sm">{job.education}</p>
+                              </div>
+                            </div>
+                          )}
+                          {job.keySkills && (
+                            <div className="flex items-start gap-2">
                               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                              {req}
-                            </li>
-                          ))}
-                        </ul>
+                              <div>
+                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Key Skills</p>
+                                <p className="text-sm">{job.keySkills}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
 
                         <Button
                           onClick={() => handleApply(job)}
-                          className="mt-6 bg-primary hover:bg-blue-600"
+                          className="mt-2 bg-primary hover:bg-blue-600"
                         >
                           Apply Now
                         </Button>
@@ -353,7 +388,7 @@ const Careers = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-card max-w-lg w-full max-h-[90vh] overflow-y-auto p-8"
+              className="glass-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-5 sm:p-8 mx-2"
             >
               <h2 className="text-2xl font-bold mb-2">Apply for Position</h2>
               <p className="text-muted-foreground mb-6">{selectedJob.title}</p>

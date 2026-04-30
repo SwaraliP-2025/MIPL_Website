@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
@@ -92,7 +93,22 @@ const services = [
 ];
 
 const Services = () => {
-  const [activeService, setActiveService] = useState(services[0]);
+  const { data: cmsServices } = useCmsData("Services", services);
+
+  // Normalize CMS rows — features comes as comma-separated string
+  const allServices = cmsServices.map((s) => ({
+    id: s.id || s.title,
+    icon: s.icon || null,
+    title: s.title || "",
+    shortDesc: s.shortDesc || s.description || "",
+    description: s.description || "",
+    features: typeof s.features === "string"
+      ? s.features.split(",").map(f => f.trim()).filter(Boolean)
+      : s.features || [],
+  }));
+
+  const [activeService, setActiveService] = useState(null);
+  const currentService = activeService || allServices[0] || services[0];
 
   return (
     <Layout>
@@ -128,20 +144,20 @@ const Services = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Service Navigation */}
             <div className="lg:col-span-1 space-y-2">
-              {services.map((service) => (
+              {allServices.map((service) => (
                 <motion.button
                   key={service.id}
                   onClick={() => setActiveService(service)}
                   whileHover={{ x: 8 }}
                   className={`w-full p-4 rounded-xl text-left flex items-center gap-4 transition-all ${
-                    activeService.id === service.id
+                    currentService.id === service.id
                       ? "glass-card border-primary/50 glow-border"
                       : "hover:bg-white/5"
                   }`}
                 >
                   <div
                     className={`p-3 rounded-lg ${
-                      activeService.id === service.id
+                      currentService.id === service.id
                         ? "bg-primary/20 text-primary"
                         : "bg-white/5 text-muted-foreground"
                     }`}
@@ -154,7 +170,7 @@ const Services = () => {
                   </div>
                   <ChevronRight
                     className={`w-5 h-5 transition-opacity ${
-                      activeService.id === service.id
+                      currentService.id === service.id
                         ? "opacity-100 text-primary"
                         : "opacity-0"
                     }`}
@@ -167,7 +183,7 @@ const Services = () => {
             <div className="lg:col-span-2">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeService.id}
+                  key={currentService.id}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -176,22 +192,22 @@ const Services = () => {
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="p-4 rounded-xl bg-primary/20 text-primary">
-                      <activeService.icon className="w-10 h-10" />
+                      <currentService.icon className="w-10 h-10" />
                     </div>
                     <div>
                       <h2 className="text-2xl lg:text-3xl font-bold">
-                        {activeService.title}
+                        {currentService.title}
                       </h2>
                     </div>
                   </div>
 
                   <p className="text-lg text-muted-foreground mb-8">
-                    {activeService.description}
+                    {currentService.description}
                   </p>
 
                   <h3 className="text-lg font-semibold mb-4">Key Capabilities</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {activeService.features.map((feature, index) => (
+                    {(currentService.features || []).map((feature, index) => (
                       <motion.div
                         key={feature}
                         initial={{ opacity: 0, y: 10 }}

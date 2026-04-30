@@ -1,8 +1,38 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
+import { useCmsSheet } from "@/hooks/useCmsConfig";
+import { 
+  Users, 
+  Globe, 
+  Shield, 
+  Award, 
+  Target, 
+  Zap, 
+  CheckCircle2, 
+  BarChart3,
+  Search,
+  CheckCircle
+} from "lucide-react";
 
-const StatItem = ({ value, suffix, label, delay }) => {
+const iconMap = {
+  Users,
+  Globe,
+  Shield,
+  Award,
+  Target,
+  Zap,
+  CheckCircle2,
+  BarChart3,
+  Search,
+  CheckCircle
+};
+
+const StatItem = ({ value, suffix = "", label, delay }) => {
+  // Parse numeric value from string (e.g. "25+" -> 25)
+  const numericValue = parseInt(value) || 0;
+  const displaySuffix = suffix || (typeof value === 'string' ? value.replace(/[0-9]/g, '') : "");
+  
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -12,13 +42,13 @@ const StatItem = ({ value, suffix, label, delay }) => {
 
     const duration = 2000;
     const steps = 60;
-    const increment = value / steps;
+    const increment = numericValue / steps;
     let current = 0;
     
     const timer = setInterval(() => {
       current += increment;
-      if (current >= value) {
-        setCount(value);
+      if (current >= numericValue) {
+        setCount(numericValue);
         clearInterval(timer);
       } else {
         setCount(Math.floor(current));
@@ -26,7 +56,7 @@ const StatItem = ({ value, suffix, label, delay }) => {
     }, duration / steps);
 
     return () => clearInterval(timer);
-  }, [isInView, value]);
+  }, [isInView, numericValue]);
 
   return (
     <motion.div
@@ -40,7 +70,7 @@ const StatItem = ({ value, suffix, label, delay }) => {
       <div className="relative inline-block">
         <span className="text-5xl md:text-6xl lg:text-7xl font-bold gradient-text notranslate">
           {count}
-          {suffix}
+          {displaySuffix}
         </span>
         <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full -z-10" />
       </div>
@@ -50,11 +80,20 @@ const StatItem = ({ value, suffix, label, delay }) => {
 };
 
 export const StatsSection = () => {
-  const stats = [
-    { value: 25, suffix: "+", label: "Years Experience" },
-    { value: 50, suffix: "+", label: "Major Projects" },
-    { value: 500, suffix: "+", label: "Security Audits" },
-    { value: 100, suffix: "%", label: "Client Satisfaction" },
+  const { data: cmsStats, loading } = useCmsSheet('Stats', [
+    { value: "25+", label: "Years Experience", page: "home" },
+    { value: "50+", label: "Major Projects", page: "home" },
+    { value: "500+", label: "Security Audits", page: "home" },
+    { value: "100%", label: "Client Satisfaction", page: "home" },
+  ]);
+
+  // Handle case where cmsStats might not have 'page' property correctly set or is empty
+  const homeStats = cmsStats.filter(s => (s.page || '').toLowerCase().trim() === 'home');
+  const stats = homeStats.length > 0 ? homeStats : [
+    { value: "25+", label: "Years Experience", page: "home" },
+    { value: "50+", label: "Major Projects", page: "home" },
+    { value: "500+", label: "Security Audits", page: "home" },
+    { value: "100%", label: "Client Satisfaction", page: "home" },
   ];
 
   return (
@@ -81,7 +120,6 @@ export const StatsSection = () => {
             <StatItem
               key={stat.label}
               value={stat.value}
-              suffix={stat.suffix}
               label={stat.label}
               delay={index * 0.1}
             />

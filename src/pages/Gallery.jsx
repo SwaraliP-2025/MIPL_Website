@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
@@ -60,10 +61,29 @@ const galleryItems = [
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState(null);
+  const { data: cmsItems } = useCmsData("Gallery", galleryItems);
 
-  const filteredItems = selectedCategory === "All" 
-    ? galleryItems 
-    : galleryItems.filter(item => item.category === selectedCategory);
+  const allItems = cmsItems.map((item) => {
+    let imageUrl = item.image || "";
+    // Convert Google Drive share link to direct image link if needed
+    const driveMatch = imageUrl.match(/https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\/view.*/);
+    if (driveMatch) {
+      const fileId = driveMatch[1];
+      imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+    }
+    return {
+      id: item.id || item.title,
+      category: item.category || "Events",
+      title: item.title || "",
+      description: item.description || "",
+      image: imageUrl,
+      date: item.date || "",
+    };
+  });
+
+  const filteredItems = selectedCategory === "All"
+    ? allItems
+    : allItems.filter(item => item.category === selectedCategory);
 
   return (
     <Layout>
@@ -116,7 +136,7 @@ const Gallery = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div 
             layout
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence>
               {filteredItems.map((item, index) => (
@@ -194,7 +214,7 @@ const Gallery = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-2xl w-full"
+              className="w-full max-w-2xl mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Image */}

@@ -5,33 +5,75 @@ import { Menu, X, ChevronDown, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSelector } from "@/components/LanguageSelector";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { 
-    name: "About", 
-    href: "/about",
-    dropdown: [
-      { name: "About MIPL", href: "/about" },
-      { name: "Our Achievements", href: "/achievements" },
-      { name: "Our Publications", href: "/publications" },
-      { name: "Our Social Contribution", href: "/social-activities" },
-      { name: "Gallery", href: "/gallery" },
-    ]
-  },
-  { name: "Services", href: "/services" },
-  { name: "Our Clients", href: "/projects" },
-  { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "/contact" },
-  { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
-];
+import { useCmsConfig } from "@/hooks/useCmsConfig";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const timeoutRef = useRef(null);
   const location = useLocation();
   const dropdownRef = useRef(null);
+  const { config: cmsConfig, loading } = useCmsConfig();
+
+  const handleMouseEnter = (name) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpenDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150); // 150ms grace period
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  // Build nav links from CMS config or use defaults
+  const navLinks = loading ? [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about", dropdown: [
+      { name: "About MIPL", href: "/about" },
+      { name: "Our Achievements", href: "/achievements" },
+      { name: "Our Publications", href: "/publications" },
+      { name: "Our Social Contribution", href: "/social-activities" },
+      { name: "Gallery", href: "/gallery" },
+    ]},
+    { name: "Services", href: "/services" },
+    { name: "Our Clients", href: "/projects" },
+    { name: "Careers", href: "/careers" },
+    { name: "Contact", href: "/contact" },
+    { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
+  ] : (cmsConfig.navbar.length > 0 ? cmsConfig.navbar.map(item => ({
+    name: item.name,
+    href: item.href,
+    dropdown: item.dropdown_items ? item.dropdown_items.split(',').map(d => {
+      const [name, href] = d.split('|');
+      return { name: name?.trim() || '', href: href?.trim() || '#' };
+    }) : null,
+  })) : [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about", dropdown: [
+      { name: "About MIPL", href: "/about" },
+      { name: "Our Achievements", href: "/achievements" },
+      { name: "Our Publications", href: "/publications" },
+      { name: "Our Social Contribution", href: "/social-activities" },
+      { name: "Gallery", href: "/gallery" },
+    ]},
+    { name: "Services", href: "/services" },
+    { name: "Our Clients", href: "/projects" },
+    { name: "Careers", href: "/careers" },
+    { name: "Contact", href: "/contact" },
+    { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
+  ]);
+
+  // Get logo from CMS config
+  const logoConfig = loading ? { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 } :
+    (cmsConfig.logos.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,9 +119,10 @@ export const Navbar = () => {
           <Link to="/" className="flex items-center group" aria-label="MIPL Home">
             <div className="dark:bg-white dark:px-1.5 dark:py-0.5 dark:rounded transition-colors">
               <img 
-                src="/logo.png" 
-                alt="MIPL Logo" 
-                className="h-14 md:h-16 w-auto transition-all duration-300 group-hover:scale-105"
+                src={logoConfig.src}
+                alt={logoConfig.alt || 'MIPL Logo'}
+                style={{ width: parseInt(logoConfig.width) || 56, height: parseInt(logoConfig.height) || 56 }}
+                className="transition-all duration-300 group-hover:scale-105"
               />
             </div>
           </Link>
@@ -87,13 +130,17 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-0.5" role="menubar">
             {navLinks.map((link) => (
-              <div key={link.name} className="relative" ref={link.dropdown ? dropdownRef : null}>
+              <div 
+                key={link.name} 
+                className="relative" 
+                ref={link.dropdown ? dropdownRef : null}
+                onMouseEnter={() => link.dropdown && handleMouseEnter(link.name)}
+                onMouseLeave={() => link.dropdown && handleMouseLeave()}
+              >
                 {link.dropdown ? (
                   <>
                     <button
                       onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
-                      onMouseEnter={() => setOpenDropdown(link.name)}
-                      onMouseLeave={() => setOpenDropdown(null)}
                       role="menuitem"
                       aria-haspopup="true"
                       aria-expanded={openDropdown === link.name}
@@ -114,26 +161,29 @@ export const Navbar = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                           transition={{ duration: 0.2 }}
-                          onMouseEnter={() => setOpenDropdown(link.name)}
-                          onMouseLeave={() => setOpenDropdown(null)}
-                          className="absolute top-full left-0 mt-2 w-56 glass-card shadow-xl border border-border rounded-xl overflow-hidden"
+                          className="absolute top-full left-0 mt-0 pt-2 w-56 z-50 pointer-events-auto"
                           role="menu"
                         >
-                          {link.dropdown.map((item) => (
-                            <Link
-                              key={item.href}
-                              to={item.href}
-                              onClick={() => setOpenDropdown(null)}
-                              role="menuitem"
-                              className={`block px-4 py-3 text-sm hover:bg-muted transition-colors ${
-                                location.pathname === item.href
-                                  ? "text-primary bg-primary/10 font-medium"
-                                  : "text-foreground"
-                              }`}
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
+                          <div className="glass-card shadow-xl border border-border rounded-xl overflow-hidden">
+                            {link.dropdown.map((item) => (
+                              <Link
+                                key={item.href}
+                                to={item.href}
+                                onClick={() => {
+                                  setOpenDropdown(null);
+                                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                                }}
+                                role="menuitem"
+                                className={`block px-4 py-3 text-sm hover:bg-muted transition-colors pointer-events-auto ${
+                                  location.pathname === item.href
+                                    ? "text-primary bg-primary/10 font-medium"
+                                    : "text-foreground"
+                                }`}
+                              >
+                                {item.name}
+                              </Link>
+                            ))}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
