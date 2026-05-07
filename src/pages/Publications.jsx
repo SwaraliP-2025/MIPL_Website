@@ -2,6 +2,7 @@ import { useCmsData } from "@/hooks/useCmsData";
 import { Layout } from "@/components/layout/Layout";
 import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { BookOpen, FileText, Newspaper, Download, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const publications = [
   {

@@ -34,21 +34,21 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-        <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
-        <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
-        <Route path="/achievements" element={<PageTransition><Achievements /></PageTransition>} />
-        <Route path="/publications" element={<PageTransition><Publications /></PageTransition>} />
-        <Route path="/social-activities" element={<PageTransition><SocialActivities /></PageTransition>} />
-        <Route path="/gallery" element={<PageTransition><Gallery /></PageTransition>} />
-        <Route path="/coffee-table-book" element={<PageTransition><CoffeeTableBook /></PageTransition>} />
-        <Route path="/ctb-feedback" element={<PageTransition><CTBFeedback /></PageTransition>} />
-        <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
-        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route index element={<PageTransition><Index /></PageTransition>} />
+        <Route path="about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="services" element={<PageTransition><Services /></PageTransition>} />
+        <Route path="projects" element={<PageTransition><Projects /></PageTransition>} />
+        <Route path="achievements" element={<PageTransition><Achievements /></PageTransition>} />
+        <Route path="publications" element={<PageTransition><Publications /></PageTransition>} />
+        <Route path="social-activities" element={<PageTransition><SocialActivities /></PageTransition>} />
+        <Route path="gallery" element={<PageTransition><Gallery /></PageTransition>} />
+        <Route path="coffee-table-book" element={<PageTransition><CoffeeTableBook /></PageTransition>} />
+        <Route path="ctb-feedback" element={<PageTransition><CTBFeedback /></PageTransition>} />
+        <Route path="careers" element={<PageTransition><Careers /></PageTransition>} />
+        <Route path="contact" element={<PageTransition><Contact /></PageTransition>} />
+        <Route path="login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="admin" element={<AdminLogin />} />
+        <Route path="admin/dashboard" element={<AdminDashboard />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>

@@ -34,27 +34,16 @@ const iconMap = {
   CheckCircle
 };
 
-const values = [
-  {
-    icon: Shield,
-    title: "Integrity",
-    description: "We uphold the highest ethical standards in all our engagements.",
-  },
-  {
-    icon: Target,
-    title: "Excellence",
-    description: "We strive for exceptional quality in every project we undertake.",
-  },
-  {
-    icon: Eye,
-    title: "Transparency",
-    description: "Open communication and honest reporting guide our client relationships.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Innovation",
-    description: "We continuously evolve to stay ahead of emerging threats and technologies.",
-  },
+const defaultMissionVision = {
+  mission: "To empower organizations with cutting-edge security solutions and innovative technology that protect assets, enable growth, and build a safer digital future for all stakeholders.",
+  vision: "To be the global leader in integrated security and smart city solutions, recognized for our innovation, integrity, and commitment to creating secure, intelligent environments.",
+};
+
+const defaultValues = [
+  { icon: "Shield", title: "Integrity", description: "We uphold the highest ethical standards in all our engagements." },
+  { icon: "Target", title: "Excellence", description: "We strive for exceptional quality in every project we undertake." },
+  { icon: "Eye", title: "Transparency", description: "Open communication and honest reporting guide our client relationships." },
+  { icon: "TrendingUp", title: "Innovation", description: "We continuously evolve to stay ahead of emerging threats and technologies." },
 ];
 
 const defaultMilestones = [
@@ -97,6 +86,14 @@ const About = () => {
     { icon: 'Globe', value: "4", label: "Office Locations", page: 'about' },
     { icon: 'Award', value: "Award", label: "Winning Consultancy", page: 'about' },
   ]);
+  
+  // Mission & Vision from CMS
+  const { data: missionVisionData } = useCmsData('AboutMissionVision', defaultMissionVision);
+  const missionVision = missionVisionData[0] || defaultMissionVision;
+  
+  // Core Values from CMS
+  const { data: valuesData } = useCmsData('AboutValues', defaultValues);
+  const cmsValues = valuesData.length > 0 ? valuesData : defaultValues;
 
   const filteredAboutStats = cmsStats.filter(s => (s.page || '').toLowerCase().trim() === 'about');
   const aboutStats = filteredAboutStats.length > 0 ? filteredAboutStats : [
@@ -174,9 +171,7 @@ const About = () => {
               </div>
               <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
               <p className="text-muted-foreground leading-relaxed">
-                To empower organizations with cutting-edge security solutions and 
-                innovative technology that protect assets, enable growth, and build 
-                a safer digital future for all stakeholders.
+                {missionVision.mission}
               </p>
             </motion.div>
 
@@ -191,9 +186,7 @@ const About = () => {
               </div>
               <h2 className="text-2xl font-bold mb-4">Our Vision</h2>
               <p className="text-muted-foreground leading-relaxed">
-                To be the global leader in integrated security and smart city 
-                solutions, recognized for our innovation, integrity, and 
-                commitment to creating secure, intelligent environments.
+                {missionVision.vision}
               </p>
             </motion.div>
           </div>
@@ -273,7 +266,9 @@ const About = () => {
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
+            {cmsValues.map((value, index) => {
+              const IconComponent = iconMap[value.icon] || Shield;
+              return (
               <motion.div
                 key={value.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -283,12 +278,13 @@ const About = () => {
                 className="glass-card p-6 text-center group hover:glow-border transition-all"
               >
                 <div className="inline-flex p-4 rounded-xl bg-white/5 text-primary group-hover:bg-primary/20 transition-colors mb-4">
-                  <value.icon className="w-8 h-8" />
+                  <IconComponent className="w-8 h-8" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{value.title}</h3>
                 <p className="text-sm text-muted-foreground">{value.description}</p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

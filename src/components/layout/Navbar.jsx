@@ -11,91 +11,150 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const timeoutRef = useRef(null);
+  const [mobileOpenDropdown, setMobileOpenDropdown] = useState(null);
+  const dropdownTimeoutRef = useRef(null);
   const location = useLocation();
-  const dropdownRef = useRef(null);
   const { config: cmsConfig, loading } = useCmsConfig();
 
-  const handleMouseEnter = (name) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setOpenDropdown(name);
-  };
+  // const clearDropdownTimeout = () => {
+  //   if (dropdownTimeoutRef.current) {
+  //     clearTimeout(dropdownTimeoutRef.current);
+  //     dropdownTimeoutRef.current = null;
+  //   }
+  // };
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setOpenDropdown(null);
-    }, 150); // 150ms grace period
-  };
+  // const handleDropdownMouseEnter = (name) => {
+  //   clearDropdownTimeout();
+  //   setOpenDropdown(name);
+  // };
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, []);
+  // const handleDropdownMouseLeave = () => {
+  //   clearDropdownTimeout();
+  //   dropdownTimeoutRef.current = setTimeout(() => {
+  //     setOpenDropdown(null);
+  //   }, 800); // Delay before closing
+  // };
+
+  // useEffect(() => {
+  //   return () => clearDropdownTimeout();
+  // }, []);
+
+  // Don't close dropdown on route change - let user control it
+  // This was causing the dropdown to disappear after navigation
 
   // Build nav links from CMS config or use defaults
-  const navLinks = loading ? [
+  const defaultLinks = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about", dropdown: [
-      { name: "About MIPL", href: "/about" },
-      { name: "Our Achievements", href: "/achievements" },
-      { name: "Our Publications", href: "/publications" },
-      { name: "Our Social Contribution", href: "/social-activities" },
-      { name: "Gallery", href: "/gallery" },
-    ]},
+    { 
+      name: "About", 
+      href: "/about", 
+      dropdown: [
+        { name: "About MIPL", href: "/about" },
+        { name: "Our Achievements", href: "/achievements" },
+        { name: "Our Publications", href: "/publications" },
+        { name: "Our Social Contribution", href: "/social-activities" },
+        { name: "Gallery", href: "/gallery" },
+      ]
+    },
     { name: "Services", href: "/services" },
     { name: "Our Clients", href: "/projects" },
     { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
     { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
-  ] : (cmsConfig.navbar.length > 0 ? cmsConfig.navbar.map(item => ({
-    name: item.name,
-    href: item.href,
-    dropdown: item.dropdown_items ? item.dropdown_items.split(',').map(d => {
-      const [name, href] = d.split('|');
-      return { name: name?.trim() || '', href: href?.trim() || '#' };
-    }) : null,
-  })) : [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about", dropdown: [
-      { name: "About MIPL", href: "/about" },
-      { name: "Our Achievements", href: "/achievements" },
-      { name: "Our Publications", href: "/publications" },
-      { name: "Our Social Contribution", href: "/social-activities" },
-      { name: "Gallery", href: "/gallery" },
-    ]},
-    { name: "Services", href: "/services" },
-    { name: "Our Clients", href: "/projects" },
-    { name: "Careers", href: "/careers" },
-    { name: "Contact", href: "/contact" },
-    { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
-  ]);
+  ];
+
+  // const navLinks = loading ? defaultLinks
+  //   : (cmsConfig?.navbar && Array.isArray(cmsConfig.navbar) && cmsConfig.navbar.length > 0
+  //       ? cmsConfig.navbar.map(item => ({
+  //           name: item.name,
+  //           href: item.href,
+  //           dropdown: item.dropdown_items
+  //             ? item.dropdown_items.split(',').map(d => {
+  //                 const [name, href] = d.split('|');
+  //                 return { name: name?.trim() || '', href: href?.trim() || '' };
+  //               }).filter(d => d.name && d.href)
+  //             : undefined,
+  //         }))
+  //       : defaultLinks
+  //     );
+
+  const navLinks =
+  cmsConfig?.navbar &&
+  Array.isArray(cmsConfig.navbar) &&
+  cmsConfig.navbar.length > 0
+    ? cmsConfig.navbar.map((item) => {
+        let parsedDropdown = [];
+
+        // SAFELY PARSE DROPDOWN
+        if (
+          typeof item.dropdown_items === "string" &&
+          item.dropdown_items.trim() !== ""
+        ) {
+          parsedDropdown = item.dropdown_items
+            .split(",")
+            .map((d) => {
+              const [name, href] = d.split("|");
+
+              return {
+                name: name?.trim() || "",
+                href: href?.trim() || "",
+              };
+            })
+            .filter((d) => d.name && d.href);
+        }
+
+        // FORCE ABOUT DROPDOWN IF CMS FAILS
+        if (
+          item.name === "About" &&
+          parsedDropdown.length === 0
+        ) {
+          parsedDropdown = [
+            { name: "About MIPL", href: "/about" },
+            { name: "Our Achievements", href: "/achievements" },
+            { name: "Our Publications", href: "/publications" },
+            { name: "Our Social Contribution", href: "/social-activities" },
+            { name: "Gallery", href: "/gallery" },
+          ];
+        }
+
+        return {
+          name: item.name,
+          href: item.href,
+          dropdown:
+            parsedDropdown.length > 0
+              ? parsedDropdown
+              : undefined,
+        };
+      })
+    : defaultLinks;
 
   // Get logo from CMS config
-  const logoConfig = loading ? { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 } :
-    (cmsConfig.logos.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 });
+  const logoConfig = loading
+    ? { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 }
+    : (cmsConfig?.logos?.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 });
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // // Close mobile menu on route change, but keep desktop dropdown open
+  // useEffect(() => {
+  //   setIsMobileMenuOpen(false);
+  //   setMobileOpenDropdown(null);
+  //   // IMPORTANT: Do NOT close openDropdown - it should persist across navigation
+  //   // Clear any pending timeouts to prevent dropdown from closing unexpectedly
+  //   clearDropdownTimeout();
+  // }, [location.pathname]);
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpenDropdown(null);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  setIsMobileMenuOpen(false);
+  setMobileOpenDropdown(null);
+  setOpenDropdown(null);
+}, [location.pathname]);
 
   const isActiveLink = (link) => {
-    if (link.dropdown) {
+    if (link.dropdown && link.dropdown.length > 0) {
       return link.dropdown.some(item => location.pathname === item.href);
     }
     return location.pathname === link.href;
@@ -106,10 +165,8 @@ export const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "glass shadow-lg"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-[9998] transition-all duration-300 ${
+        isScrolled ? "glass shadow-lg" : "bg-transparent"
       }`}
       role="banner"
     >
@@ -118,7 +175,7 @@ export const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center group" aria-label="MIPL Home">
             <div className="dark:bg-white dark:px-1.5 dark:py-0.5 dark:rounded transition-colors">
-              <img 
+              <img
                 src={logoConfig.src}
                 alt={logoConfig.alt || 'MIPL Logo'}
                 style={{ width: parseInt(logoConfig.width) || 56, height: parseInt(logoConfig.height) || 56 }}
@@ -130,17 +187,25 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-0.5" role="menubar">
             {navLinks.map((link) => (
-              <div 
-                key={link.name} 
-                className="relative" 
-                ref={link.dropdown ? dropdownRef : null}
-                onMouseEnter={() => link.dropdown && handleMouseEnter(link.name)}
-                onMouseLeave={() => link.dropdown && handleMouseLeave()}
+              <div
+                key={link.name}
+                className="relative"
+                // onMouseEnter={() => link.dropdown && link.dropdown.length > 0 && handleDropdownMouseEnter(link.name)}
+                // onMouseLeave={() => link.dropdown && link.dropdown.length > 0 && handleDropdownMouseLeave()}
+                onMouseEnter={() => {
+  if (link.dropdown && link.dropdown.length > 0) {
+    setOpenDropdown(link.name);
+  }
+}}
+onMouseLeave={() => {
+  setOpenDropdown(null);
+}}
               >
-                {link.dropdown ? (
+                {link.dropdown && link.dropdown.length > 0 ? (
                   <>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                    {/* Dropdown button */}
+                    <Link
+                      to={link.href}
                       role="menuitem"
                       aria-haspopup="true"
                       aria-expanded={openDropdown === link.name}
@@ -151,30 +216,28 @@ export const Navbar = () => {
                       }`}
                     >
                       {link.name}
-                      <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
-                    </button>
-                    
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                    </Link>
+
                     <AnimatePresence>
                       {openDropdown === link.name && (
                         <motion.div
-                          initial={{ opacity: 0, y: -10 }}
+                          initial={{ opacity: 0, y: -8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-0 pt-2 w-56 z-50 pointer-events-auto"
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute top-full left-0 w-56 z-[9999]"
                           role="menu"
                         >
+                          {/* Invisible bridge to prevent dropdown from closing */}
+                          {/* <div className="h-2 w-full" /> */}
                           <div className="glass-card shadow-xl border border-border rounded-xl overflow-hidden">
                             {link.dropdown.map((item) => (
                               <Link
                                 key={item.href}
                                 to={item.href}
-                                onClick={() => {
-                                  setOpenDropdown(null);
-                                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                                }}
                                 role="menuitem"
-                                className={`block px-4 py-3 text-sm hover:bg-muted transition-colors pointer-events-auto ${
+                                className={`block px-4 py-3 text-sm hover:bg-muted transition-colors cursor-pointer ${
                                   location.pathname === item.href
                                     ? "text-primary bg-primary/10 font-medium"
                                     : "text-foreground"
@@ -262,10 +325,10 @@ export const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  {link.dropdown ? (
+                  {link.dropdown && link.dropdown.length > 0 ? (
                     <div>
                       <button
-                        onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                        onClick={() => setMobileOpenDropdown(mobileOpenDropdown === link.name ? null : link.name)}
                         className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all ${
                           isActiveLink(link)
                             ? "text-primary bg-primary/10"
@@ -273,23 +336,23 @@ export const Navbar = () => {
                         }`}
                       >
                         {link.name}
-                        <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileOpenDropdown === link.name ? 'rotate-180' : ''}`} />
                       </button>
                       <AnimatePresence>
-                        {openDropdown === link.name && (
+                        {mobileOpenDropdown === link.name && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="ml-4 mt-2 space-y-1"
+                            className="ml-4 mt-2 space-y-1 overflow-hidden"
                           >
                             {link.dropdown.map((item) => (
                               <Link
                                 key={item.href}
                                 to={item.href}
                                 onClick={() => {
+                                  setMobileOpenDropdown(null);
                                   setIsMobileMenuOpen(false);
-                                  setOpenDropdown(null);
                                 }}
                                 className={`block px-4 py-2 rounded-lg text-sm transition-all ${
                                   location.pathname === item.href
@@ -307,7 +370,6 @@ export const Navbar = () => {
                   ) : (
                     <Link
                       to={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
                       role="menuitem"
                       className={`block px-4 py-3 rounded-lg font-medium transition-all ${
                         location.pathname === link.href
@@ -331,13 +393,10 @@ export const Navbar = () => {
                   asChild
                   className="w-full bg-primary hover:bg-blue-600 text-primary-foreground font-semibold"
                 >
-                  <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                    Book a Consultation
-                  </Link>
+                  <Link to="/contact">Book a Consultation</Link>
                 </Button>
                 <Link
                   to="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                 >
                   <User className="w-5 h-5" />

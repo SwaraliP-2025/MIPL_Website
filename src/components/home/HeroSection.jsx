@@ -3,8 +3,22 @@ import { ArrowRight, Shield, Lock, Network } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { HeroNetworkBackground } from "@/components/ProfessionalNetworkBackground";
+import { useCmsData } from "@/hooks/useCmsData";
+
+const defaultHeroData = {
+  badgeText: "Award-Winning Security & IT Consultancy from India",
+  headline: "Securing India's Critical Infrastructure Since 2000",
+  subheadline: "Award-winning security & IT consulting with end-to-end capabilities. From design to implementation, we deliver sustainable solutions for complex, integrated security management projects across government, energy, and enterprise sectors.",
+  ctaPrimaryText: "Book Appointment",
+  ctaPrimaryLink: "/contact",
+  ctaSecondaryText: "View Services",
+  ctaSecondaryLink: "/services",
+};
 
 export const HeroSection = () => {
+  const { data: heroData } = useCmsData('HomeHero', defaultHeroData);
+  const data = heroData[0] || defaultHeroData;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <HeroNetworkBackground />
@@ -23,7 +37,7 @@ export const HeroSection = () => {
           >
             <Shield className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">
-              Award-Winning Security & IT Consultancy from India
+              {data.badgeText}
             </span>
           </motion.div>
 
@@ -34,7 +48,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
-            Securing India's Critical Infrastructure Since 2000
+            {data.headline}
           </motion.h1>
 
           {/* Sub-headline */}
@@ -44,9 +58,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10"
           >
-            Award-winning security & IT consulting with end-to-end capabilities. 
-            From design to implementation, we deliver sustainable solutions for complex, 
-            integrated security management projects across government, energy, and enterprise sectors.
+            {data.subheadline}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -61,8 +73,8 @@ export const HeroSection = () => {
               size="lg"
               className="bg-primary hover:bg-blue-600 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all group"
             >
-              <Link to="/contact">
-                Book Appointment
+              <Link to={data.ctaPrimaryLink}>
+                {data.ctaPrimaryText}
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -72,7 +84,7 @@ export const HeroSection = () => {
               size="lg"
               className="border-white/20 hover:bg-white/5 px-8 py-6 text-lg"
             >
-              <Link to="/services">View Services</Link>
+              <Link to={data.ctaSecondaryLink}>{data.ctaSecondaryText}</Link>
             </Button>
           </motion.div>
 

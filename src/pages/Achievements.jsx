@@ -2,92 +2,38 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { Award, Trophy, Star, Target, CheckCircle } from "lucide-react";
+import { useCmsData } from "@/hooks/useCmsData";
 
-const achievements = [
-  {
-    year: "2014",
-    title: "Security Excellence Awards - Finalist",
-    location: "London, UK",
-    description: "First international recognition for outstanding contributions to security technology and management.",
-    category: "International Recognition"
-  },
-   {
-    year: "2015",
-    title: "Security Excellence Awards - Finalist",
-    location: "London, UK",
-    description: "Second consecutive year as finalist, showcasing consistent excellence in security management.",
-    category: "International Recognition"
-  },
-  {
-    year: "2017",
-    title: "Security Excellence Awards - Finalist",
-    location: "London, UK",
-    description: "Recognized as finalist for innovative security solutions and implementations in the international arena.",
-    category: "International Recognition"
-  },
-  {
-    year: "2017",
-    title: "Nanded Safe City Project",
-    location: "Nanded, Maharashtra",
-    description: "Implemented comprehensive safe city solution recognized nationally and internationally for its innovative approach and effectiveness.",
-    category: "Safe City Projects"
-  },
-  {
-    year: "2017",
-    title: "Kolhapur Safe City Project",
-    location: "Kolhapur, Maharashtra",
-    description: "Delivered integrated surveillance and security management system for enhanced public safety recognized nationally and internationally.",
-    category: "Safe City Projects"
-  },
-  
-  // {
-  //   year: "2018",
-  //   title: "First Command & Control System in Indian Refinery",
-  //   location: "India",
-  //   description: "Pioneered the implementation of integrated Command & Control system in the Indian refinery sector, setting new industry standards.",
-  //   category: "Industry Innovation"
-  // },
-  // {
-  //   year: "2019",
-  //   title: "Largest Biometric Access Control Project",
-  //   location: "Pan India - HPCL",
-  //   description: "Successfully delivered one of the largest biometric access control projects in the world for HPCL across India.",
-  //   category: "Major Implementation"
-  // },
- 
-  // {
-  //   year: "2020",
-  //   title: "Supreme Court-Mandated Security Rollout",
-  //   location: "Courts across India",
-  //   description: "Executed large-scale security implementation for court premises as mandated by the Supreme Court of India.",
-  //   category: "Government Projects"
-  // },
+const iconMap = {
+  Trophy,
+  Star,
+  Target,
+  CheckCircle,
+  Award
+};
+
+const defaultAchievements = [
+  { year: "2014", title: "Security Excellence Awards - Finalist", location: "London, UK", description: "First international recognition for outstanding contributions to security technology and management.", category: "International Recognition" },
+  { year: "2015", title: "Security Excellence Awards - Finalist", location: "London, UK", description: "Second consecutive year as finalist, showcasing consistent excellence in security management.", category: "International Recognition" },
+  { year: "2017", title: "Security Excellence Awards - Finalist", location: "London, UK", description: "Recognized as finalist for innovative security solutions and implementations in the international arena.", category: "International Recognition" },
+  { year: "2017", title: "Nanded Safe City Project", location: "Nanded, Maharashtra", description: "Implemented comprehensive safe city solution recognized nationally and internationally for its innovative approach and effectiveness.", category: "Safe City Projects" },
+  { year: "2017", title: "Kolhapur Safe City Project", location: "Kolhapur, Maharashtra", description: "Delivered integrated surveillance and security management system for enhanced public safety recognized nationally and internationally.", category: "Safe City Projects" },
 ];
 
-const highlights = [
-  {
-    icon: Trophy,
-    title: "3x International Finalist",
-    description: "Security Excellence Awards, London (2014, 2015, 2017)"
-  },
-  {
-    icon: Star,
-    title: "Industry Pioneer",
-    description: "First C&C system in Indian refinery sector"
-  },
-  {
-    icon: Target,
-    title: "Scale Leader",
-    description: "Largest biometric project in India"
-  },
-  {
-    icon: CheckCircle,
-    title: "Government Trust",
-    description: "Supreme Court-mandated implementations"
-  },
+const defaultHighlights = [
+  { icon: "Trophy", title: "3x International Finalist", description: "Security Excellence Awards, London (2014, 2015, 2017)" },
+  { icon: "Star", title: "Industry Pioneer", description: "First C&C system in Indian refinery sector" },
+  { icon: "Target", title: "Scale Leader", description: "Largest biometric project in India" },
+  { icon: "CheckCircle", title: "Government Trust", description: "Supreme Court-mandated implementations" },
 ];
 
 const Achievements = () => {
+  const { data: achievementsData } = useCmsData('Achievements', defaultAchievements);
+  const achievements = achievementsData.length > 0 ? achievementsData : defaultAchievements;
+
+  const { data: highlightsData } = useCmsData('AchievementsHighlights', defaultHighlights);
+  const highlights = highlightsData.length > 0 ? highlightsData : defaultHighlights;
+
   return (
     <Layout>
       {/* Hero */}
@@ -117,7 +63,9 @@ const Achievements = () => {
         <SubtleNetworkBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {highlights.map((highlight, index) => (
+            {highlights.map((highlight, index) => {
+              const IconComponent = iconMap[highlight.icon] || Trophy;
+              return (
               <motion.div
                 key={highlight.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -127,12 +75,13 @@ const Achievements = () => {
                 className="glass-card p-6 text-center hover:glow-border group"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <highlight.icon className="w-6 h-6 text-primary" />
+                  <IconComponent className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-bold mb-2">{highlight.title}</h3>
                 <p className="text-sm text-muted-foreground">{highlight.description}</p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

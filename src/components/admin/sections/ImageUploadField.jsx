@@ -29,22 +29,17 @@ const ImageUploadField = ({ label = "Image", value = "", onChange, hint }) => {
     try {
       const result = await cmsUploadImage(file);
       if (result.success) {
-        let url = result.url;
-        // Convert Google Drive share link to direct image link if needed
-        const driveMatch = url && url.match(/https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\/view.*/);
-        if (driveMatch) {
-          const fileId = driveMatch[1];
-          url = `https://drive.google.com/uc?export=view&id=${fileId}`;
-        }
+        const url = result.url;
         setPreview(url);
         onChange(url);
-        toast({ title: "Uploaded!", description: "Image saved to Google Drive." });
+        toast({ title: "Uploaded!", description: "Image saved to Hostinger." });
       } else {
         toast({ title: "Upload Failed", description: result.message || "Try again.", variant: "destructive" });
         setPreview(value); // revert
       }
-    } catch {
-      toast({ title: "Upload Failed", description: "Network error.", variant: "destructive" });
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({ title: "Upload Failed", description: "Network error or server issue.", variant: "destructive" });
       setPreview(value);
     } finally {
       setUploading(false);
@@ -58,7 +53,7 @@ const ImageUploadField = ({ label = "Image", value = "", onChange, hint }) => {
         {uploading ? (
           <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <span className="text-sm">Uploading to Drive...</span>
+            <span className="text-sm">Uploading to Hostinger...</span>
           </div>
         ) : preview ? (
           <img src={preview} alt="preview" className="w-full h-full object-cover" />
@@ -66,7 +61,7 @@ const ImageUploadField = ({ label = "Image", value = "", onChange, hint }) => {
           <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <Upload className="h-7 w-7" />
             <span className="text-sm font-medium">Click to upload image</span>
-            <span className="text-xs">JPG, PNG, WebP — stored on Google Drive</span>
+            <span className="text-xs">JPG, PNG, WebP — stored on Hostinger</span>
           </div>
         )}
         <input type="file" accept="image/*" className="hidden" onChange={handleFile} disabled={uploading} />

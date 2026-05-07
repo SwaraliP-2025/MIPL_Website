@@ -137,7 +137,7 @@ const LogoConfigSection = () => {
           <DialogHeader>
             <DialogTitle>{editIndex !== null ? 'Edit' : 'Add'} Logo</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          <div className="space-y-4 py-2 overflow-y-auto flex-1 pr-1">
             <div className="space-y-1.5">
               <Label>Type</Label>
               <Input

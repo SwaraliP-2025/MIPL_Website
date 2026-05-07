@@ -163,11 +163,11 @@ const GallerySection = () => {
 
       {/* Add / Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{editIndex !== null ? 'Edit' : 'Add'} Gallery Item</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          <div className="space-y-4 py-2 overflow-y-auto flex-1 pr-1">
 
             {/* Image Upload */}
             <ImageUploadField
@@ -198,7 +198,7 @@ const GallerySection = () => {
             <div className="space-y-1.5">
               <Label>Description</Label>
               <Textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})}
-                placeholder="Brief description..." className="bg-white/5 border-2 border-black/20 dark:border-white/10" rows={3} />
+                placeholder="Brief description..." className="bg-white/5 border-2 border-black/20 dark:border-white/10" rows={2} />
             </div>
 
             <div className="space-y-1.5">

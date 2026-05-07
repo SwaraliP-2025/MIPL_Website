@@ -1,0 +1,32 @@
+# Hostinger Image Upload - Security Configuration
+
+# Disable directory browsing
+Options -Indexes
+
+# Enable rewrite engine
+RewriteEngine On
+
+# PHP settings
+php_value upload_max_filesize 10M
+php_value post_max_size 12M
+php_value max_execution_time 60
+php_value max_input_time 60
+
+# Block access to sensitive files
+<FilesMatch "\.(env|log|ini|conf|sql|git|htaccess|htpasswd)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Allow access to uploaded images
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Set cache headers for images
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+</IfModule>

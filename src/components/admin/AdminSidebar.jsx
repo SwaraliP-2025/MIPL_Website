@@ -16,7 +16,14 @@ import {
   ChevronRight, 
   Menu, 
   Type, 
-  TrendingUp 
+  TrendingUp,
+  Home,
+  Star,
+  MessageSquare,
+  Award,
+  Target,
+  Eye,
+  Shield
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -24,8 +31,20 @@ export const navItems = [
   { key: 'overview', label: 'Dashboard', icon: LayoutDashboard },
   { key: 'siteconfig', label: 'Site Config', icon: Settings },
   { key: 'herocontent', label: 'Hero Content', icon: Layout },
+  // Home Page Sections
+  { key: 'homehero', label: 'Home Hero', icon: Home },
+  { key: 'homeservices', label: 'Home Services', icon: Briefcase },
+  { key: 'homestats', label: 'Home Stats', icon: BarChart },
+  { key: 'clientlogos', label: 'Client Logos', icon: Building2 },
+  { key: 'testimonials', label: 'Testimonials', icon: MessageSquare },
+  // About Page Sections
+  { key: 'abouthero', label: 'About Hero', icon: Eye },
+  { key: 'aboutmv', label: 'Mission & Vision', icon: Target },
+  { key: 'aboutvalues', label: 'Core Values', icon: Shield },
+  // Services & Projects
   { key: 'services', label: 'Services', icon: Briefcase },
   { key: 'projects', label: 'Projects', icon: Building2 },
+  // Other Pages
   { key: 'jobs', label: 'Jobs / Careers', icon: Users },
   { key: 'gallery', label: 'Gallery', icon: Image },
   { key: 'publications', label: 'Publications', icon: BookOpen },
@@ -34,6 +53,8 @@ export const navItems = [
   { key: 'stats', label: 'Stats', icon: BarChart },
   { key: 'social', label: 'Social Activities', icon: Heart },
   { key: 'achievements', label: 'Achievements', icon: Trophy },
+  { key: 'achievementshl', label: 'Achievement Highlights', icon: Star },
+  // Config
   { key: 'navbar', label: 'Navbar Config', icon: Menu },
   { key: 'footer', label: 'Footer Config', icon: Type },
   { key: 'logo', label: 'Logo Config', icon: Layout },

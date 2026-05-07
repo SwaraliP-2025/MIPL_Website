@@ -10,6 +10,12 @@ import { cmsGet, cmsPost } from "@/components/admin/cmsApi";
 
 import SiteConfigSection from "@/components/admin/sections/SiteConfigSection";
 import HeroContentSection from "@/components/admin/sections/HeroContentSection";
+import HomeHeroSection from "@/components/admin/sections/HomeHeroSection";
+import HomeServicesSection from "@/components/admin/sections/HomeServicesSection";
+import HomeStatsSection from "@/components/admin/sections/HomeStatsSection";
+import AboutHeroSection from "@/components/admin/sections/AboutHeroSection";
+import AboutMissionVisionSection from "@/components/admin/sections/AboutMissionVisionSection";
+import AboutValuesSection from "@/components/admin/sections/AboutValuesSection";
 import ServicesSection from "@/components/admin/sections/ServicesSection";
 import ProjectsSection from "@/components/admin/sections/ProjectsSection";
 import JobsSection from "@/components/admin/sections/JobsSection";
@@ -20,9 +26,12 @@ import JourneySection from "@/components/admin/sections/JourneySection";
 import StatsSection from "@/components/admin/sections/StatsSection";
 import SocialActivitiesSection from "@/components/admin/sections/SocialActivitiesSection";
 import AchievementsSection from "@/components/admin/sections/AchievementsSection";
+import AchievementsHighlightsSection from "@/components/admin/sections/AchievementsHighlightsSection";
 import NavbarConfigSection from "@/components/admin/sections/NavbarConfigSection";
 import FooterConfigSection from "@/components/admin/sections/FooterConfigSection";
 import LogoConfigSection from "@/components/admin/sections/LogoConfigSection";
+import ClientLogosSection from "@/components/admin/sections/ClientLogosSection";
+import TestimonialsSection from "@/components/admin/sections/TestimonialsSection";
 
 const sheetNames = ['Services', 'Projects', 'Jobs', 'Gallery', 'Publications', 'Leadership', 'Journey', 'Stats', 'SocialActivities', 'HeroContent', 'Achievements', 'SiteConfig', 'NavbarConfig', 'FooterConfig', 'LogoConfig'];
 
@@ -41,7 +50,10 @@ const DashboardOverview = () => {
         const c = {};
         Object.entries(data.content).forEach(([k, v]) => { c[k] = Array.isArray(v) ? v.length : 0; });
         setCounts(c);
-        setLastSync(new Date().toLocaleString());
+        const now = new Date();
+        const date = now.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const time = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+        setLastSync(`${date}, ${time}`);
       }
     } catch {
       toast({ title: "Error", description: "Could not fetch dashboard data.", variant: "destructive" });
@@ -124,6 +136,17 @@ const sectionMap = {
   overview: DashboardOverview,
   siteconfig: SiteConfigSection,
   herocontent: HeroContentSection,
+  // Home Page
+  homehero: HomeHeroSection,
+  homeservices: HomeServicesSection,
+  homestats: HomeStatsSection,
+  clientlogos: ClientLogosSection,
+  testimonials: TestimonialsSection,
+  // About Page
+  abouthero: AboutHeroSection,
+  aboutmv: AboutMissionVisionSection,
+  aboutvalues: AboutValuesSection,
+  // Other Pages
   services: ServicesSection,
   projects: ProjectsSection,
   jobs: JobsSection,
@@ -134,6 +157,7 @@ const sectionMap = {
   stats: StatsSection,
   social: SocialActivitiesSection,
   achievements: AchievementsSection,
+  achievementshl: AchievementsHighlightsSection,
   navbar: NavbarConfigSection,
   footer: FooterConfigSection,
   logo: LogoConfigSection,

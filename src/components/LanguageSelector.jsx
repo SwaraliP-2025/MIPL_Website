@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const languages = [
-  // English (Default)
   { code: "en", name: "English" },
-  
-  //Indian
   { code: "hi", name: "हिंदी (Hindi)" },
   { code: "te", name: "తెలుగు (Telugu)" },
   { code: "ta", name: "தமிழ் (Tamil)" },
@@ -35,8 +32,6 @@ const languages = [
   { code: "sat", name: "ᱥᱟᱱᱛᱟᱲᱤ (Santali)" },
   { code: "mni-Mtei", name: "ꯃꯩꯇꯩꯂꯣꯟ (Manipuri/Meitei)" },
   { code: "brx", name: "बड़ो (Bodo)" },
-  
-  // Major Asian 
   { code: "zh-CN", name: "中文简体 (Chinese Simplified)" },
   { code: "zh-TW", name: "中文繁體 (Chinese Traditional)" },
   { code: "ja", name: "日本語 (Japanese)" },
@@ -49,14 +44,10 @@ const languages = [
   { code: "my", name: "မြန်မာ (Burmese)" },
   { code: "km", name: "ខ្មែរ (Khmer)" },
   { code: "lo", name: "ລາວ (Lao)" },
-  
-  // Middle Eastern 
   { code: "ar", name: "العربية (Arabic)" },
   { code: "fa", name: "فارسی (Persian)" },
   { code: "he", name: "עברית (Hebrew)" },
   { code: "tr", name: "Türkçe (Turkish)" },
-  
-  // European 
   { code: "es", name: "Español (Spanish)" },
   { code: "fr", name: "Français (French)" },
   { code: "de", name: "Deutsch (German)" },
@@ -85,8 +76,6 @@ const languages = [
   { code: "is", name: "Íslenska (Icelandic)" },
   { code: "ga", name: "Gaeilge (Irish)" },
   { code: "mt", name: "Malti (Maltese)" },
-  
-  // African
   { code: "sw", name: "Kiswahili (Swahili)" },
   { code: "zu", name: "isiZulu (Zulu)" },
   { code: "xh", name: "isiXhosa (Xhosa)" },
@@ -96,13 +85,9 @@ const languages = [
   { code: "ig", name: "Igbo" },
   { code: "yo", name: "Yorùbá (Yoruba)" },
   { code: "so", name: "Soomaali (Somali)" },
-  
-  // Latin American 
   { code: "ca", name: "Català (Catalan)" },
   { code: "gl", name: "Galego (Galician)" },
   { code: "eu", name: "Euskara (Basque)" },
-  
-  // Other 
   { code: "sq", name: "Shqip (Albanian)" },
   { code: "hy", name: "Հայերեն (Armenian)" },
   { code: "az", name: "Azərbaycan (Azerbaijani)" },
@@ -118,202 +103,83 @@ const languages = [
   { code: "tk", name: "Türkmen (Turkmen)" },
 ];
 
-//total 92 languages
-
+let googleTranslateInitialized = false;
 
 export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Function to get current language from hash
-  const getLangFromHash = () => {
-    const hash = window.location.hash;
-    const match = hash.match(/googtrans\(en\|([^)]+)\)/);
-    return match ? match[1] : "en";
-  };
 
   useEffect(() => {
-    // Set initial language from hash immediately
-    const initialLang = getLangFromHash();
-    setCurrentLang(initialLang);
+    // Only run once on mount
+    const savedLang = localStorage.getItem("preferredLanguage") || "en";
+    setCurrentLang(savedLang);
 
-    if (!window.google?.translate) {
+    // Initialize Google Translate only once
+    if (!googleTranslateInitialized && !window.google?.translate) {
+      googleTranslateInitialized = true;
+      
       const script = document.createElement("script");
       script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
+      script.onerror = () => {
+        console.warn("Google Translate failed to load");
+      };
       document.body.appendChild(script);
 
       window.googleTranslateElementInit = () => {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: languages.map(l => l.code).join(","),
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false,
-          },
-          "google_translate_element_hidden"
-        );
-        setIsLoaded(true);
-        
-        // Update language after Google Translate loads
-        setTimeout(() => {
-          const lang = getLangFromHash();
-          setCurrentLang(lang);
-        }, 1000);
+        try {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: "en",
+              includedLanguages: languages.map(l => l.code).join(","),
+              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false,
+            },
+            "google_translate_element_hidden"
+          );
+        } catch (err) {
+          console.warn("Google Translate init failed:", err);
+        }
       };
-    } else {
-      setIsLoaded(true);
-      // Update language if already loaded
-      setTimeout(() => {
-        const lang = getLangFromHash();
-        setCurrentLang(lang);
-      }, 500);
     }
 
-    // Monitor hash changes to update current language display
-    const handleHashChange = () => {
-      const lang = getLangFromHash();
-      setCurrentLang(lang);
-    };
-    
-    window.addEventListener('hashchange', handleHashChange);
-    
-    // Also check periodically in case Google Translate changes the hash
-    const intervalId = setInterval(() => {
-      const lang = getLangFromHash();
-      if (lang !== currentLang) {
-        setCurrentLang(lang);
-      }
-    }, 500);
-
+    // Hide Google Translate UI
     const style = document.createElement("style");
     style.innerHTML = `
-      #google_translate_element_hidden {
-        display: none !important;
-        visibility: hidden !important;
-        position: absolute !important;
-        left: -9999px !important;
-      }
-      .goog-te-banner-frame {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      body {
-        top: 0 !important;
-        position: static !important;
-      }
-      .skiptranslate {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide all Google Translate UI elements */
-      .goog-te-gadget {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      .goog-te-combo {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      iframe.skiptranslate {
-        display: none !important;
-        visibility: hidden !important;
-        position: absolute !important;
-        left: -9999px !important;
-      }
-      body > .skiptranslate {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      .goog-te-spinner-pos {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      .goog-te-balloon-frame {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide the translate icon/widget completely */
-      #goog-gt-tt, .goog-gt-tt {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      .goog-te-menu-value span:first-child {
-        display: none !important;
-      }
-      /* Hide menu frame */
-      .goog-te-menu-frame {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide menu2 frame */
-      .goog-te-menu2 {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide ftab */
-      .goog-te-ftab {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide all Google Translate UI by ID pattern */
-      [id^="goog-gt-"] {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Hide elements with class starting with goog-te */
-      [class^="goog-te"] {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Force hide any visible translate elements */
-      body > .skiptranslate,
-      body > .goog-te-banner-frame,
-      body > iframe.skiptranslate {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        position: absolute !important;
-        left: -9999px !important;
-        top: -9999px !important;
-      }
-      /* Keep dropdown menu text in original language */
-      .notranslate {
-        translate: no !important;
-      }
-      .notranslate * {
-        translate: no !important;
-      }
-      /* Force prevent translation of language selector button text */
-      button[class*="notranslate"] span {
-        font-family: inherit !important;
-      }
-      /* Prevent Google Translate from touching the button */
-      [data-lang-display] {
-        pointer-events: none;
-      }
+      #google_translate_element_hidden { display: none !important; }
+      .goog-te-banner-frame { display: none !important; }
+      .skiptranslate { display: none !important; }
+      .goog-te-gadget { display: none !important; }
+      iframe.skiptranslate { display: none !important; }
+      body > .skiptranslate { display: none !important; }
+      [class^="goog-te"] { display: none !important; }
+      [id^="goog-gt-"] { display: none !important; }
     `;
     document.head.appendChild(style);
 
     return () => {
       if (style.parentNode) style.parentNode.removeChild(style);
-      window.removeEventListener('hashchange', handleHashChange);
-      clearInterval(intervalId);
     };
-  }, [currentLang]);
+  }, []); // Empty dependency array - run only once
 
   const changeLanguage = (langCode) => {
-  
-    window.location.hash = `googtrans(en|${langCode})`;
-    
-    // Immediately reload - the hash is already set
-    window.location.reload();
+    localStorage.setItem("preferredLanguage", langCode);
+    setCurrentLang(langCode);
+
+    if (langCode === "en") {
+      window.location.hash = "";
+    } else {
+      window.location.hash = `googtrans(en|${langCode})`;
+    }
+
+    // Reload after a short delay
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   const getCurrentLanguageName = () => {
-    return languages.find(l => l.code === currentLang)?.name || "English";
+    const lang = languages.find(l => l.code === currentLang);
+    return lang?.name || "English";
   };
 
   return (
@@ -321,9 +187,19 @@ export const LanguageSelector = () => {
       <div id="google_translate_element_hidden"></div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="gap-1.5 notranslate hover:bg-accent px-2" translate="no">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="gap-1.5 notranslate hover:bg-accent px-2" 
+            translate="no"
+          >
             <Globe className="w-3.5 h-3.5" />
-            <span className="text-xs font-medium notranslate hidden xl:inline" translate="no" key={currentLang}>{getCurrentLanguageName()}</span>
+            <span 
+              className="text-xs font-medium notranslate hidden xl:inline" 
+              translate="no"
+            >
+              {getCurrentLanguageName()}
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64 max-h-96 overflow-y-auto notranslate">
@@ -334,7 +210,9 @@ export const LanguageSelector = () => {
             <DropdownMenuItem
               key={lang.code}
               onClick={() => changeLanguage(lang.code)}
-              className={`notranslate cursor-pointer ${currentLang === lang.code ? "bg-accent font-medium" : ""}`}
+              className={`notranslate cursor-pointer ${
+                currentLang === lang.code ? "bg-accent font-medium" : ""
+              }`}
             >
               {lang.name}
             </DropdownMenuItem>

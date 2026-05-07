@@ -212,11 +212,11 @@ const SheetEditor = ({ sheetName, title, description, columns }) => {
 
       {/* Add/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{editIndex !== null ? 'Edit' : 'Add'} {title} Entry</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          <div className="space-y-4 py-2 overflow-y-auto flex-1 pr-1">
             {columns.map(col => (
               <div key={col.key} className="space-y-1.5">
                 <Label>{col.label}{col.hint ? <span className="text-xs text-muted-foreground ml-1">({col.hint})</span> : null}</Label>

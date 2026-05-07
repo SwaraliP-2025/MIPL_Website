@@ -6,7 +6,11 @@ const ALLOWED_SHEETS = [
   'Gallery', 'Publications', 'Leadership', 'Stats',
   'SocialActivities', 'HeroContent', 'Achievements',
   'NavbarConfig', 'FooterConfig', 'LogoConfig', 'Journey',
-  'ClientLogos', 'Testimonials'
+  'ClientLogos', 'Testimonials',
+  // New sheets for full CMS coverage
+  'HomeServices', 'HomeStats', 'HomeHero',
+  'AboutHero', 'AboutMissionVision', 'AboutValues',
+  'AchievementsHighlights'
 ];
 
 // ── CORS helper ──────────────────────────────────────────────
@@ -64,7 +68,8 @@ function doPost(e) {
     if (action === 'addRow')     return addRow(body.sheet, body.row);
     if (action === 'saveSheet')  return saveSheet(body.sheet, body.rows);
     if (action === 'initSheets') return initAllSheets();
-    if (action === 'uploadImage') return uploadImageToDrive(body.fileName, body.fileData, body.mimeType || 'image/jpeg');
+    // Image uploads now go directly to Hostinger (see frontend cmsApi.js)
+    // if (action === 'uploadImage') return uploadImageToDrive(body.fileName, body.fileData, body.mimeType || 'image/jpeg');
 
     return corsResponse({ success: false, message: 'Unknown action: ' + action });
   } catch (err) {
@@ -109,36 +114,60 @@ function getSheetData(sheetName) {
   var sheet = ss.getSheetByName(sheetName);
 
   if (!sheet) {
-    return corsResponse({ success: true, sheet: sheetName, headers: [], rows: [] });
+    return corsResponse({ success: true, sheet: sheetName, headers: [], data: [] });
   }
 
   var data    = sheet.getDataRange().getValues();
   if (data.length === 0) {
-    return corsResponse({ success: true, sheet: sheetName, headers: [], rows: [] });
+    return corsResponse({ success: true, sheet: sheetName, headers: [], data: [] });
   }
 
-  var headers = data[0].map(function(h) { return h.toString().trim(); });
+  var headers = data[0].map(function(h) { return String(h).trim(); });
   var rows    = [];
 
+  // Only process non-empty rows
   for (var i = 1; i < data.length; i++) {
     var row = {};
+    var hasData = false;
     for (var j = 0; j < headers.length; j++) {
-      row[headers[j]] = data[i][j] !== undefined ? data[i][j].toString() : '';
+      var cellValue = data[i][j];
+      // Skip empty cells
+      if (cellValue === '' || cellValue === null || cellValue === undefined) {
+        row[headers[j]] = '';
+      } else {
+        row[headers[j]] = String(cellValue);
+        hasData = true;
+      }
     }
-    rows.push(row);
+    // Only add rows that have at least some data
+    if (hasData) {
+      rows.push(row);
+    }
   }
 
-  return corsResponse({ success: true, sheet: sheetName, headers: headers, rows: rows });
+  return corsResponse({ success: true, sheet: sheetName, headers: headers, data: rows });
 }
 
 function getAllContent() {
+  // Check cache first (5 minute TTL)
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('cms_all_content');
+  if (cached) {
+    return corsResponse(JSON.parse(cached));
+  }
+
   var result = {};
   for (var i = 0; i < ALLOWED_SHEETS.length; i++) {
     var name = ALLOWED_SHEETS[i];
     var res  = JSON.parse(getSheetData(name).getContent());
-    result[name] = res.rows || [];
+    result[name] = res.data || [];
   }
-  return corsResponse({ success: true, content: result });
+  
+  var response = { success: true, content: result };
+  // Cache for 5 minutes
+  cache.put('cms_all_content', JSON.stringify(response), 300);
+  
+  return corsResponse(response);
 }
 
 // ── Write ─────────────────────────────────────────────────────
@@ -154,6 +183,9 @@ function saveRow(sheetName, rowData, rowIndex) {
   // +2 because row 1 = headers, rowIndex is 0-based
   var sheetRow = rowIndex + 2;
   sheet.getRange(sheetRow, 1, 1, values.length).setValues([values]);
+
+  // Invalidate cache after write
+  CacheService.getScriptCache().remove('cms_all_content');
 
   return corsResponse({ success: true, message: 'Row saved' });
 }
@@ -176,6 +208,10 @@ function deleteRow(sheetName, rowIndex) {
   var sheet    = getOrCreateSheet(sheetName);
   var sheetRow = rowIndex + 2; // +2: header row + 0-based index
   sheet.deleteRow(sheetRow);
+
+  // Invalidate cache after write
+  CacheService.getScriptCache().remove('cms_all_content');
+
   return corsResponse({ success: true, message: 'Row deleted' });
 }
 
@@ -190,13 +226,20 @@ function saveSheet(sheetName, rows) {
     sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).clearContent();
   }
 
-  // Write new rows
-  for (var i = 0; i < rows.length; i++) {
-    var values = headers.map(function(h) {
-      return rows[i][h] !== undefined ? rows[i][h] : '';
-    });
-    sheet.getRange(i + 2, 1, 1, values.length).setValues([values]);
+  // Batch write all rows at once (much faster than individual setValues)
+  if (rows.length > 0) {
+    var values = [];
+    for (var i = 0; i < rows.length; i++) {
+      var rowValues = headers.map(function(h) {
+        return rows[i][h] !== undefined ? rows[i][h] : '';
+      });
+      values.push(rowValues);
+    }
+    sheet.getRange(2, 1, values.length, headers.length).setValues(values);
   }
+
+  // Invalidate cache after write
+  CacheService.getScriptCache().remove('cms_all_content');
 
   return corsResponse({ success: true, message: 'Sheet saved with ' + rows.length + ' rows' });
 }
@@ -221,7 +264,15 @@ function initAllSheets() {
     'LogoConfig': ['type', 'src', 'alt', 'width', 'height', 'order'],
     'Journey':    ['id', 'year', 'title', 'description'],
     'ClientLogos': ['id', 'name', 'logo'],
-    'Testimonials': ['id', 'quote', 'author', 'company', 'role']
+    'Testimonials': ['id', 'quote', 'author', 'company', 'role'],
+    // New sheets for full CMS coverage
+    'HomeServices': ['id', 'iconImage', 'title', 'description', 'gradient'],
+    'HomeStats': ['page', 'label', 'value', 'icon'],
+    'HomeHero': ['badgeText', 'headline', 'subheadline', 'ctaPrimaryText', 'ctaPrimaryLink', 'ctaSecondaryText', 'ctaSecondaryLink'],
+    'AboutHero': ['badgeText', 'headline', 'intro'],
+    'AboutMissionVision': ['mission', 'vision'],
+    'AboutValues': ['icon', 'title', 'description'],
+    'AchievementsHighlights': ['icon', 'title', 'description']
   };
 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
