@@ -2,7 +2,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { ScrollToTopButton } from "../ScrollToTopButton";
 import { Breadcrumbs } from "../Breadcrumbs";
-import { SimpleChatbot } from "../SimpleChatbot";
+// import { SimpleChatbot } from "../SimpleChatbot";
 
 export const Layout = ({ children }) => {
   return (
@@ -15,7 +15,7 @@ export const Layout = ({ children }) => {
         </main>
       </div>
       <Footer />
-      <SimpleChatbot />
+      {/* <SimpleChatbot /> */}
       <ScrollToTopButton />
     </div>
   );

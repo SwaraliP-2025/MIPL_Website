@@ -22,3 +22,51 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables and sensitive files
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# API Keys and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+credentials.json
+service-account-key.json
+google-apps-scripts/
+
+# Build and deployment files
+build/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive configuration
+config/secrets.js
+config/credentials.js
+.kiro/settings/mcp.json
+
+# Hostinger upload files (contains sensitive paths)
+hostinger-upload/
+
+# CTB Feedback Page (contains sensitive images and configs)
+CTB\ Feedback\ Page/
+
+# Lock files (optional - uncomment if you want to exclude)
+# bun.lockb
+# package-lock.json
