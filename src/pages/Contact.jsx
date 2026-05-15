@@ -283,18 +283,24 @@ const Contact = () => {
               <div className="mt-8">
                 <h3 className="font-semibold mb-4">Our Headquarter at Thane</h3>
                 <h6 className="text-sm text-muted-foreground mb-4">708/B, Lodha Supremus, Kolshet Road, Thane -4000607.</h6>
-                <div className="aspect-video rounded-xl overflow-hidden glass-card">
+                <a 
+                  href="https://www.google.com/maps/place/Lodha+Supremus,+Thane/@19.236275,72.986007,17z" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block aspect-video rounded-xl overflow-hidden glass-card cursor-pointer hover:opacity-90 transition-opacity"
+                  title="Open in Google Maps"
+                >
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1434.7196072455104!2d72.98600659169911!3d19.236275053074987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7bbb093af5bb5%3A0x3eb081913331e6bf!2sLodha%20Supremus!5e1!3m2!1sen!2sin!4v1769423226727!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
-                    style={{ border: 0 }}
+                    style={{ border: 0, pointerEvents: 'none' }}
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="MIPL Headquarter - 708/B, Lodha Supremus, Kolshet Road, Thane"
                   ></iframe>
-                </div>
+                </a>
               </div>
             </motion.div>
           </div>

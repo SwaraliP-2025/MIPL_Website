@@ -29,7 +29,25 @@ const defaultHighlights = [
   },
 ];
 
-const iconOptions = ["Trophy", "Star", "Target", "CheckCircle", "Award", "Shield", "Users", "Globe", "TrendingUp", "Zap", "CheckCircle2", "BarChart3"];
+const iconOptions = [
+  'Trophy', 'Star', 'Target', 'CheckCircle', 'Award', 'Shield', 'Users', 'Globe',
+  'TrendingUp', 'Zap', 'CheckCircle2', 'BarChart3', 'Search', 'Briefcase', 'Heart',
+  'Rocket', 'Lock', 'Eye', 'Layers', 'Network', 'Cpu', 'Database', 'Cloud', 'Code',
+  'Settings', 'Gauge', 'Lightbulb', 'Compass', 'Map', 'Navigation', 'AlertCircle',
+  'CheckSquare', 'Wifi', 'Radio', 'Smartphone', 'Monitor', 'Headphones', 'Volume2',
+  'Music', 'Camera', 'Video', 'Image', 'FileText', 'Download', 'Upload', 'Share2',
+  'Link', 'ExternalLink', 'Copy', 'Trash2', 'Edit', 'Plus', 'Minus', 'X', 'Check',
+  'ChevronRight', 'ChevronDown', 'Menu', 'Home', 'Building2', 'Factory', 'Landmark',
+  'CreditCard', 'DollarSign', 'TrendingDown', 'PieChart', 'LineChart', 'AreaChart',
+  'BarChart', 'Activity', 'AlertTriangle', 'Info', 'HelpCircle', 'MessageSquare',
+  'Mail', 'Phone', 'MapPin', 'Clock', 'Calendar', 'Clock3', 'Watch', 'Timer',
+  'Hourglass', 'Battery', 'Power', 'Sun', 'Moon', 'CloudRain', 'Wind', 'Droplets',
+  'Thermometer', 'Umbrella', 'Coffee', 'Beer', 'Wine', 'Utensils', 'Truck', 'Car',
+  'Plane', 'Ship', 'Anchor', 'Flag', 'Bookmark', 'Tag', 'Tags', 'Package', 'Gift',
+  'Inbox', 'Send', 'Archive', 'Trash', 'XCircle', 'Smile', 'Frown', 'Meh', 'Thumbs',
+  'Hand', 'Handshake', 'Finger', 'Fist', 'Wand2', 'Sparkles', 'Flame', 'Droplet',
+  'Leaf', 'Flower', 'Feather'
+];
 
 const AchievementsHighlightsSection = () => {
   const [highlights, setHighlights] = useState(defaultHighlights);

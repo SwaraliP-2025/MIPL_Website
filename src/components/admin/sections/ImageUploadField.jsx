@@ -56,7 +56,7 @@ const ImageUploadField = ({ label = "Image", value = "", onChange, hint }) => {
             <span className="text-sm">Uploading to Hostinger...</span>
           </div>
         ) : preview ? (
-          <img src={preview} alt="preview" className="w-full h-full object-cover" />
+          <img src={preview} alt="preview" className="w-full h-full object-contain" />
         ) : (
           <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <Upload className="h-7 w-7" />

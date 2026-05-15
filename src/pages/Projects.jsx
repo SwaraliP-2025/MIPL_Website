@@ -807,13 +807,12 @@ const Projects = () => {
                   onClick={() => setSelectedProject(project)}
                 >
                   <div className="glass-card overflow-hidden">
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-48 overflow-hidden bg-white/5">
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                       <div className="absolute bottom-4 left-4">
                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
                           {categories.find(c => c.id === project.category)?.label}
@@ -827,10 +826,7 @@ const Projects = () => {
                       <p className="text-sm text-muted-foreground mb-4">
                         {project.client}
                       </p>
-                      <div className="flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                        View Case Study
-                        <ArrowUpRight className="w-4 h-4 ml-1" />
-                      </div>
+  
                     </div>
                   </div>
                 </motion.div>
@@ -848,7 +844,7 @@ const Projects = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -857,13 +853,12 @@ const Projects = () => {
               onClick={(e) => e.stopPropagation()}
               className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2"
             >
-              <div className="relative h-64">
+              <div className="relative h-64 bg-white/5">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
               </div>
               <div className="p-8">
                 <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">

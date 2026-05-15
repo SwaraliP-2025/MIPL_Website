@@ -151,17 +151,17 @@ const Gallery = () => {
                   onClick={() => setSelectedImage(item)}
                 >
                   {/* Image */}
-                  <div className="aspect-[4/3] relative overflow-hidden">
+                  <div className="aspect-[4/3] relative overflow-hidden bg-white/5 flex items-center justify-center">
                     <img 
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextElementSibling.style.display = 'flex';
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-600/20 items-center justify-center hidden">
+                    <div className="absolute inset-0 bg-white/5 items-center justify-center hidden">
                       {item.category === "Awards" && <Award className="w-16 h-16 text-primary/40" />}
                       {item.category === "Events" && <Calendar className="w-16 h-16 text-primary/40" />}
                       {item.category === "Team" && <Users className="w-16 h-16 text-primary/40" />}
@@ -214,11 +214,11 @@ const Gallery = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="w-full max-w-2xl mx-4"
+              className="w-full max-w-4xl mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Image */}
-              <div className="max-h-[70vh] rounded-lg overflow-hidden">
+              <div className="max-h-[70vh] rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
                 <img 
                   src={selectedImage.image}
                   alt={selectedImage.title}
@@ -228,7 +228,7 @@ const Gallery = () => {
                     e.target.nextElementSibling.style.display = 'flex';
                   }}
                 />
-                <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-blue-600/20 rounded-lg items-center justify-center hidden">
+                <div className="aspect-[4/3] bg-white/5 rounded-lg items-center justify-center hidden">
                   {selectedImage.category === "Awards" && <Award className="w-32 h-32 text-primary/40" />}
                   {selectedImage.category === "Events" && <Calendar className="w-32 h-32 text-primary/40" />}
                   {selectedImage.category === "Team" && <Users className="w-32 h-32 text-primary/40" />}

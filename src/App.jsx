@@ -25,6 +25,7 @@ import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -56,21 +57,41 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <SkipToContent />
-          <ScrollToTop />
-          {/* <Chatbot /> */}
-          <AnimatedRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
-);
+const App = () => {
+  useEffect(() => {
+    // FORCE ENGLISH - Run on every render
+    localStorage.clear();
+    localStorage.setItem("preferredLanguage", "en");
+    
+    // Clear hash
+    if (window.location.hash) {
+      window.location.hash = "";
+    }
+    
+    // Set HTML lang attribute
+    document.documentElement.lang = "en";
+    
+    // Remove any Google Translate elements
+    const gtElements = document.querySelectorAll('[class*="goog-te"], [id*="goog-gt"], .skiptranslate');
+    gtElements.forEach(el => el.remove());
+  }, []);
+
+  return (
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <SkipToContent />
+            <ScrollToTop />
+            {/* <Chatbot /> */}
+            <AnimatedRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
+};
 
 export default App;

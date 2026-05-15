@@ -19,6 +19,16 @@
     <!-- Accessibility Meta Tags -->
     <meta name="theme-color" content="#0d47a1" />
     <meta name="color-scheme" content="light dark" />
+
+    <script>
+      // FORCE ENGLISH - Run before anything else loads
+      (function() {
+        localStorage.clear();
+        localStorage.setItem("preferredLanguage", "en");
+        window.location.hash = "";
+        document.documentElement.lang = "en";
+      })();
+    </script>
   </head>
 
   <body>

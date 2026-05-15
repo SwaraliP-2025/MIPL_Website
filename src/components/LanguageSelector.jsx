@@ -109,40 +109,19 @@ export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
 
   useEffect(() => {
-    // Only run once on mount
-    const savedLang = localStorage.getItem("preferredLanguage") || "en";
-    setCurrentLang(savedLang);
+    // FORCE ENGLISH ONLY - Clear all language settings
+    localStorage.clear();
+    localStorage.setItem("preferredLanguage", "en");
+    setCurrentLang("en");
+    
+    // Clear the hash completely
+    window.location.hash = "";
+    
+    // Remove any Google Translate elements that might exist
+    const gtElements = document.querySelectorAll('[class*="goog-te"], [id*="goog-gt"], .skiptranslate, .goog-te-banner-frame');
+    gtElements.forEach(el => el.remove());
 
-    // Initialize Google Translate only once
-    if (!googleTranslateInitialized && !window.google?.translate) {
-      googleTranslateInitialized = true;
-      
-      const script = document.createElement("script");
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      script.onerror = () => {
-        console.warn("Google Translate failed to load");
-      };
-      document.body.appendChild(script);
-
-      window.googleTranslateElementInit = () => {
-        try {
-          new window.google.translate.TranslateElement(
-            {
-              pageLanguage: "en",
-              includedLanguages: languages.map(l => l.code).join(","),
-              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-              autoDisplay: false,
-            },
-            "google_translate_element_hidden"
-          );
-        } catch (err) {
-          console.warn("Google Translate init failed:", err);
-        }
-      };
-    }
-
-    // Hide Google Translate UI
+    // Hide Google Translate UI with aggressive CSS
     const style = document.createElement("style");
     style.innerHTML = `
       #google_translate_element_hidden { display: none !important; }
@@ -153,6 +132,8 @@ export const LanguageSelector = () => {
       body > .skiptranslate { display: none !important; }
       [class^="goog-te"] { display: none !important; }
       [id^="goog-gt-"] { display: none !important; }
+      .goog-te-combo { display: none !important; }
+      .goog-te-gadget-simple { display: none !important; }
     `;
     document.head.appendChild(style);
 
@@ -162,19 +143,11 @@ export const LanguageSelector = () => {
   }, []); // Empty dependency array - run only once
 
   const changeLanguage = (langCode) => {
-    localStorage.setItem("preferredLanguage", langCode);
-    setCurrentLang(langCode);
-
-    if (langCode === "en") {
-      window.location.hash = "";
-    } else {
-      window.location.hash = `googtrans(en|${langCode})`;
+    // For now, just keep it in English
+    if (langCode !== "en") {
+      alert("Language switching is temporarily disabled. Website is in English only.");
+      return;
     }
-
-    // Reload after a short delay
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
   };
 
   const getCurrentLanguageName = () => {
