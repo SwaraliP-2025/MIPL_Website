@@ -58,8 +58,8 @@ const Login = () => {
         });
         
         setTimeout(() => {
-          // Use assign instead of href to preserve history
-          window.location.assign('/Project Dashboard/index.html');
+          // Redirect to Project Dashboard - works on both local and Netlify
+          window.location.href = window.location.origin + '/Project%20Dashboard/index.html';
         }, 1000);
       } else {
         toast({
