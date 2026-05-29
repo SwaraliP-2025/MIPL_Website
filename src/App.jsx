@@ -1,14 +1,15 @@
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
-// import { Chatbot } from "@/components/Chatbot";
 import { PageTransition } from "@/components/PageTransition";
+import { NavProvider } from "@/context/NavContext";
+import { useEffect } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index.jsx";
 import About from "./pages/About.jsx";
 import Services from "./pages/Services.jsx";
@@ -25,7 +26,7 @@ import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
-import { useEffect } from "react";
+import Article from "./pages/Article.jsx";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const AnimatedRoutes = () => {
         <Route path="login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="admin" element={<AdminLogin />} />
         <Route path="admin/dashboard" element={<AdminDashboard />} />
+        <Route path="article/:id" element={<PageTransition><Article /></PageTransition>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
@@ -59,8 +61,7 @@ const AnimatedRoutes = () => {
 
 const App = () => {
   useEffect(() => {
-    // FORCE ENGLISH - Run on every render
-    localStorage.clear();
+    // FORCE ENGLISH - Don't clear localStorage!
     localStorage.setItem("preferredLanguage", "en");
     
     // Clear hash
@@ -74,23 +75,33 @@ const App = () => {
     // Remove any Google Translate elements
     const gtElements = document.querySelectorAll('[class*="goog-te"], [id*="goog-gt"], .skiptranslate');
     gtElements.forEach(el => el.remove());
+    
+    // Force blue/orange theme (no dark/light switching)
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
   }, []);
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <SkipToContent />
-            <ScrollToTop />
-            {/* <Chatbot /> */}
-            <AnimatedRoutes />
-          </BrowserRouter>
+          <NavProvider>
+            <Toaster />
+            <SonnerToaster />
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <SkipToContent />
+              <ScrollToTop />
+              <Helmet>
+                <title>MIPL | Securing India's Critical Infrastructure</title>
+                <meta name="description" content="MIPL provides 25+ years of expertise in Safe Cities, Smart Governance, ICCC Command & Control, and Enterprise Infrastructure Security solutions across India." />
+                <meta name="keywords" content="MIPL, security solutions, safe cities, smart governance, ICCC, command and control, enterprise infrastructure security" />
+              </Helmet>
+              <AnimatedRoutes />
+            </BrowserRouter>
+          </NavProvider>
         </TooltipProvider>
       </QueryClientProvider>
-    </ThemeProvider>
+    </HelmetProvider>
   );
 };
 

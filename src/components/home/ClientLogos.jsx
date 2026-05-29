@@ -16,8 +16,7 @@ export const ClientLogos = () => {
   ]);
 
   return (
-    <section className="py-16 bg-card/30 relative overflow-hidden">
-      <div className="absolute inset-0 animated-grid opacity-10" />
+    <section className="py-16 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -25,10 +24,10 @@ export const ClientLogos = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">
             Trusted by Leading Organizations
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-slate-600 max-w-2xl mx-auto">
             We've partnered with government agencies, Fortune 500 companies, and industry leaders 
             to deliver world-class security solutions across India
           </p>
@@ -43,17 +42,19 @@ export const ClientLogos = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-white dark:bg-white hover:bg-white/90 dark:hover:bg-white/90 transition-all group"
+              className="flex flex-col items-center justify-center p-6 rounded-xl bg-slate-50 border border-gray-200 hover:border-[#E9863C]/50 transition-all group"
             >
-              <img
-                src={client.logo}
-                alt={`${client.name} logo`}
-                className="h-16 md:h-20 w-auto object-contain transition-all opacity-90 group-hover:opacity-100 group-hover:scale-110 mb-3"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-              <p className="text-xs text-center text-muted-foreground font-medium">
+              <div className="w-full h-20 md:h-24 mb-3 flex items-center justify-center bg-white rounded-lg p-3 border border-gray-200">
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-w-full max-h-full object-contain transition-opacity opacity-90 group-hover:opacity-100"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+              <p className="text-xs text-center text-slate-900 font-medium">
                 {client.name}
               </p>
             </motion.div>
@@ -67,7 +68,7 @@ export const ClientLogos = () => {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-slate-600">
             Serving 50+ clients across government, energy, banking, and industrial sectors
           </p>
         </motion.div>

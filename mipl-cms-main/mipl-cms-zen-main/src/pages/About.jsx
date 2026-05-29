@@ -290,7 +290,7 @@ const About = () => {
 He has nearly more than two decades of experience as a consultant in information technology and security management. <br />
 As a security consultant, Prasad actively advocates “appropriateness” of technology usage and believes in the value of detailed risk assessment. He has been involved in several large security implementations in cities & industrial premises. He has been invited to several national and international conferences to speak on issues concerning the security industry in India and solutions for the same.<br />
 Prasad completed his mechanical engineering from the College of Engineering, Pune in 1992 and then received an MBA from the prestigious IIM Bangalore in 1994.<br />
-Prasad is the founder Chairman of SECONA, the Security Consultants’ Association, a non-profit association of security consultants formed to work in the field of training, certification, standardisation & guidelines for security technologies. Prasad is also the founder Trustee of Aatman Educational Society, a non-profit trust that manages Aatman Academy, an inclusive school for children with learning differences & disabilities.
+Prasad is the founder Chairman of SECONA, the Security Consultants’ Association, the first association in India creating a unique collaboration platform for independent security consultants. SECONA has also launched a|s|t|r|a, the Academy of Security Technology Training Research and Application. Prasad is also the founder Trustee of Aatman Educational Society, a non-profit trust that manages Aatman Academy, an inclusive school for children with learning differences & disabilities.
               </p>
               
               

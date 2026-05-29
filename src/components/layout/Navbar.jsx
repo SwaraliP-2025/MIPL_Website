@@ -1,137 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageSelector } from "@/components/LanguageSelector";
 import { useCmsConfig } from "@/hooks/useCmsConfig";
+import { useNavLinks } from "@/context/NavContext";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState(null);
-  const dropdownTimeoutRef = useRef(null);
   const location = useLocation();
   const { config: cmsConfig, loading } = useCmsConfig();
-
-  // const clearDropdownTimeout = () => {
-  //   if (dropdownTimeoutRef.current) {
-  //     clearTimeout(dropdownTimeoutRef.current);
-  //     dropdownTimeoutRef.current = null;
-  //   }
-  // };
-
-  // const handleDropdownMouseEnter = (name) => {
-  //   clearDropdownTimeout();
-  //   setOpenDropdown(name);
-  // };
-
-  // const handleDropdownMouseLeave = () => {
-  //   clearDropdownTimeout();
-  //   dropdownTimeoutRef.current = setTimeout(() => {
-  //     setOpenDropdown(null);
-  //   }, 800); // Delay before closing
-  // };
-
-  // useEffect(() => {
-  //   return () => clearDropdownTimeout();
-  // }, []);
-
-  // Don't close dropdown on route change - let user control it
-  // This was causing the dropdown to disappear after navigation
-
-  // Build nav links from CMS config or use defaults
-  const defaultLinks = [
-    { name: "Home", href: "/" },
-    { 
-      name: "About", 
-      href: "/about", 
-      dropdown: [
-        { name: "About MIPL", href: "/about" },
-        { name: "Our Achievements", href: "/achievements" },
-        { name: "Our Publications", href: "/publications" },
-        { name: "Our Social Contribution", href: "/social-activities" },
-        { name: "Gallery", href: "/gallery" },
-      ]
-    },
-    { name: "Services", href: "/services" },
-    { name: "Our Clients", href: "/projects" },
-    { name: "Careers", href: "/careers" },
-    { name: "Contact", href: "/contact" },
-    { name: "CSN Digital Coffee Table Book", href: "/coffee-table-book" },
-  ];
-
-  // const navLinks = loading ? defaultLinks
-  //   : (cmsConfig?.navbar && Array.isArray(cmsConfig.navbar) && cmsConfig.navbar.length > 0
-  //       ? cmsConfig.navbar.map(item => ({
-  //           name: item.name,
-  //           href: item.href,
-  //           dropdown: item.dropdown_items
-  //             ? item.dropdown_items.split(',').map(d => {
-  //                 const [name, href] = d.split('|');
-  //                 return { name: name?.trim() || '', href: href?.trim() || '' };
-  //               }).filter(d => d.name && d.href)
-  //             : undefined,
-  //         }))
-  //       : defaultLinks
-  //     );
-
-  const navLinks =
-  cmsConfig?.navbar &&
-  Array.isArray(cmsConfig.navbar) &&
-  cmsConfig.navbar.length > 0
-    ? cmsConfig.navbar.map((item) => {
-        let parsedDropdown = [];
-
-        // SAFELY PARSE DROPDOWN
-        if (
-          typeof item.dropdown_items === "string" &&
-          item.dropdown_items.trim() !== ""
-        ) {
-          parsedDropdown = item.dropdown_items
-            .split(",")
-            .map((d) => {
-              const [name, href] = d.split("|");
-
-              return {
-                name: name?.trim() || "",
-                href: href?.trim() || "",
-              };
-            })
-            .filter((d) => d.name && d.href);
-        }
-
-        // FORCE ABOUT DROPDOWN IF CMS FAILS
-        if (
-          item.name === "About" &&
-          parsedDropdown.length === 0
-        ) {
-          parsedDropdown = [
-            { name: "About MIPL", href: "/about" },
-            { name: "Our Achievements", href: "/achievements" },
-            { name: "Our Publications", href: "/publications" },
-            { name: "Our Social Contribution", href: "/social-activities" },
-            { name: "Gallery", href: "/gallery" },
-          ];
-        }
-
-        return {
-          name: item.name,
-          href: item.href,
-          dropdown:
-            parsedDropdown.length > 0
-              ? parsedDropdown
-              : undefined,
-        };
-      })
-    : defaultLinks;
+  const { navLinks } = useNavLinks();
 
   // Get logo from CMS config
   const logoConfig = loading
-    ? { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 }
-    : (cmsConfig?.logos?.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 56, height: 56 });
+    ? { src: '/logo.png', alt: 'MIPL Logo', width: 80, height: 80 }
+    : (cmsConfig?.logos?.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 80, height: 80 });
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -139,19 +25,11 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // // Close mobile menu on route change, but keep desktop dropdown open
-  // useEffect(() => {
-  //   setIsMobileMenuOpen(false);
-  //   setMobileOpenDropdown(null);
-  //   // IMPORTANT: Do NOT close openDropdown - it should persist across navigation
-  //   // Clear any pending timeouts to prevent dropdown from closing unexpectedly
-  //   clearDropdownTimeout();
-  // }, [location.pathname]);
   useEffect(() => {
-  setIsMobileMenuOpen(false);
-  setMobileOpenDropdown(null);
-  setOpenDropdown(null);
-}, [location.pathname]);
+    setIsMobileMenuOpen(false);
+    setMobileOpenDropdown(null);
+    setOpenDropdown(null);
+  }, [location.pathname]);
 
   const isActiveLink = (link) => {
     if (link.dropdown && link.dropdown.length > 0) {
@@ -161,45 +39,42 @@ export const Navbar = () => {
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+    <header
       className={`fixed top-0 left-0 right-0 z-[9998] transition-all duration-300 ${
-        isScrolled ? "glass shadow-lg" : "bg-transparent"
+        isScrolled 
+          ? "bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20" 
+          : "bg-white"
       }`}
       role="banner"
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <nav className="flex items-center justify-between h-16 md:h-18" role="navigation" aria-label="Main navigation">
+        <nav className="flex items-center justify-between h-16 md:h-20" role="navigation" aria-label="Main navigation">
           {/* Logo */}
-          <Link to="/" className="flex items-center group" aria-label="MIPL Home">
-            <div className="dark:bg-white dark:px-1.5 dark:py-0.5 dark:rounded transition-colors">
+          <Link to="/" className="flex items-center justify-center !bg-transparent" aria-label="MIPL Home">
+            <div className="flex items-center justify-center !bg-transparent">
               <img
                 src={logoConfig.src}
                 alt={logoConfig.alt || 'MIPL Logo'}
-                style={{ width: parseInt(logoConfig.width) || 56, height: parseInt(logoConfig.height) || 56 }}
-                className="transition-all duration-300 group-hover:scale-105"
+                style={{ width: parseInt(logoConfig.width) || 80, height: parseInt(logoConfig.height) || 80 }}
+                className="!bg-transparent"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5" role="menubar">
+          <div className="hidden lg:flex items-center gap-1 notranslate" translate="no" role="menubar">
             {navLinks.map((link) => (
               <div
                 key={link.name}
-                className="relative"
-                // onMouseEnter={() => link.dropdown && link.dropdown.length > 0 && handleDropdownMouseEnter(link.name)}
-                // onMouseLeave={() => link.dropdown && link.dropdown.length > 0 && handleDropdownMouseLeave()}
+                className="relative group"
                 onMouseEnter={() => {
-  if (link.dropdown && link.dropdown.length > 0) {
-    setOpenDropdown(link.name);
-  }
-}}
-onMouseLeave={() => {
-  setOpenDropdown(null);
-}}
+                  if (link.dropdown && link.dropdown.length > 0) {
+                    setOpenDropdown(link.name);
+                  }
+                }}
+                onMouseLeave={() => {
+                  setOpenDropdown(null);
+                }}
               >
                 {link.dropdown && link.dropdown.length > 0 ? (
                   <>
@@ -209,56 +84,49 @@ onMouseLeave={() => {
                       role="menuitem"
                       aria-haspopup="true"
                       aria-expanded={openDropdown === link.name}
-                      className={`flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                      className={`flex items-center gap-1 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 whitespace-nowrap ${
                         isActiveLink(link)
-                          ? "text-primary bg-primary/10"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          ? "text-[#E9863C] bg-[#E9863C]/10"
+                          : "text-gray-700 hover:text-[#244884] hover:bg-gray-100"
                       }`}
                     >
                       {link.name}
                       <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`} />
                     </Link>
 
-                    <AnimatePresence>
-                      {openDropdown === link.name && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute top-full left-0 w-56 z-[9999]"
-                          role="menu"
-                        >
-                          {/* Invisible bridge to prevent dropdown from closing */}
-                          {/* <div className="h-2 w-full" /> */}
-                          <div className="glass-card shadow-xl border border-border rounded-xl overflow-hidden">
-                            {link.dropdown.map((item) => (
-                              <Link
-                                key={item.href}
-                                to={item.href}
-                                role="menuitem"
-                                className={`block px-4 py-3 text-sm hover:bg-muted transition-colors cursor-pointer ${
-                                  location.pathname === item.href
-                                    ? "text-primary bg-primary/10 font-medium"
-                                    : "text-foreground"
-                                }`}
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {openDropdown === link.name && (
+                      <div
+                        className="absolute top-full left-0 w-56 z-[9999] notranslate"
+                        translate="no"
+                        role="menu"
+                      >
+                        <div className="shadow-lg border border-gray-200 rounded-xl overflow-hidden mt-2 bg-white">
+                          {link.dropdown.map((item) => (
+                            <Link
+                              key={item.href}
+                              to={item.href}
+                              role="menuitem"
+                              className={`block px-4 py-3 text-sm hover:bg-gray-100 transition-colors cursor-pointer ${
+                                location.pathname === item.href
+                                  ? "text-[#E9863C] bg-[#E9863C]/10 font-medium"
+                                  : "text-gray-700 hover:text-[#244884]"
+                              }`}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <Link
                     to={link.href}
                     role="menuitem"
-                    className={`px-2.5 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    className={`px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 whitespace-nowrap ${
                       location.pathname === link.href
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        ? "text-[#E9863C] bg-[#E9863C]/10"
+                        : "text-gray-700 hover:text-[#244884] hover:bg-gray-100"
                     }`}
                     aria-current={location.pathname === link.href ? 'page' : undefined}
                   >
@@ -269,32 +137,22 @@ onMouseLeave={() => {
             ))}
           </div>
 
-          {/* Right side: Language + Theme Toggle + CTA + User Icon */}
-          <div className="hidden lg:flex items-center gap-2">
-            <LanguageSelector />
-            <ThemeToggle />
-            <Button
-              asChild
-              className="bg-primary hover:bg-blue-600 text-primary-foreground font-semibold px-4 py-2 text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
-            >
-              <Link to="/contact">Book Consultation</Link>
-            </Button>
+          {/* Right side: User Icon */}
+          <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/login"
-              className="w-10 h-10 rounded-full hover:bg-primary/10 transition-colors flex items-center justify-center"
+              className="w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors flex items-center justify-center"
               aria-label="Login"
             >
-              <User className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
+              <User className="w-5 h-5 text-gray-600 hover:text-[#E9863C] transition-colors" />
             </Link>
           </div>
 
-          {/* Mobile: Language + Theme Toggle + Menu Button */}
+          {/* Mobile: Menu Button */}
           <div className="lg:hidden flex items-center gap-2">
-            <LanguageSelector />
-            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-foreground hover:text-primary transition-colors"
+              className="p-2 text-gray-700 hover:text-[#E9863C] transition-colors"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -306,107 +164,88 @@ onMouseLeave={() => {
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden glass border-t border-border"
-            role="menu"
-          >
-            <div className="container mx-auto px-4 py-6 space-y-2">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  {link.dropdown && link.dropdown.length > 0 ? (
-                    <div>
-                      <button
-                        onClick={() => setMobileOpenDropdown(mobileOpenDropdown === link.name ? null : link.name)}
-                        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all ${
-                          isActiveLink(link)
-                            ? "text-primary bg-primary/10"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        }`}
-                      >
-                        {link.name}
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileOpenDropdown === link.name ? 'rotate-180' : ''}`} />
-                      </button>
-                      <AnimatePresence>
-                        {mobileOpenDropdown === link.name && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="ml-4 mt-2 space-y-1 overflow-hidden"
-                          >
-                            {link.dropdown.map((item) => (
-                              <Link
-                                key={item.href}
-                                to={item.href}
-                                onClick={() => {
-                                  setMobileOpenDropdown(null);
-                                  setIsMobileMenuOpen(false);
-                                }}
-                                className={`block px-4 py-2 rounded-lg text-sm transition-all ${
-                                  location.pathname === item.href
-                                    ? "text-primary bg-primary/10 font-medium"
-                                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                                }`}
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ) : (
-                    <Link
-                      to={link.href}
-                      role="menuitem"
-                      className={`block px-4 py-3 rounded-lg font-medium transition-all ${
-                        location.pathname === link.href
-                          ? "text-primary bg-primary/10"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+      {isMobileMenuOpen && (
+        <div
+          id="mobile-menu"
+          className="lg:hidden border-t border-gray-200 bg-white notranslate"
+          translate="no"
+          role="menu"
+        >
+          <div className="container mx-auto px-4 py-6 space-y-2">
+            {navLinks.map((link) => (
+              <div key={link.name}>
+                {link.dropdown && link.dropdown.length > 0 ? (
+                  <div>
+                    <button
+                      onClick={() => setMobileOpenDropdown(mobileOpenDropdown === link.name ? null : link.name)}
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all ${
+                        isActiveLink(link)
+                          ? "text-[#E9863C] bg-[#E9863C]/10"
+                          : "text-gray-700 hover:text-[#244884] hover:bg-gray-100"
                       }`}
-                      aria-current={location.pathname === link.href ? 'page' : undefined}
                     >
                       {link.name}
-                    </Link>
-                  )}
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="pt-4 space-y-2"
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileOpenDropdown === link.name ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileOpenDropdown === link.name && (
+                      <div
+                        className="ml-4 mt-2 space-y-1 notranslate"
+                        translate="no"
+                      >
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.href}
+                            to={item.href}
+                            onClick={() => {
+                              setMobileOpenDropdown(null);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className={`block px-4 py-2 rounded-lg text-sm transition-all ${
+                              location.pathname === item.href
+                                ? "text-[#E9863C] bg-[#E9863C]/10 font-medium"
+                                : "text-gray-600 hover:text-[#244884] hover:bg-gray-100"
+                            }`}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to={link.href}
+                    role="menuitem"
+                    className={`block px-4 py-3 rounded-lg font-medium transition-all ${
+                      location.pathname === link.href
+                        ? "text-[#E9863C] bg-[#E9863C]/10"
+                        : "text-gray-700 hover:text-[#244884] hover:bg-gray-100"
+                    }`}
+                    aria-current={location.pathname === link.href ? 'page' : undefined}
+                  >
+                    {link.name}
+                  </Link>
+                )}
+              </div>
+            ))}
+            <div className="pt-4 space-y-2 border-t border-gray-200 notranslate" translate="no">
+              <Button
+                asChild
+                className="w-full bg-[#E9863C] hover:bg-[#d67734] text-white font-semibold transition-colors"
               >
-                <Button
-                  asChild
-                  className="w-full bg-primary hover:bg-blue-600 text-primary-foreground font-semibold"
-                >
-                  <Link to="/contact">Book a Consultation</Link>
-                </Button>
-                <Link
-                  to="/login"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
-                >
-                  <User className="w-5 h-5" />
-                  <span>Login</span>
-                </Link>
-              </motion.div>
+                <Link to="/contact">Contact Us</Link>
+              </Button>
+              <Link
+                to="/login"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium text-gray-700 hover:text-[#244884] hover:bg-gray-100 transition-all"
+              >
+                <User className="w-5 h-5" />
+                <span>Login</span>
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };

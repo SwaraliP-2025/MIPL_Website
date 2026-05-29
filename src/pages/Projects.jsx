@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { ArrowUpRight, Building2, Landmark, Factory, CreditCard } from "lucide-react";
 
 const categories = [
@@ -662,20 +661,18 @@ const Projects = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
             <span className="text-primary font-medium mb-4 block">Our Work</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
               Our Clients
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-slate-600">
               MIPL can design and deliver security projects in a wide variety of domains including 
               safe cities, shopping malls, commercial establishments, petroleum establishments, ports, 
               airports and industrial environments. Each of these segments needs a unique approach to 
@@ -686,90 +683,11 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Industry Domains */}
-      <section className="py-24 relative overflow-hidden bg-card/30">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Industries We Serve
-            </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              We serve a variety of businesses & industries with tailored security solutions
-            </p>
-          </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                iconImage: "pet.png",  
-                title: "Petroleum Establishments",
-                description: "Oil & gas refineries, pipelines, distribution terminals and retail outlets have long been under the radar of miscreants as high visibility targets. The MIPL team has been involved with some of the most innovative security projects in this sector, which have tackled security threats in some of the most volatile environments in the world.",
-              },
-              {
-                iconImage: "smartsafecity.png",  
-                title: "Smart and Safe City Projects",
-                description: "Safe City projects are a culmination of integrated security design that is based on several security technologies such as video surveillance & analytics, traffic management, emergency response, vehicle tracking and command & control. MIPL can work with city councils to design and implement Safe City Projects that are take into consideration local risks and security needs.",
-              },
-              {
-                iconImage: "bankatm.png", 
-                title: "Banks & ATMs",
-                description: "Incidents of theft and robberies at Banks and ATMs are on the rise – resulting in grievous injuries to the victims. MIPL can provide uniquely tailored security solutions that are able to offer real-time and actionable analytics for efficient and speedy incident response. ATMs are vulnerable and need to be protected through application of security technology, complemented by manpower.",
-              },
-              {
-                iconImage: "large.png",  
-                title: "Large Premises",
-                description: "Large premises such as courts, educational institutes, government buildings and commercial parks are areas of mass congregations and for the very reason, become attractive targets for miscreants and anti-social elements. Security has to be built into design in such places since it should be not only effective but also unobtrusive. MIPL can work out solutions that are sustainable and yet do not compromise the aesthetics of shopping malls.",
-              },
-              {
-                iconImage: "naval.png",  
-                title: "Naval Ports",
-                description: "Critical infrastructure such as ports and airports are national symbols of enterprise and innovation. Not only are they high value, an act of destruction in such places can have disastrous consequences for the national economy. Hence, security considerations in such important locations play a major role in attracting traffic and tourism.",
-              },
-              {
-                iconImage: "air.png",  
-                title: "Airports",
-                description: "Critical infrastructure such as ports and airports are national symbols of enterprise and innovation. Not only are they high value, an act of destruction in such places can have disastrous consequences for the national economy. Hence, security considerations in such important locations play a major role in attracting traffic and tourism.",
-              },
-            ].map((industry, index) => (
-              <motion.div
-                key={industry.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-card p-6 hover:glow-border transition-all"
-              >
-                {/* Icon Image */}
-                <div className="mb-4 flex justify-center">
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <img 
-                      src={industry.iconImage} 
-                      alt={`${industry.title} icon`}
-                      className="w-12 h-12 object-contain"
-                    />
-                  </div>
-                </div>
-                
-                <h3 className="text-xl font-semibold mb-3 text-primary text-center">{industry.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed text-justify">
-                  {industry.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Filter Bar */}
-      <section className="py-8 border-b border-white/10 glass relative overflow-hidden">
-        <div className="absolute inset-0 animated-grid opacity-20" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-8 border-b border-gray-200 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
@@ -778,7 +696,7 @@ const Projects = () => {
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
                   activeCategory === category.id
                     ? "bg-primary text-primary-foreground"
-                    : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                    : "bg-slate-50 border border-gray-200 text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 {category.icon && <category.icon className="w-4 h-4" />}
@@ -790,9 +708,8 @@ const Projects = () => {
       </section>
 
       {/* Projects Grid */}
-      <section className="py-16 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
@@ -806,12 +723,12 @@ const Projects = () => {
                   className="group cursor-pointer"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <div className="glass-card overflow-hidden">
-                    <div className="relative h-48 overflow-hidden bg-white/5">
+                  <div className="overflow-hidden bg-slate-50 border border-gray-200 rounded-xl">
+                    <div className="relative h-48 overflow-hidden bg-white">
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute bottom-4 left-4">
                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
@@ -820,10 +737,10 @@ const Projects = () => {
                       </div>
                     </div>
                     <div className="p-6">
-                      <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="text-lg font-semibold mb-2 text-slate-900 group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-sm text-slate-600 mb-4">
                         {project.client}
                       </p>
   
@@ -844,47 +761,47 @@ const Projects = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2"
+              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2 bg-white rounded-xl border border-gray-200 shadow-xl"
             >
-              <div className="relative h-64 bg-white/5">
+              <div className="relative h-64 bg-white">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-8">
                 <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
                   {categories.find(c => c.id === selectedProject.category)?.label}
                 </span>
-                <h2 className="text-2xl font-bold mt-4 mb-2">{selectedProject.title}</h2>
-                <p className="text-muted-foreground mb-6">{selectedProject.client}</p>
+                <h2 className="text-2xl font-bold mt-4 mb-2 text-slate-900">{selectedProject.title}</h2>
+                <p className="text-slate-600 mb-6">{selectedProject.client}</p>
 
                 <div className="space-y-6">
                   <div>
                     <h4 className="font-semibold text-primary mb-2">Challenge</h4>
-                    <p className="text-muted-foreground">{selectedProject.challenge}</p>
+                    <p className="text-slate-600">{selectedProject.challenge}</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary mb-2">Solution</h4>
-                    <p className="text-muted-foreground">{selectedProject.solution}</p>
+                    <p className="text-slate-600">{selectedProject.solution}</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary mb-2">Result</h4>
-                    <p className="text-muted-foreground">{selectedProject.result}</p>
+                    <p className="text-slate-600">{selectedProject.result}</p>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="mt-8 w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors font-medium"
+                  className="mt-8 w-full py-3 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors font-medium text-slate-900"
                 >
                   Close
                 </button>

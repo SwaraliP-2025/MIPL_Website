@@ -85,7 +85,7 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5" role="menubar">
+          <div className="hidden lg:flex items-center gap-0.5 notranslate" translate="no" role="menubar">
             {navLinks.map((link) => (
               <div key={link.name} className="relative" ref={link.dropdown ? dropdownRef : null}>
                 {link.dropdown ? (
@@ -116,7 +116,8 @@ export const Navbar = () => {
                           transition={{ duration: 0.2 }}
                           onMouseEnter={() => setOpenDropdown(link.name)}
                           onMouseLeave={() => setOpenDropdown(null)}
-                          className="absolute top-full left-0 mt-2 w-56 glass-card shadow-xl border border-border rounded-xl overflow-hidden"
+                          className="absolute top-full left-0 mt-2 w-56 glass-card shadow-xl border border-border rounded-xl overflow-hidden notranslate"
+                          translate="no"
                           role="menu"
                         >
                           {link.dropdown.map((item) => (
@@ -201,7 +202,8 @@ export const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden glass border-t border-border"
+            className="lg:hidden glass border-t border-border notranslate"
+            translate="no"
             role="menu"
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
@@ -231,7 +233,8 @@ export const Navbar = () => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="ml-4 mt-2 space-y-1"
+                            className="ml-4 mt-2 space-y-1 notranslate"
+                            translate="no"
                           >
                             {link.dropdown.map((item) => (
                               <Link
@@ -275,7 +278,8 @@ export const Navbar = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className="pt-4 space-y-2"
+                className="pt-4 space-y-2 notranslate"
+                translate="no"
               >
                 <Button
                   asChild

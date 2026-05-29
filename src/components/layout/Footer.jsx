@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, ArrowRight } from "lucide-react";
 import { useCmsConfig } from "@/hooks/useCmsConfig";
 
 export const Footer = () => {
@@ -37,41 +37,81 @@ export const Footer = () => {
     { name: footer.services_service_4_name || "Smart City & Safe City", href: footer.services_service_4_href || "/services" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="relative bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border-t border-white/10 overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500 rounded-full blur-3xl opacity-5" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-5" />
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="footer-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#footer-grid)" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-16">
+        {/* Main footer content */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12"
+        >
           {/* Company Info */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-3"
+            variants={itemVariants}
+            className="lg:col-span-2 space-y-4"
           >
-            <Link to="/" className="flex items-center group">
-              <div className="dark:bg-white dark:p-2 dark:rounded-lg transition-colors">
-                <img 
-                  src={logoConfig.src}
-                  alt={logoConfig.alt || 'MIPL Logo'}
-                  style={{ width: parseInt(logoConfig.width) || 96, height: parseInt(logoConfig.height) || 96 }}
-                  className="transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
+            <Link to="/" className="flex items-center group w-fit">
+              <img 
+                src={logoConfig.src}
+                alt={logoConfig.alt || 'MIPL Logo'}
+                style={{ width: parseInt(logoConfig.width) || 96, height: parseInt(logoConfig.height) || 96 }}
+                className="transition-transform duration-300 group-hover:scale-105"
+              />
             </Link>
-            <p className="text-muted-foreground text-xs leading-relaxed">
-              {footer.company_description || "A New Era of Security. Security & IT consultancy from India."}
+            <p className="text-gray-300 text-sm leading-relaxed max-w-xs">
+              {footer.company_description || "Securing India's critical infrastructure and enabling smart governance through innovative technology solutions."}
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <motion.a
                 href={footer.company_linkedin_url || "https://www.linkedin.com/company/mipl-security-&-it-consultants/about/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-lg bg-muted hover:bg-primary/10 hover:text-primary transition-all"
+                className="p-2 rounded-lg bg-white/10 hover:bg-orange-500/20 hover:text-orange-400 transition-all"
               >
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="w-5 h-5" />
               </motion.a>
               <motion.a
                 href={footer.company_twitter_url || "https://x.com/consultmipl"}
@@ -79,9 +119,9 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-lg bg-muted hover:bg-primary/10 hover:text-primary transition-all"
+                className="p-2 rounded-lg bg-white/10 hover:bg-orange-500/20 hover:text-orange-400 transition-all"
               >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
               </motion.a>
@@ -89,21 +129,17 @@ export const Footer = () => {
           </motion.div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 className="text-sm font-semibold mb-3">Quick Links</h4>
-            <ul className="space-y-2">
+          <motion.div variants={itemVariants}>
+            <h4 className="text-sm font-semibold mb-4 text-white uppercase tracking-widest">Quick Links</h4>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="text-muted-foreground hover:text-primary transition-colors text-xs"
+                    className="text-gray-400 hover:text-orange-400 transition-colors text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-1 h-1 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                     {link.name}
                   </Link>
                 </li>
@@ -112,21 +148,17 @@ export const Footer = () => {
           </motion.div>
 
           {/* Services */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="text-sm font-semibold mb-3">Services</h4>
-            <ul className="space-y-2">
+          <motion.div variants={itemVariants}>
+            <h4 className="text-sm font-semibold mb-4 text-white uppercase tracking-widest">Services</h4>
+            <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.name}>
                   <Link
                     to={service.href}
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="text-muted-foreground hover:text-primary transition-colors text-xs"
+                    className="text-gray-400 hover:text-orange-400 transition-colors text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-1 h-1 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                     {service.name}
                   </Link>
                 </li>
@@ -135,50 +167,58 @@ export const Footer = () => {
           </motion.div>
 
           {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h4 className="text-sm font-semibold mb-3">Contact</h4>
-            <div className="space-y-2 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Mail className="w-3 h-3 text-primary" />
+          <motion.div variants={itemVariants}>
+            <h4 className="text-sm font-semibold mb-4 text-white uppercase tracking-widest">Contact</h4>
+            <div className="space-y-3 text-sm text-gray-400">
+              <a href={`mailto:${footer.contact_email || "info@consultmipl.com"}`} className="flex items-start gap-3 hover:text-orange-400 transition-colors group">
+                <Mail className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>{footer.contact_email || "info@consultmipl.com"}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-3 h-3 text-primary" />
+              </a>
+              <a href={`tel:${footer.contact_phone || "+919821301414"}`} className="flex items-start gap-3 hover:text-orange-400 transition-colors group">
+                <Phone className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>{footer.contact_phone || "+91 98213 01414"}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-3 h-3 text-primary" />
+              </a>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>{footer.contact_locations || "Thane – Chhatrapati Sambhajinagar – Navi Mumbai – Dubai"}</span>
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Bottom Bar */}
-        <div className="mt-6 pt-4 border-t border-border flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-muted-foreground">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400"
+        >
           <p>{footer.bottom_copyright_text || "© 2026 Maha Infotech Pvt. Ltd. All rights reserved."}</p>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
             <Link 
               to={footer.bottom_privacy_href || "/privacy"}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="hover:text-primary transition-colors"
+              className="hover:text-orange-400 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link 
               to={footer.bottom_terms_href || "/terms"}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="hover:text-primary transition-colors"
+              className="hover:text-orange-400 transition-colors"
             >
               Terms of Service
             </Link>
+            <Link 
+              to="/contact"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="hover:text-orange-400 transition-colors"
+            >
+              Compliance
+            </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

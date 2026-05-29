@@ -84,10 +84,10 @@ export function useCmsConfig() {
     }
   }, []);
 
-  // Initial fetch
+  // Initial fetch - only run once
   useEffect(() => {
     fetchConfig();
-  }, [fetchConfig]);
+  }, []); // Empty dependency array - run only once on mount
 
   // Refetch whenever CMS cache is invalidated
   useEffect(() => {

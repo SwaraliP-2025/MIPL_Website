@@ -240,9 +240,11 @@ export const chatbotKnowledge = {
     },
     
     secona: {
-      name: "SECONA (Security Consultants Association)",
-      description: "A non-profit association of security consultants formed to work in the field of training, certification, standardization & guidelines for security technologies",
-      roles: "Prasad Patil - Founder Chairman, Sudhir Deshpande - Member Secretary"
+      name: "SECONA (Security Consultants' Association)",
+      description: "The first association in India creating a unique collaboration platform for independent security consultants. SECONA has launched a|s|t|r|a, the Academy of Security Technology Training Research and Application.",
+      roles: "Prasad Patil - Founder Chairman, Sudhir Deshpande - Member Secretary",
+      website: "https://www.secona.org",
+      whitePapers: "https://www.sourcesecurity.com/companies/secona.html"
     },
     
     impact: "500+ students supported, 50+ awareness programs, 20+ years of service, 10+ community initiatives"

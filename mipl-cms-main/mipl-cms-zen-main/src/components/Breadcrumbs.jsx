@@ -21,7 +21,7 @@ export const Breadcrumbs = () => {
   };
 
   return (
-    <nav aria-label="Breadcrumb" className="py-3 bg-card/80 backdrop-blur-md border-b border-white/5">
+    <nav aria-label="Breadcrumb" className="py-3 bg-card/80 backdrop-blur-md border-b border-white/5 notranslate" translate="no">
       <div className="container mx-auto px-4 lg:px-8">
         <ol className="flex items-center gap-2 text-sm">
           <li>

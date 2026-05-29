@@ -4,7 +4,6 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { 
   Mail, 
   Phone, 
@@ -99,20 +98,18 @@ const Contact = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
             <span className="text-primary font-medium mb-4 block">Get in Touch</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
               Contact Us
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-slate-600">
               Ready to secure your organization? Our team of experts at Maha Infotech Pvt. Ltd. 
               is here to help you navigate your security challenges.
             </p>
@@ -121,9 +118,8 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-16 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <motion.div
@@ -131,8 +127,8 @@ const Contact = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="glass-card p-8 lg:p-10">
-                <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
+              <div className="p-8 lg:p-10 rounded-2xl bg-slate-50 border border-gray-200 shadow-xl">
+                <h2 className="text-2xl font-bold mb-6 text-slate-900">Send us a Message</h2>
 
                 {isSubmitted ? (
                   <motion.div
@@ -140,17 +136,17 @@ const Contact = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center py-12"
                   >
-                    <div className="inline-flex p-4 rounded-full bg-green-500/20 text-green-400 mb-4">
+                    <div className="inline-flex p-4 rounded-full bg-green-500/20 text-green-600 mb-4">
                       <CheckCircle2 className="w-12 h-12" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
-                    <p className="text-muted-foreground mb-6">
+                    <h3 className="text-xl font-semibold mb-2 text-slate-900">Message Sent!</h3>
+                    <p className="text-slate-600 mb-6">
                       Thank you for reaching out. We'll get back to you within 24 hours.
                     </p>
                     <Button
                       onClick={() => setIsSubmitted(false)}
                       variant="outline"
-                      className="border-white/20"
+                      className="border-[#E9863C] text-[#E9863C] hover:bg-[#E9863C]/10"
                     >
                       Send Another Message
                     </Button>
@@ -159,73 +155,73 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2">First Name</label>
+                        <label className="block text-sm font-medium mb-2 text-slate-900">First Name</label>
                         <Input
                           name="firstName"
                           required
                           placeholder="FirstName"
-                          className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 focus:border-primary focus:outline-none focus:ring-0"
+                          className="bg-white border border-gray-200 text-slate-900 placeholder:text-slate-500 focus:border-[#E9863C] focus:outline-none focus:ring-0 rounded-lg"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Last Name</label>
+                        <label className="block text-sm font-medium mb-2 text-slate-900">Last Name</label>
                         <Input
                           name="lastName"
                           required
                           placeholder="LastName"
-                          className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 focus:border-primary focus:outline-none focus:ring-0"
+                          className="bg-white border border-gray-200 text-slate-900 placeholder:text-slate-500 focus:border-[#E9863C] focus:outline-none focus:ring-0 rounded-lg"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Email</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-900">Email</label>
                       <Input
                         name="email"
                         required
                         type="email"
                         placeholder="user@company.com"
-                        className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 focus:border-primary focus:outline-none focus:ring-0"
+                        className="bg-white border border-gray-200 text-slate-900 placeholder:text-slate-500 focus:border-[#E9863C] focus:outline-none focus:ring-0 rounded-lg"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Organization</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-900">Organization</label>
                       <Input
                         name="organization"
                         placeholder="Your Company"
-                        className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 focus:border-primary focus:outline-none focus:ring-0"
+                        className="bg-white border border-gray-200 text-slate-900 placeholder:text-slate-500 focus:border-[#E9863C] focus:outline-none focus:ring-0 rounded-lg"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Service Interest</label>
-                      <select name="serviceInterest" className="w-full h-10 rounded-lg bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 px-3 text-sm focus:border-primary focus:outline-none focus:ring-0">
-                        <option value="">Select a service</option>
-                        <option value="security-audit">Security Audits</option>
-                        <option value="smart-city">Smart City Solutions</option>
-                        <option value="egovernance">eGovernance</option>
-                        <option value="ai-iot">AI & IoT Integration</option>
-                        <option value="surveillance">Video Surveillance</option>
-                        <option value="training">Security Training</option>
-                        <option value="other">Other</option>
+                      <label className="block text-sm font-medium mb-2 text-slate-900">Service Interest</label>
+                      <select name="serviceInterest" className="w-full h-10 rounded-lg bg-white border border-gray-200 text-slate-900 focus:border-[#E9863C] focus:outline-none focus:ring-0">
+                        <option value="" className="text-slate-900">Select a service</option>
+                        <option value="security-audit" className="text-slate-900">Security Audits</option>
+                        <option value="smart-city" className="text-slate-900">Smart City Solutions</option>
+                        <option value="egovernance" className="text-slate-900">eGovernance</option>
+                        <option value="ai-iot" className="text-slate-900">AI & IoT Integration</option>
+                        <option value="surveillance" className="text-slate-900">Video Surveillance</option>
+                        <option value="training" className="text-slate-900">Security Training</option>
+                        <option value="other" className="text-slate-900">Other</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">Message</label>
+                      <label className="block text-sm font-medium mb-2 text-slate-900">Message</label>
                       <Textarea
                         name="message"
                         required
                         placeholder="Tell us about your project or security needs..."
-                        className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/20 focus:border-primary focus:outline-none focus:ring-0 min-h-[150px]"
+                        className="bg-white border border-gray-200 text-slate-900 placeholder:text-slate-500 focus:border-[#E9863C] focus:outline-none focus:ring-0 min-h-[150px] rounded-lg"
                       />
                     </div>
 
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-primary hover:bg-blue-600 text-primary-foreground font-semibold py-6"
+                      className="w-full bg-gradient-to-r from-[#E9863C] to-[#f5a85c] hover:from-[#d97a2f] hover:to-[#e89a4f] text-white font-semibold py-6 rounded-lg"
                     >
                       {isSubmitting ? (
                         "Sending..."
@@ -249,8 +245,8 @@ const Contact = () => {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-2xl font-bold mb-4 text-slate-900">Contact Information</h2>
+                <p className="text-slate-600">
                   Have questions? Reach out to us through any of the following channels.
                 </p>
               </div>
@@ -265,14 +261,14 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ x: 8 }}
-                    className="flex items-center gap-4 p-4 rounded-xl glass-card group"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-gray-200 hover:border-[#E9863C]/50 group transition-all"
                   >
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <div className="p-3 rounded-lg bg-[#E9863C]/20 text-[#E9863C] group-hover:bg-[#E9863C] group-hover:text-white transition-colors">
                       <item.icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">{item.label}</p>
-                      <p className="font-medium">{item.value}</p>
+                      <p className="text-sm text-slate-500">{item.label}</p>
+                      <p className="font-medium text-slate-900">{item.value}</p>
                     </div>
                   </motion.a>
                 ))}
@@ -281,13 +277,13 @@ const Contact = () => {
               {/* Office Locations */}
               {/* Map */}
               <div className="mt-8">
-                <h3 className="font-semibold mb-4">Our Headquarter at Thane</h3>
-                <h6 className="text-sm text-muted-foreground mb-4">708/B, Lodha Supremus, Kolshet Road, Thane -4000607.</h6>
+                <h3 className="font-semibold mb-4 text-slate-900">Our Headquarter at Thane</h3>
+                <h6 className="text-sm text-slate-600 mb-4">708/B, Lodha Supremus, Kolshet Road, Thane -4000607.</h6>
                 <a 
                   href="https://www.google.com/maps/place/Lodha+Supremus,+Thane/@19.236275,72.986007,17z" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block aspect-video rounded-xl overflow-hidden glass-card cursor-pointer hover:opacity-90 transition-opacity"
+                  className="block aspect-video rounded-xl overflow-hidden bg-slate-50 border border-gray-200 cursor-pointer hover:border-[#E9863C]/50 transition-all"
                   title="Open in Google Maps"
                 >
                   <iframe

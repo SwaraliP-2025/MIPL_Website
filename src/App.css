@@ -5,6 +5,16 @@
   text-align: center;
 }
 
+/* Allow hero section to break out of container constraints */
+#root > section:first-child {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

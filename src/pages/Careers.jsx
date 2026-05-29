@@ -5,7 +5,6 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { 
   MapPin, 
   Clock, 
@@ -195,20 +194,18 @@ const Careers = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
             <span className="text-primary font-medium mb-4 block">Join Our Team</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
               Career Opportunities
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-slate-600">
               Join Maha Infotech Pvt. Ltd. and be part of a team shaping the future of 
               security and smart city solutions in India.
             </p>
@@ -217,18 +214,16 @@ const Careers = () => {
       </section>
 
       {/* Benefits */}
-      <section className="py-16 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-600/5" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">Why Join MIPL?</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900">Why Join MIPL?</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
               We offer more than just a job – we offer a career with purpose
             </p>
           </motion.div>
@@ -241,13 +236,13 @@ const Careers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-6 text-center"
+                className="p-6 text-center bg-slate-50 border border-gray-200 rounded-xl"
               >
                 <div className="inline-flex p-3 rounded-xl bg-primary/10 text-primary mb-4">
                   <benefit.icon className="w-8 h-8" />
                 </div>
-                <h3 className="font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                <h3 className="font-semibold mb-2 text-slate-900">{benefit.title}</h3>
+                <p className="text-sm text-slate-600">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
@@ -255,17 +250,16 @@ const Careers = () => {
       </section>
 
       {/* Job Listings */}
-      <section className="py-16 bg-card/50 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">Open Positions</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900">Open Positions</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
               Explore our current openings and find your next opportunity
             </p>
           </motion.div>
@@ -278,15 +272,15 @@ const Careers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card overflow-hidden"
+                className="overflow-hidden bg-slate-50 border border-gray-200 rounded-xl"
               >
                 <button
                   onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
                   className="w-full p-6 flex items-center justify-between text-left"
                 >
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">{job.title}</h3>
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                    <h3 className="text-lg font-semibold mb-2 text-slate-900">{job.title}</h3>
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                       <span className="flex items-center gap-1">
                         <MapPin className="w-4 h-4" />
                         {job.location}
@@ -312,15 +306,15 @@ const Careers = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="px-6 pb-6 border-t border-white/10 pt-6 space-y-4">
-                        <p className="text-muted-foreground whitespace-pre-line">{job.description}</p>
+                      <div className="px-6 pb-6 border-t border-gray-200 pt-6 space-y-4">
+                        <p className="text-slate-600 whitespace-pre-line">{job.description}</p>
 
                         <div className="grid sm:grid-cols-2 gap-4">
                           {job.experience && (
                             <div className="flex items-start gap-2">
                               <Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                               <div>
-                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Experience</p>
+                                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-0.5">Experience</p>
                                 <p className="text-sm">{job.experience}</p>
                               </div>
                             </div>
@@ -329,7 +323,7 @@ const Careers = () => {
                             <div className="flex items-start gap-2">
                               <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                               <div>
-                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Location</p>
+                                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-0.5">Location</p>
                                 <p className="text-sm">{job.location}</p>
                               </div>
                             </div>
@@ -338,7 +332,7 @@ const Careers = () => {
                             <div className="flex items-start gap-2">
                               <Briefcase className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                               <div>
-                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Education</p>
+                                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-0.5">Education</p>
                                 <p className="text-sm">{job.education}</p>
                               </div>
                             </div>
@@ -347,7 +341,7 @@ const Careers = () => {
                             <div className="flex items-start gap-2">
                               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                               <div>
-                                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-0.5">Key Skills</p>
+                                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-0.5">Key Skills</p>
                                 <p className="text-sm">{job.keySkills}</p>
                               </div>
                             </div>
@@ -381,57 +375,57 @@ const Careers = () => {
               setShowApplicationForm(false);
               setSelectedFileName("");
             }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-5 sm:p-8 mx-2"
+              className="w-full max-w-lg max-h-[90vh] overflow-y-auto p-5 sm:p-8 mx-2 bg-white rounded-xl border border-gray-200 shadow-xl"
             >
-              <h2 className="text-2xl font-bold mb-2">Apply for Position</h2>
-              <p className="text-muted-foreground mb-6">{selectedJob.title}</p>
+              <h2 className="text-2xl font-bold mb-2 text-slate-900">Apply for Position</h2>
+              <p className="text-slate-600 mb-6">{selectedJob.title}</p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">First Name <span className="text-red-500">*</span></label>
-                    <Input name="firstName" required placeholder="FirstName" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                    <label className="block text-sm font-medium mb-2 text-slate-900">First Name <span className="text-red-500">*</span></label>
+                    <Input name="firstName" required placeholder="FirstName" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Last Name <span className="text-red-500">*</span></label>
-                    <Input name="lastName" required placeholder="LastName" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                    <label className="block text-sm font-medium mb-2 text-slate-900">Last Name <span className="text-red-500">*</span></label>
+                    <Input name="lastName" required placeholder="LastName" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email <span className="text-red-500">*</span></label>
-                  <Input name="email" required type="email" placeholder="user@gmail.com" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Email <span className="text-red-500">*</span></label>
+                  <Input name="email" required type="email" placeholder="user@gmail.com" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Phone <span className="text-red-500">*</span></label>
-                  <Input name="phone" required type="tel" placeholder="+91 XXX XXX XXXX" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Phone <span className="text-red-500">*</span></label>
+                  <Input name="phone" required type="tel" placeholder="+91 XXX XXX XXXX" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Date of Birth <span className="text-red-500">*</span></label>
-                  <Input name="dateOfBirth" required type="date" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Date of Birth <span className="text-red-500">*</span></label>
+                  <Input name="dateOfBirth" required type="date" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Current Location <span className="text-red-500">*</span></label>
-                  <Input name="currentLocation" required placeholder="City, State" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Current Location <span className="text-red-500">*</span></label>
+                  <Input name="currentLocation" required placeholder="City, State" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Education (Highest Degree) <span className="text-red-500">*</span></label>
-                  <Input name="education" required placeholder="e.g. Bachelor's in Computer Science" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Education (Highest Degree) <span className="text-red-500">*</span></label>
+                  <Input name="education" required placeholder="e.g. Bachelor's in Computer Science" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Currently Working? <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Currently Working? <span className="text-red-500">*</span></label>
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input 
@@ -443,7 +437,7 @@ const Careers = () => {
                         style={{width: '24px', height: '24px'}}
                         onChange={(e) => setWorkStatus(e.target.value)}
                       />
-                      <span className="text-sm">Working</span>
+                      <span className="text-sm text-slate-900">Working</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input 
@@ -455,7 +449,7 @@ const Careers = () => {
                         style={{width: '24px', height: '24px'}}
                         onChange={(e) => setWorkStatus(e.target.value)}
                       />
-                      <span className="text-sm">Not Working</span>
+                      <span className="text-sm text-slate-900">Not Working</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input 
@@ -467,7 +461,7 @@ const Careers = () => {
                         style={{width: '24px', height: '24px'}}
                         onChange={(e) => setWorkStatus(e.target.value)}
                       />
-                      <span className="text-sm">Serving Notice Period</span>
+                      <span className="text-sm text-slate-900">Serving Notice Period</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input 
@@ -479,7 +473,7 @@ const Careers = () => {
                         style={{width: '24px', height: '24px'}}
                         onChange={(e) => setWorkStatus(e.target.value)}
                       />
-                      <span className="text-sm">Fresher</span>
+                      <span className="text-sm text-slate-900">Fresher</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input 
@@ -491,7 +485,7 @@ const Careers = () => {
                         style={{width: '24px', height: '24px'}}
                         onChange={(e) => setWorkStatus(e.target.value)}
                       />
-                      <span className="text-sm">Other</span>
+                      <span className="text-sm text-slate-900">Other</span>
                     </label>
                     {workStatus === "other" && (
                       <div className="mt-2 ml-8">
@@ -499,7 +493,7 @@ const Careers = () => {
                           name="workStatusOther"
                           required 
                           placeholder="Please specify..." 
-                          className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" 
+                          className="bg-slate-50 border-2 border-gray-200 focus:border-primary" 
                         />
                       </div>
                     )}
@@ -507,32 +501,32 @@ const Careers = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Total Years of Experience <span className="text-red-500">*</span></label>
-                  <Input name="yearsExperience" required type="number" min="0" step="0.5" placeholder="e.g. 5.5" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Total Years of Experience <span className="text-red-500">*</span></label>
+                  <Input name="yearsExperience" required type="number" min="0" step="0.5" placeholder="e.g. 5.5" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Current Annual Salary (₹) <span className="text-red-500">*</span></label>
-                  <Input name="currentSalary" required type="number" min="0" placeholder="Enter 0 for freshers" className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10" />
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Current Annual Salary (₹) <span className="text-red-500">*</span></label>
+                  <Input name="currentSalary" required type="number" min="0" placeholder="Enter 0 for freshers" className="bg-slate-50 border-2 border-gray-200 focus:border-primary" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Cover Letter</label>
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Cover Letter</label>
                   <Textarea
                     name="coverLetter"
                     placeholder="Tell us why you're interested in this role..."
-                    className="bg-white/5 dark:bg-white/5 border-2 border-black/20 dark:border-white/10 min-h-[120px]"
+                    className="bg-slate-50 border-2 border-gray-200 focus:border-primary min-h-[120px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Resume <span className="text-red-500">*</span></label>
-                  <label className="border-2 border-dashed border-black/20 dark:border-white/20 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer block">
-                    <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-                    <p className="text-sm text-muted-foreground">
+                  <label className="block text-sm font-medium mb-2 text-slate-900">Resume <span className="text-red-500">*</span></label>
+                  <label className="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer block">
+                    <Upload className="w-8 h-8 mx-auto text-slate-500 mb-2" />
+                    <p className="text-sm text-slate-600">
                       Drag & drop your resume or click to browse
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">PDF only, max 5MB</p>
+                    <p className="text-xs text-slate-500 mt-1">PDF only, max 5MB</p>
                     <input 
                       type="file" 
                       accept=".pdf" 
@@ -543,7 +537,7 @@ const Careers = () => {
                     />
                   </label>
                   {selectedFileName && (
-                    <div className="mt-3 flex items-center gap-2 text-sm text-green-400">
+                    <div className="mt-3 flex items-center gap-2 text-sm text-green-600">
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Selected: {selectedFileName}</span>
                     </div>
@@ -558,7 +552,7 @@ const Careers = () => {
                       setShowApplicationForm(false);
                       setSelectedFileName("");
                     }}
-                    className="flex-1 border-white/20"
+                    className="flex-1 border-gray-200 text-slate-900 hover:bg-slate-50"
                   >
                     Cancel
                   </Button>

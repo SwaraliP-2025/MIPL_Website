@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { ProfessionalNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
@@ -27,11 +26,8 @@ const CoffeeTableBook = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-8 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-8">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

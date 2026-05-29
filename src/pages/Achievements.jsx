@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { Award, Trophy, Star, Target, CheckCircle } from "lucide-react";
 import { useCmsData } from "@/hooks/useCmsData";
 
@@ -37,20 +36,18 @@ const Achievements = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
             <span className="text-primary font-medium mb-4 block">Recognition & Excellence</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
               Our Achievements
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-slate-600">
               Over two decades of excellence, innovation, and recognition in security management 
               and technology implementation across India and internationally.
             </p>
@@ -59,9 +56,8 @@ const Achievements = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-16 relative overflow-hidden border-b border-border">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 border-b border-gray-200 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {highlights.map((highlight, index) => {
               const IconComponent = iconMap[highlight.icon] || Trophy;
@@ -72,13 +68,13 @@ const Achievements = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-6 text-center hover:glow-border group"
+                className="p-6 text-center bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <IconComponent className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-bold mb-2">{highlight.title}</h3>
-                <p className="text-sm text-muted-foreground">{highlight.description}</p>
+                <h3 className="font-semibold mb-2 text-slate-900">{highlight.title}</h3>
+                <p className="text-sm text-slate-600">{highlight.description}</p>
               </motion.div>
               );
             })}
@@ -87,9 +83,8 @@ const Achievements = () => {
       </section>
 
       {/* Achievements Timeline */}
-      <section className="py-24 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -110,7 +105,7 @@ const Achievements = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="glass-card p-8 hover:glow-border group"
+                className="p-8 bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
               >
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Year Badge */}
@@ -126,19 +121,19 @@ const Achievements = () => {
                   {/* Content */}
                   <div className="flex-1">
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                      <h3 className="text-xl font-bold">{achievement.title}</h3>
+                      <h3 className="text-xl font-bold text-slate-900">{achievement.title}</h3>
                       <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
                         {achievement.category}
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+                    <p className="text-sm text-slate-600 mb-2 flex items-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                       {achievement.location}
                     </p>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-slate-600 leading-relaxed">
                       {achievement.description}
                     </p>
                   </div>
@@ -150,18 +145,16 @@ const Achievements = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="medium" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-blue-600/10" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-12 text-center max-w-3xl mx-auto"
+            className="p-12 text-center max-w-3xl mx-auto bg-slate-50 border border-gray-200 rounded-xl"
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to Work with Award-Winning Experts?</h2>
-            <p className="text-muted-foreground mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900">Ready to Work with Award-Winning Experts?</h2>
+            <p className="text-slate-600 mb-8">
               Let our proven track record of excellence work for your security needs
             </p>
             <a

@@ -42,7 +42,7 @@ export const ClientLogos = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-white dark:bg-white hover:bg-white/90 dark:hover:bg-white/90 transition-all group"
+              className="flex flex-col items-center justify-center p-6 rounded-xl bg-slate-50 border border-gray-200 hover:border-[#E9863C]/50 transition-all group"
             >
               <img
                 src={client.logo}
@@ -52,7 +52,7 @@ export const ClientLogos = () => {
                   e.target.style.display = 'none';
                 }}
               />
-              <p className="text-xs text-center text-muted-foreground font-medium">
+              <p className="text-xs text-center text-slate-900 font-medium">
                 {client.name}
               </p>
             </motion.div>

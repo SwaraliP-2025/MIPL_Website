@@ -28,6 +28,7 @@ export const ProfessionalNetworkBackground = ({
         duration: Math.random() * 30 + 25, // Slower, more elegant
         delay: Math.random() * 8,
         pulseDelay: Math.random() * 4,
+        color: Math.random() > 0.5 ? "#E9863C" : "#64DFDF" // Alternate colors
       };
     });
 
@@ -51,6 +52,7 @@ export const ProfessionalNetworkBackground = ({
             distance: distance,
             opacity: (1 - distance / maxDistance) * 0.4,
             delay: Math.random() * 3,
+            color: newNodes[i].color
           });
         }
       }
@@ -65,14 +67,28 @@ export const ProfessionalNetworkBackground = ({
       <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           {/* Gradient for lines */}
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
-            <stop offset="50%" stopColor="currentColor" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+          <linearGradient id="lineGradientOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#E9863C" stopOpacity="0" />
+            <stop offset="50%" stopColor="#E9863C" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#E9863C" stopOpacity="0" />
+          </linearGradient>
+          
+          <linearGradient id="lineGradientCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#64DFDF" stopOpacity="0" />
+            <stop offset="50%" stopColor="#64DFDF" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#64DFDF" stopOpacity="0" />
           </linearGradient>
           
           {/* Glow effect for nodes */}
-          <filter id="glow">
+          <filter id="glowOrange">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          
+          <filter id="glowCyan">
             <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
             <feMerge>
               <feMergeNode in="coloredBlur"/>
@@ -89,9 +105,8 @@ export const ProfessionalNetworkBackground = ({
             y1={`${line.y1}%`}
             x2={`${line.x2}%`}
             y2={`${line.y2}%`}
-            stroke="url(#lineGradient)"
+            stroke={`url(#lineGradient${line.color === '#E9863C' ? 'Orange' : 'Cyan'})`}
             strokeWidth="1"
-            className="text-primary/30"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ 
               pathLength: 1, 
@@ -109,9 +124,8 @@ export const ProfessionalNetworkBackground = ({
           <motion.circle
             key={`flow-${line.id}`}
             r="2.5"
-            fill="currentColor"
-            className="text-primary"
-            filter="url(#glow)"
+            fill={line.color}
+            filter={`url(#glow${line.color === '#E9863C' ? 'Orange' : 'Cyan'})`}
             initial={{
               cx: `${line.x1}%`,
               cy: `${line.y1}%`,
@@ -140,9 +154,9 @@ export const ProfessionalNetworkBackground = ({
               cy={`${node.y}%`}
               r={node.size * 3}
               fill="none"
-              stroke="currentColor"
+              stroke={node.color}
               strokeWidth="0.5"
-              className="text-primary/20"
+              opacity="0.2"
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: [1, 1.5, 1],
@@ -161,9 +175,8 @@ export const ProfessionalNetworkBackground = ({
               cx={`${node.x}%`}
               cy={`${node.y}%`}
               r={node.size}
-              fill="currentColor"
-              className="text-primary"
-              filter="url(#glow)"
+              fill={node.color}
+              filter={`url(#glow${node.color === '#E9863C' ? 'Orange' : 'Cyan'})`}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: [1, 1.2, 1],
@@ -185,9 +198,9 @@ export const ProfessionalNetworkBackground = ({
             <path
               d="M 50 0 L 0 0 0 50"
               fill="none"
-              stroke="currentColor"
+              stroke="#E9863C"
               strokeWidth="0.5"
-              className="text-primary/5"
+              opacity="0.05"
             />
           </pattern>
         </defs>

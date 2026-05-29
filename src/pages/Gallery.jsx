@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
 import { X, Award, Users, Building, Calendar } from "lucide-react";
 
 const categories = ["All", "Awards", "Events", "Team", "Projects"];
@@ -88,20 +87,18 @@ const Gallery = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
             <span className="text-primary font-medium mb-4 block">Our Journey in Pictures</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
               Gallery
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-slate-600">
               Explore our milestones, achievements, and memorable moments through our photo gallery
             </p>
           </motion.div>
@@ -109,9 +106,8 @@ const Gallery = () => {
       </section>
 
       {/* Category Filter */}
-      <section className="py-8 border-b border-border relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-8 border-b border-gray-200 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="flex flex-wrap gap-3 justify-center">
             {categories.map((category) => (
               <button
@@ -120,7 +116,7 @@ const Gallery = () => {
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === category
                     ? "bg-primary text-primary-foreground shadow-lg"
-                    : "bg-card hover:bg-accent text-foreground"
+                    : "bg-slate-50 border border-gray-200 hover:bg-slate-100 text-slate-900"
                 }`}
               >
                 {category}
@@ -131,9 +127,8 @@ const Gallery = () => {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-16 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div 
             layout
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -147,7 +142,7 @@ const Gallery = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ delay: index * 0.05 }}
-                  className="glass-card overflow-hidden group cursor-pointer hover:glow-border"
+                  className="overflow-hidden group cursor-pointer bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50"
                   onClick={() => setSelectedImage(item)}
                 >
                   {/* Image */}
@@ -175,10 +170,10 @@ const Gallery = () => {
                       <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
                         {item.category}
                       </span>
-                      <span className="text-xs text-muted-foreground">{item.date}</span>
+                      <span className="text-xs text-slate-600">{item.date}</span>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 line-clamp-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                    <h3 className="font-bold text-lg mb-2 line-clamp-1 text-slate-900">{item.title}</h3>
+                    <p className="text-sm text-slate-600 line-clamp-2">{item.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -187,7 +182,7 @@ const Gallery = () => {
 
           {filteredItems.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-muted-foreground">No images found in this category</p>
+              <p className="text-slate-600">No images found in this category</p>
             </div>
           )}
         </div>

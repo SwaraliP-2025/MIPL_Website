@@ -180,7 +180,7 @@ function generateResponse(userMessage) {
 
   // SECONA
   if (message.includes('secona')) {
-    return `SECONA (Security Consultants' Association):\n\nA non-profit association of security consultants formed to work in the field of training, certification, standardisation & guidelines for security technologies.\n\n👥 Leadership:\n• Prasad Patil - Founder Chairman\n• Sudhir Deshpande - Member Secretary\n\nSECONA works towards establishing professional standards and best practices in the security consulting industry in India.`;
+    return `SECONA (Security Consultants' Association):\n\nThe first association in India which has created a unique collaboration platform for independent security consultants to tackle various challenges faced by Indian security industry. SECONA has also launched a|s|t|r|a, the Academy of Security Technology Training Research and Application.\n\n👥 Leadership:\n• Prasad Patil - Founder Chairman\n• Sudhir Deshpande - Member Secretary\n\n🌐 Website: https://www.secona.org\n📄 White Papers: https://www.sourcesecurity.com/companies/secona.html\n\nSECONA works towards establishing professional standards and best practices in the security consulting industry in India.`;
   }
   
   // Aatman

@@ -8,7 +8,7 @@ export const Layout = ({ children }) => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-16 md:pt-18">
+      <div className="pt-20 md:pt-24">
         <Breadcrumbs />
         <main id="main-content" role="main" tabIndex="-1">
           {children}

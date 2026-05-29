@@ -1,6 +1,6 @@
 import { useCmsData } from "@/hooks/useCmsData";
 import { Layout } from "@/components/layout/Layout";
-import { ProfessionalNetworkBackground, SubtleNetworkBackground } from "@/components/ProfessionalNetworkBackground";
+import { PublicationsSection } from "@/components/home/PublicationsSection";
 import { BookOpen, FileText, Newspaper, Download, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -47,10 +47,8 @@ const Publications = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="high" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="pt-32 pb-16 bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -69,9 +67,8 @@ const Publications = () => {
       </section>
 
       {/* Categories */}
-      <section className="py-16 relative overflow-hidden border-b border-border">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 border-b border-border">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -101,9 +98,8 @@ const Publications = () => {
       </section>
 
       {/* Publications List */}
-      <section className="py-24 relative overflow-hidden">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-24 bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -180,11 +176,12 @@ const Publications = () => {
         </div>
       </section>
 
+      {/* Director's Articles */}
+      <PublicationsSection />
+
       {/* CTA Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ProfessionalNetworkBackground density="medium" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-blue-600/10" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="py-16 bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
