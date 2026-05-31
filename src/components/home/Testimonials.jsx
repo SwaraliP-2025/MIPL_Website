@@ -12,13 +12,13 @@ export const Testimonials = () => {
       role: "Operations & Security"
     },
     {
-      quote: "The smart city surveillance system implemented by MIPL has transformed our city's security infrastructure. Their end-to-end approach ensured seamless deployment.",
+      quote: "MIPL's advice on our city's camera and safety systems made a real difference. They explained everything clearly and stayed with us through the full plan.",
       author: "Project Director",
       company: "Aurangabad Smart City Development Corporation",
       role: "Smart City Initiative"
     },
     {
-      quote: "Working with MIPL on our port security management system was exceptional. They delivered a world-class solution that meets international standards.",
+      quote: "Working with MIPL on our port security plan was excellent. Their advice was clear, practical, and met international standards.",
       author: "Chief Security Officer",
       company: "Jawaharlal Nehru Port Trust",
       role: "Port Security"
@@ -40,11 +40,11 @@ export const Testimonials = () => {
             What Our Clients Say
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Trusted by leading organizations across India for delivering excellence in security solutions
+            Trusted by leading organisations across India for clear, dependable security advice
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="card-grid-equal grid md:grid-cols-3 gap-8">
           {cmsTestimonials.map((testimonial, index) => (
             <motion.div
               key={index}
@@ -52,15 +52,16 @@ export const Testimonials = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              className="h-full min-h-0"
             >
-              <Card className="p-8 h-full glass-card hover:shadow-xl transition-all group">
-                <Quote className="w-10 h-10 text-primary mb-6 opacity-50 group-hover:opacity-100 transition-opacity" />
+              <Card className="card-fill p-8 glass-card hover:shadow-xl transition-all group">
+                <Quote className="w-10 h-10 text-primary mb-6 opacity-50 group-hover:opacity-100 transition-opacity shrink-0" />
                 
-                <blockquote className="text-justify mb-6 leading-relaxed">
+                <blockquote className="flex-1 text-justify mb-6 leading-relaxed line-clamp-6">
                   "{testimonial.quote}"
                 </blockquote>
                 
-                <div className="border-t border-white/10 pt-6">
+                <div className="mt-auto border-t border-white/10 pt-6 shrink-0">
                   <p className="font-semibold text-lg mb-1">
                     {testimonial.author}
                   </p>

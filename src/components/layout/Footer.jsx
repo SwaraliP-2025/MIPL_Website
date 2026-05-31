@@ -12,6 +12,15 @@ export const Footer = () => {
     (cmsConfig.logos.find(l => l.type === 'main') || { src: '/logo.png', alt: 'MIPL Logo', width: 96, height: 96 });
 
   // Quick links from CMS
+  const serviceLinks = [
+    { name: "Security Consultancy", href: "/services" },
+    { name: "Security Audits", href: "/services" },
+    { name: "Safe City", href: "/services" },
+    { name: "Smart City", href: "/services" },
+    { name: "eGovernance", href: "/services" },
+    { name: "Training", href: "/services" },
+  ];
+
   const quickLinks = loading ? [
     { name: "About Us", href: "/about" },
     { name: "Our Team", href: "/about" },
@@ -22,19 +31,6 @@ export const Footer = () => {
     { name: footer.quicklinks_link_2_name || "Our Team", href: footer.quicklinks_link_2_href || "/about" },
     { name: footer.quicklinks_link_3_name || "Careers", href: footer.quicklinks_link_3_href || "/careers" },
     { name: footer.quicklinks_link_4_name || "Contact", href: footer.quicklinks_link_4_href || "/contact" },
-  ];
-
-  // Services from CMS
-  const services = loading ? [
-    { name: "Security Consultancy", href: "/services" },
-    { name: "Security Audits (TRAVA)", href: "/services" },
-    { name: "eGovernance", href: "/services" },
-    { name: "Smart City & Safe City", href: "/services" },
-  ] : [
-    { name: footer.services_service_1_name || "Security Consultancy", href: footer.services_service_1_href || "/services" },
-    { name: footer.services_service_2_name || "Security Audits (TRAVA)", href: footer.services_service_2_href || "/services" },
-    { name: footer.services_service_3_name || "eGovernance", href: footer.services_service_3_href || "/services" },
-    { name: footer.services_service_4_name || "Smart City & Safe City", href: footer.services_service_4_href || "/services" },
   ];
 
   const containerVariants = {
@@ -84,12 +80,12 @@ export const Footer = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12"
+          className="grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-5"
         >
           {/* Company Info */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-2 space-y-4"
+            className="space-y-4 lg:col-span-2"
           >
             <Link to="/" className="flex items-center group w-fit">
               <img 
@@ -151,15 +147,15 @@ export const Footer = () => {
           <motion.div variants={itemVariants}>
             <h4 className="text-sm font-semibold mb-4 text-white uppercase tracking-widest">Services</h4>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service.name}>
+              {serviceLinks.map((link) => (
+                <li key={link.name}>
                   <Link
-                    to={service.href}
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    to={link.href}
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-gray-400 hover:text-orange-400 transition-colors text-sm flex items-center gap-2 group"
                   >
                     <span className="w-1 h-1 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {service.name}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -194,7 +190,10 @@ export const Footer = () => {
           viewport={{ once: true }}
           className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400"
         >
-          <p>{footer.bottom_copyright_text || "© 2026 Maha Infotech Pvt. Ltd. All rights reserved."}</p>
+          <div className="text-center md:text-left">
+            <p>{footer.bottom_copyright_text || "© 2026 Maha Infotech Pvt. Ltd. All rights reserved."}</p>
+            
+          </div>
           <div className="flex gap-6">
             <Link 
               to={footer.bottom_privacy_href || "/privacy"}

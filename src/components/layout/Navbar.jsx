@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useCmsConfig } from "@/hooks/useCmsConfig";
 import { useNavLinks } from "@/context/NavContext";
 
@@ -50,15 +49,13 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <nav className="flex items-center justify-between h-16 md:h-20" role="navigation" aria-label="Main navigation">
           {/* Logo */}
-          <Link to="/" className="flex items-center justify-center !bg-transparent" aria-label="MIPL Home">
-            <div className="flex items-center justify-center !bg-transparent">
-              <img
-                src={logoConfig.src}
-                alt={logoConfig.alt || 'MIPL Logo'}
-                style={{ width: parseInt(logoConfig.width) || 80, height: parseInt(logoConfig.height) || 80 }}
-                className="!bg-transparent"
-              />
-            </div>
+          <Link to="/" className="flex items-center !bg-transparent" aria-label="MIPL Home">
+            <img
+              src={logoConfig.src}
+              alt={logoConfig.alt || "MIPL Logo"}
+              style={{ width: parseInt(logoConfig.width) || 80, height: parseInt(logoConfig.height) || 80 }}
+              className="!bg-transparent"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -137,14 +134,13 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Right side: User Icon */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/login"
-              className="w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors flex items-center justify-center"
+              className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-gray-100"
               aria-label="Login"
             >
-              <User className="w-5 h-5 text-gray-600 hover:text-[#E9863C] transition-colors" />
+              <User className="h-5 w-5 text-gray-600 transition-colors hover:text-[#E9863C]" />
             </Link>
           </div>
 
@@ -228,13 +224,7 @@ export const Navbar = () => {
                 )}
               </div>
             ))}
-            <div className="pt-4 space-y-2 border-t border-gray-200 notranslate" translate="no">
-              <Button
-                asChild
-                className="w-full bg-[#E9863C] hover:bg-[#d67734] text-white font-semibold transition-colors"
-              >
-                <Link to="/contact">Contact Us</Link>
-              </Button>
+            <div className="border-t border-gray-200 pt-4 notranslate" translate="no">
               <Link
                 to="/login"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium text-gray-700 hover:text-[#244884] hover:bg-gray-100 transition-all"

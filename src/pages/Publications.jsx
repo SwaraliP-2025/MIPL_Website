@@ -3,6 +3,8 @@ import { Layout } from "@/components/layout/Layout";
 import { PublicationsSection } from "@/components/home/PublicationsSection";
 import { BookOpen, FileText, Newspaper, Download, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
 
 const publications = [
   {
@@ -46,25 +48,12 @@ const Publications = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Knowledge Sharing</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Publications & Research
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Sharing expertise through technical papers, white papers, case studies, and journal 
-              articles on security management, smart cities, and technology implementation.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Knowledge Sharing"
+        title="Publications & Research"
+        description="Sharing expertise through technical papers, white papers, case studies, and journal articles on security management, smart cities, and technology implementation."
+        image="/judiciary.png"
+      />
 
       {/* Categories */}
       <section className="py-16 border-b border-border">
@@ -80,18 +69,19 @@ const Publications = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="glass-card p-4 text-center hover:glow-border group cursor-pointer"
-              >
-                <category.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-sm font-medium mb-1">{category.name}</p>
-                <span className="text-xs text-muted-foreground">{category.count} {category.count === 1 ? 'publication' : 'publications'}</span>
-              </motion.div>
+              <ScrollFloat key={category.name} strength={20 + index * 2}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="glass-card p-4 text-center hover:glow-border group cursor-pointer"
+                >
+                  <category.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium mb-1">{category.name}</p>
+                  <span className="text-xs text-muted-foreground">{category.count} {category.count === 1 ? 'publication' : 'publications'}</span>
+                </motion.div>
+              </ScrollFloat>
             ))}
           </div>
         </div>
@@ -114,14 +104,14 @@ const Publications = () => {
 
           <div className="max-w-5xl mx-auto space-y-6">
             {allPublications.map((publication, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="glass-card p-8 hover:glow-border group"
-              >
+              <ScrollFloat key={index} strength={28 + index * 2}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="glass-card p-8 hover:glow-border group"
+                >
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Icon & Type */}
                   <div className="flex-shrink-0">
@@ -170,7 +160,8 @@ const Publications = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+                </motion.div>
+              </ScrollFloat>
             ))}
           </div>
         </div>
@@ -182,12 +173,13 @@ const Publications = () => {
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass-card p-12 text-center max-w-3xl mx-auto"
-          >
+          <ScrollFloat strength={36}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-12 text-center max-w-3xl mx-auto"
+            >
             <h2 className="text-3xl font-bold mb-4">Stay Updated with Our Latest Research</h2>
             <p className="text-muted-foreground mb-8">
               Subscribe to receive notifications about new publications and industry insights
@@ -201,7 +193,8 @@ const Publications = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-          </motion.div>
+            </motion.div>
+          </ScrollFloat>
         </div>
       </section>
     </Layout>

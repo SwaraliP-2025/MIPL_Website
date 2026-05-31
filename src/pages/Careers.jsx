@@ -18,6 +18,12 @@ import {
   Rocket
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
+import { EditorialProjectStrip } from "@/components/home/EditorialProjectStrip";
+
+/** Team collage — `public/team/careers-hero.png` */
+const CAREERS_HERO_IMAGE = "/team/careers-hero.png";
 
 const benefits = [
   {
@@ -193,25 +199,14 @@ const Careers = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Join Our Team</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Career Opportunities
-            </h1>
-            <p className="text-xl text-slate-600">
-              Join Maha Infotech Pvt. Ltd. and be part of a team shaping the future of 
-              security and smart city solutions in India.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Join Our Team"
+        title="Career Opportunities"
+        description="Work with our team on smart cities, refineries, courts, and national security programs."
+        image={CAREERS_HERO_IMAGE}
+        imagePosition="center center"
+        minHeight="min-h-[560px]"
+      />
 
       {/* Benefits */}
       <section className="py-16 bg-white">
@@ -228,22 +223,23 @@ const Careers = () => {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card-grid-equal grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
-              <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-6 text-center bg-slate-50 border border-gray-200 rounded-xl"
-              >
-                <div className="inline-flex p-3 rounded-xl bg-primary/10 text-primary mb-4">
-                  <benefit.icon className="w-8 h-8" />
-                </div>
-                <h3 className="font-semibold mb-2 text-slate-900">{benefit.title}</h3>
-                <p className="text-sm text-slate-600">{benefit.description}</p>
-              </motion.div>
+              <ScrollFloat key={benefit.title} strength={28 + index * 2} className="h-full min-h-0">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card-fill items-center p-6 text-center bg-slate-50 border border-gray-200 rounded-xl"
+                >
+                  <div className="mb-4 inline-flex shrink-0 rounded-xl bg-primary/10 p-3 text-primary">
+                    <benefit.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="font-semibold mb-2 text-slate-900">{benefit.title}</h3>
+                  <p className="flex-1 text-sm text-slate-600">{benefit.description}</p>
+                </motion.div>
+              </ScrollFloat>
             ))}
           </div>
         </div>
@@ -266,14 +262,14 @@ const Careers = () => {
 
           <div className="max-w-4xl mx-auto space-y-4">
             {allJobs.map((job, index) => (
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="overflow-hidden bg-slate-50 border border-gray-200 rounded-xl"
-              >
+              <ScrollFloat key={job.id} strength={32 + index * 2}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="overflow-hidden bg-slate-50 border border-gray-200 rounded-xl"
+                >
                 <button
                   onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
                   className="w-full p-6 flex items-center justify-between text-left"
@@ -358,7 +354,8 @@ const Careers = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+                </motion.div>
+              </ScrollFloat>
             ))}
           </div>
         </div>
@@ -569,6 +566,12 @@ const Careers = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <EditorialProjectStrip
+        eyebrow="The Work You'll Join"
+        title="Assignments our team supports."
+        ctaHref="/projects"
+      />
     </Layout>
   );
 };

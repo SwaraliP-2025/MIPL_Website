@@ -17,8 +17,8 @@ const capabilities = [
   },
   {
     id: 2,
-    title: "Risk Analysis (TRAVA)",
-    description: "Threat and Risk Analysis & Vulnerability Assessment for critical infrastructure",
+    title: "Risk Analysis & Audits",
+    description: "Threat and risk assessment plus vulnerability reviews for critical infrastructure",
     icon: Shield,
     span: "md:col-span-1",
   },

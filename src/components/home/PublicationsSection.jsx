@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Calendar, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { ScrollFloat } from "@/components/ScrollFloat";
 
 export const PublicationsSection = () => {
   // Publications data
@@ -62,9 +63,10 @@ export const PublicationsSection = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {publications.map((item) => (
-            <div key={item.id}>
-              <Card className="h-full border border-gray-200 bg-[#0f172a] overflow-hidden">
+          {publications.map((item, index) => (
+            <ScrollFloat key={item.id} strength={32 + index * 2}>
+              <div>
+                <Card className="h-full border border-gray-200 bg-[#0f172a] overflow-hidden">
                 {/* Featured Image */}
                 <div className="h-48 w-full overflow-hidden relative">
                   <img 
@@ -111,7 +113,8 @@ export const PublicationsSection = () => {
                   )}
                 </div>
               </Card>
-            </div>
+              </div>
+            </ScrollFloat>
           ))}
         </div>
       </div>

@@ -3,7 +3,8 @@ import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { X, Award, Users, Building, Calendar } from "lucide-react";
-
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
 const categories = ["All", "Awards", "Events", "Team", "Projects"];
 
 const galleryItems = [
@@ -86,24 +87,12 @@ const Gallery = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Our Journey in Pictures</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Gallery
-            </h1>
-            <p className="text-xl text-slate-600">
-              Explore our milestones, achievements, and memorable moments through our photo gallery
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Our Journey in Pictures"
+        title="Gallery"
+        description="Awards, events, teams, and project milestones."
+        image="/awards/summit.jpg"
+      />
 
       {/* Category Filter */}
       <section className="py-8 border-b border-gray-200 bg-white">
@@ -131,51 +120,52 @@ const Gallery = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div 
             layout
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="card-grid-equal grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence>
               {filteredItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="overflow-hidden group cursor-pointer bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50"
-                  onClick={() => setSelectedImage(item)}
-                >
-                  {/* Image */}
-                  <div className="aspect-[4/3] relative overflow-hidden bg-white/5 flex items-center justify-center">
-                    <img 
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-contain"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextElementSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-white/5 items-center justify-center hidden">
-                      {item.category === "Awards" && <Award className="w-16 h-16 text-primary/40" />}
-                      {item.category === "Events" && <Calendar className="w-16 h-16 text-primary/40" />}
-                      {item.category === "Team" && <Users className="w-16 h-16 text-primary/40" />}
-                      {item.category === "Projects" && <Building className="w-16 h-16 text-primary/40" />}
+                <ScrollFloat key={item.id} strength={34 + (index % 3) * 6} className="h-full min-h-0">
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="card-fill overflow-hidden group cursor-pointer bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50"
+                    onClick={() => setSelectedImage(item)}
+                  >
+                    {/* Image */}
+                    <div className="aspect-[4/3] relative overflow-hidden bg-white/5 flex items-center justify-center">
+                      <img 
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-white/5 items-center justify-center hidden">
+                        {item.category === "Awards" && <Award className="w-16 h-16 text-primary/40" />}
+                        {item.category === "Events" && <Calendar className="w-16 h-16 text-primary/40" />}
+                        {item.category === "Team" && <Users className="w-16 h-16 text-primary/40" />}
+                        {item.category === "Projects" && <Building className="w-16 h-16 text-primary/40" />}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Content */}
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
-                        {item.category}
-                      </span>
-                      <span className="text-xs text-slate-600">{item.date}</span>
+                    {/* Content */}
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
+                          {item.category}
+                        </span>
+                        <span className="text-xs text-slate-600">{item.date}</span>
+                      </div>
+                      <h3 className="font-bold text-lg mb-2 line-clamp-1 text-slate-900">{item.title}</h3>
+                      <p className="text-sm text-slate-600 line-clamp-2">{item.description}</p>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 line-clamp-1 text-slate-900">{item.title}</h3>
-                    <p className="text-sm text-slate-600 line-clamp-2">{item.description}</p>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </ScrollFloat>
               ))}
             </AnimatePresence>
           </motion.div>

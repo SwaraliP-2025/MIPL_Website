@@ -1,30 +1,29 @@
-# Social Activities Photos Folder
+# Social Activities Images
 
-Place photos from social initiatives, community engagement, and CSR activities here.
+Official images downloaded from [aatmanacademy.org](https://aatmanacademy.org/) and [secona.org](https://www.secona.org/).
 
-## Recommended Specifications:
-- **Size:** 1200x900px (4:3 aspect ratio)
-- **Format:** JPG or PNG
-- **File naming:** Use descriptive names (e.g., `aatman-academy-event-2023.jpg`)
+## Refresh all images
 
-## Example:
-```
-social-activities/
-├── aatman-academy-event-2023.jpg
-├── community-outreach-2023.jpg
-├── educational-support-2022.jpg
-└── secona-meeting-2022.jpg
+From repo root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/download-social-images.ps1
 ```
 
-## Usage in Code:
-In `src/pages/SocialActivities.jsx`, update the gallery section:
+## Aatman (`aatman/`)
 
-```jsx
-<img 
-  src="/social-activities/aatman-academy-event-2023.jpg"
-  alt="Aatman Academy Event"
-  className="w-full h-full object-cover"
-/>
-```
+| Files | Source |
+|-------|--------|
+| `gallery-students-*.jpg` | [Official gallery](https://aatmanacademy.org/programs/aatman-academy/gallery/) |
+| `gallery-classroom-*.jpg`, `gallery-activities-*.jpg` | Gallery & homepage |
+| `campus-community.jpeg`, program posters | Homepage |
+| `learning-program.jpeg`, `education-rankings.png`, etc. | aatmanacademy.org |
 
-Also update in `src/pages/Gallery.jsx` for the main gallery page.
+## SECONA (`secona/`)
+
+| Files | Source |
+|-------|--------|
+| `shield-awards-banner.jpg` | [Shield Awards](https://www.secona.org/Shield-Awards/) |
+| `initiative-*.jpg`, `about-feature.png` | secona.org |
+
+Referenced in `src/data/aatmanAcademy.js` and `src/data/secona.js`.

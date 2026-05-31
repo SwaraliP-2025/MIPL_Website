@@ -17,6 +17,12 @@ import {
   Brain
 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
+import { EditorialProjectStrip } from "@/components/home/EditorialProjectStrip";
+import { ServicesEditorialOverview } from "@/components/services/ServicesEditorialOverview";
+import { projectImages } from "@/data/projectImages";
+import { getServiceImage } from "@/data/serviceImages";
 
 const services = [
   {
@@ -26,7 +32,7 @@ const services = [
     shortDesc: "Video management covering capture, transmission, recording, and analytics",
     description: "Video management is not only about capturing, but also about transmission, recording and analytics.",
     features: [
-      "IP Camera Network Design & Deployment",
+      "IP Camera Network Planning",
       "Video Management Systems (VMS)",
       "AI-Based Video Analytics",
       "Facial Recognition Integration",
@@ -195,29 +201,64 @@ const services = [
       "IoT Device Integration",
       "Predictive Analytics",
       "Automation Systems",
-      "Smart Sensors Deployment",
+      "Smart Sensors Planning",
       "AI-Powered Decision Support",
     ],
   },
 ];
 
+const iconMap = {
+  Camera,
+  Shield,
+  Cpu,
+  Building2,
+  Zap,
+  HeartPulse,
+  Gavel,
+  Brain,
+  FileCheck,
+  GraduationCap,
+};
+
 const Services = () => {
   const { data: cmsServices } = useCmsData("Services", services);
 
   // Normalize CMS rows — features comes as comma-separated string
-  const allServices = cmsServices.map((s) => ({
-    id: s.id || s.title,
-    icon: s.icon || null,
-    title: s.title || "",
-    shortDesc: s.shortDesc || s.description || "",
-    description: s.description || "",
-    features: typeof s.features === "string"
-      ? s.features.split(",").map(f => f.trim()).filter(Boolean)
-      : s.features || [],
-  }));
+  const resolveServiceIcon = (s) => {
+    const id = s.id || s.title;
+    if (typeof s.icon === "function") return s.icon;
+    if (typeof s.icon === "string" && iconMap[s.icon]) return iconMap[s.icon];
+    return services.find((x) => x.id === id)?.icon || Shield;
+  };
+
+  const allServices = cmsServices.map((s) => {
+    const id = s.id || s.title;
+    return {
+      id,
+      icon: resolveServiceIcon(s),
+      title: s.title || "",
+      shortDesc: s.shortDesc || s.description || "",
+      description: s.description || "",
+      features:
+        typeof s.features === "string"
+          ? s.features.split(",").map((f) => f.trim()).filter(Boolean)
+          : s.features || [],
+      image: getServiceImage(id),
+    };
+  });
 
   const [activeService, setActiveService] = useState(null);
-  const currentService = activeService || allServices[0] || services[0];
+  const currentService = activeService || allServices[0];
+
+  if (!currentService) {
+    return (
+      <Layout>
+        <p className="p-20 text-center text-slate-600">No services available.</p>
+      </Layout>
+    );
+  }
+
+  const currentImage = currentService.image || getServiceImage(currentService.id);
 
   return (
     <Layout>
@@ -226,117 +267,141 @@ const Services = () => {
         <meta name="description" content="Explore MIPL's comprehensive services including CCTV, biometrics, intrusion detection, command & control, ICT, smart city, cybersecurity, healthcare, judiciary, and AI & IoT solutions." />
         <meta name="keywords" content="MIPL services, CCTV, biometrics, intrusion detection, command and control, access control, smart city, cybersecurity, ICT, healthcare security, judiciary security, AI & IoT" />
       </Helmet>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Our Services</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Why MIPL?
-            </h1>
-            <p className="text-lg text-slate-600">
-              MIPL has the expertise, acumen, technology, will and the resolve to ensure safety 
-              and security of data, systems, networks that are entrusted to us.Years of experience coupled with the ability 
-              to adapt to technological upgrades makes MIPL your trustworthy partner. 
-              Besides, we are also a one-stop solution for all your security needs, 
-              be it CCTV, biometrics, intrusion detection, command & control and access control.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Our Services"
+        title="Security, IT, smart cities, and control rooms."
+        description="Advisory services from safety review and planning to setup guidance and ongoing support."
+        image={projectImages.aurangabadSmartCity}
+      />
+
+      <ServicesEditorialOverview />
 
       {/* Services Section */}
-      <section className="py-16 bg-white">
+      <section className="bg-white py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Service Navigation */}
-            <div className="lg:col-span-1 space-y-2">
-              {allServices.map((service) => (
-                <motion.button
-                  key={service.id}
-                  onClick={() => setActiveService(service)}
-                  whileHover={{ x: 8 }}
-                  className={`w-full p-4 rounded-xl text-left flex items-center gap-4 transition-all ${
-                    currentService.id === service.id
-                      ? "bg-[#0f172a] border-primary/50"
-                      : "bg-slate-100 hover:bg-slate-200"
-                  }`}
-                >
-                  <div
-                    className={`p-3 rounded-lg ${
-                      currentService.id === service.id
-                        ? "bg-primary/20 text-primary"
-                        : "bg-slate-200 text-slate-700"
-                    }`}
-                  >
-                    <service.icon className="w-6 h-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className={`font-semibold ${currentService.id === service.id ? "text-white" : "text-slate-900"}`}>{service.title}</h3>
-                    <p className={`text-sm ${currentService.id === service.id ? "text-slate-300" : "text-slate-600"}`}>{service.shortDesc}</p>
-                  </div>
-                  <ChevronRight
-                    className={`w-5 h-5 transition-opacity ${
-                      currentService.id === service.id
-                        ? "opacity-100 text-primary"
-                        : "opacity-0"
-                    }`}
-                  />
-                </motion.button>
-              ))}
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#E9863C]">
+            Capabilities
+          </p>
+          <h2 className="mb-10 text-3xl font-black text-[#0d1b3e] md:text-4xl">
+            Explore our service areas
+          </h2>
+          <div className="grid gap-8 lg:grid-cols-3">
+            <div className="space-y-2 lg:col-span-1">
+              {allServices.map((service, index) => {
+                const active = currentService.id === service.id;
+                const Icon = service.icon;
+                return (
+                  <ScrollFloat key={service.id} strength={24 + index * 2}>
+                    <motion.button
+                      type="button"
+                      onClick={() => setActiveService(service)}
+                      whileHover={{ x: 6 }}
+                      className={`flex w-full items-center gap-4 rounded-sm border p-4 text-left transition-all ${
+                        active
+                          ? "border-[#E9863C] bg-[#0d1b3e] text-white shadow-md"
+                          : "border-slate-200 bg-[#f8fafc] hover:border-[#1565c0]/40"
+                      }`}
+                    >
+                      <div
+                        className={`rounded-sm p-3 ${
+                          active ? "bg-[#E9863C]/20 text-[#E9863C]" : "bg-white text-[#1565c0]"
+                        }`}
+                      >
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`truncate font-semibold ${active ? "text-white" : "text-[#0d1b3e]"}`}>
+                          {service.title}
+                        </h3>
+                        <p className={`line-clamp-2 text-sm ${active ? "text-white/75" : "text-slate-600"}`}>
+                          {service.shortDesc}
+                        </p>
+                      </div>
+                      <ChevronRight
+                        className={`h-5 w-5 shrink-0 ${active ? "text-[#E9863C]" : "text-slate-300"}`}
+                      />
+                    </motion.button>
+                  </ScrollFloat>
+                );
+              })}
             </div>
 
-            {/* Service Details */}
             <div className="lg:col-span-2">
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentService.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="p-8 lg:p-12 bg-[#0f172a] rounded-2xl"
-                >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-4 rounded-xl bg-primary/20 text-primary">
-                      <currentService.icon className="w-10 h-10" />
+                <ScrollFloat strength={42}>
+                  <motion.div
+                    key={currentService.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden rounded-sm border border-slate-200 bg-[#0d1b3e] shadow-lg"
+                  >
+                    <div className="relative h-48 overflow-hidden sm:h-56">
+                      <img
+                        src={currentImage}
+                        alt=""
+                        aria-hidden
+                        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-md"
+                      />
+                      <img
+                        src={currentImage}
+                        alt={currentService.title}
+                        className="relative z-10 h-full w-full object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b3e] via-[#0d1b3e]/40 to-transparent" />
+                      <div className="absolute bottom-4 left-6 right-6 flex items-end gap-4">
+                        <div className="rounded-sm bg-[#E9863C]/20 p-3 text-[#E9863C]">
+                          <currentService.icon className="h-8 w-8" />
+                        </div>
+                        <h2 className="text-2xl font-black text-white lg:text-3xl">
+                          {currentService.title}
+                        </h2>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-2xl lg:text-3xl font-bold text-white">
-                        {currentService.title}
-                      </h2>
+
+                    <div className="p-8 lg:p-10">
+                      <p className="mb-8 text-lg leading-relaxed text-white/85">
+                        {currentService.description}
+                      </p>
+                      <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#E9863C]">
+                        Key capabilities
+                      </h3>
+                      <div className="grid auto-rows-fr gap-3 sm:grid-cols-2">
+                        {(currentService.features || []).map((feature, index) => (
+                          <motion.div
+                            key={feature}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.04 }}
+                            className="flex min-h-[56px] items-start gap-3 border border-white/10 bg-white/5 p-3"
+                          >
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#E9863C]" />
+                            <span className="text-sm text-white/85">{feature}</span>
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-
-                  <p className="text-lg text-slate-300 mb-8">
-                    {currentService.description}
-                  </p>
-
-                  <h3 className="text-lg font-semibold mb-4 text-white">Key Capabilities</h3>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {(currentService.features || []).map((feature, index) => (
-                      <motion.div
-                        key={feature}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex items-start gap-3"
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                        <span className="text-slate-300">{feature}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </ScrollFloat>
               </AnimatePresence>
             </div>
           </div>
         </div>
       </section>
+
+      <EditorialProjectStrip
+        eyebrow="Our Services in Action"
+        title="Sites we have advised on."
+        images={[
+          { image: projectImages.hpclMumbai, label: "HPCL Refinery" },
+          { image: projectImages.iocl, label: "IOCL" },
+          { image: projectImages.thanePolice, label: "Thane Police" },
+          { image: projectImages.mpHighCourt, label: "MP High Court" },
+          { image: projectImages.mrplFeatured, label: "MRPL" },
+          { image: projectImages.suratDiamond, label: "Surat Diamond Bourse" },
+        ]}
+      />
     </Layout>
   );
 };

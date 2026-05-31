@@ -32,7 +32,7 @@ function getAnswer(question) {
   // Services - General - Enhanced variations
   if ((q.includes("service") || q.includes("what do you offer") || q.includes("what can you do") ||
        q.includes("solution") || q.includes("offering")) && !q.includes("social")) {
-    return `${kb.services.overview}\n\nOur main services:\n1. CCTV & Video Surveillance\n2. Biometrics\n3. Intrusion Detection\n4. Command & Control\n5. Access Control\n\nWe also provide Security Consultancy, TRAVA audits, eGovernance, Smart City, Safe City solutions, and Training.`;
+    return `${kb.services.overview}\n\nOur main services:\n1. CCTV & Video Surveillance\n2. Biometrics\n3. Intrusion Detection\n4. Command & Control\n5. Access Control\n\nWe also provide Security Consultancy, security audits, eGovernance, Smart City, Safe City solutions, and Training.`;
   }
 
   // Services - Specific
@@ -55,8 +55,8 @@ function getAnswer(question) {
   // Specialized Services
   if (q.includes("smart city") || q.includes("smart cities")) return kb.services.specialized.smartCity;
   if (q.includes("safe city") || q.includes("safe cities")) return kb.services.specialized.safeCity;
-  if (q.includes("trava") || q.includes("audit") || q.includes("risk") || q.includes("vulnerability")) {
-    return kb.services.specialized.trava;
+  if (q.includes("audit") || q.includes("risk") || q.includes("vulnerability")) {
+    return kb.services.specialized.securityAudits;
   }
   if (q.includes("egovernance") || q.includes("e-governance") || q.includes("government")) {
     return kb.services.specialized.egovernance;

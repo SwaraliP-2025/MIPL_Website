@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -43,6 +44,14 @@
     --ring: 24 100% 60%;
 
     --radius: 0.75rem;
+
+    /* Editorial audit palette */
+    --mipl-navy: #0d1b3e;
+    --mipl-blue: #1565c0;
+    --mipl-gold: #f0a500;
+    --mipl-orange: #E9863C;
+    --font-display: "Rajdhani", "Inter", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Inter", system-ui, sans-serif;
 
     /* Custom MIPL tokens - Light theme */
     --slate-900: 222 47% 6%;
@@ -238,6 +247,23 @@
 
   .animate-rotate-in {
     animation: rotateIn 0.6s ease-out forwards;
+  }
+
+  /* Equal-height card grids — stretch direct children (e.g. ScrollFloat wrappers) */
+  .card-grid-equal {
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+  }
+
+  .card-grid-equal > * {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .card-fill {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
   }
 }
 

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
@@ -25,44 +27,24 @@ const CoffeeTableBook = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="pt-32 pb-8">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="inline-flex p-4 rounded-full bg-primary/10 mb-6"
-            >
-              <BookOpen className="w-12 h-12 text-primary" />
-            </motion.div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              CSN Digital Coffee Table Book
-            </h1>
-            
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Experience our comprehensive security solutions showcase in an interactive digital format. 
-              Flip through pages just like a real book.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        align="center"
+        eyebrow="Digital Showcase"
+        title="CSN Digital Coffee Table Book"
+        description="Experience our comprehensive security solutions showcase in an interactive digital format. Flip through pages just like a real book."
+        image="/projects/0148.png"
+      />
 
       {/* Flipbook Viewer Section */}
       <section className="pb-16 relative overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-7xl mx-auto"
-          >
+          <ScrollFloat strength={40}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-7xl mx-auto"
+            >
             {/* Flipbook Container */}
             <div className={`glass-card overflow-hidden transition-all duration-300 ${
               isFullscreen 
@@ -170,7 +152,8 @@ const CoffeeTableBook = () => {
                 </Button>
               </motion.div>
             </motion.div>
-          </motion.div>
+            </motion.div>
+          </ScrollFloat>
         </div>
       </section>
     </Layout>

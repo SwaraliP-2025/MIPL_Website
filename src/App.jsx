@@ -27,6 +27,8 @@ import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import Article from "./pages/Article.jsx";
+import SectorDetail from "./pages/SectorDetail.jsx";
+import CaseStudyDetail from "./pages/CaseStudyDetail.jsx";
 
 const queryClient = new QueryClient();
 
@@ -48,10 +50,12 @@ const AnimatedRoutes = () => {
         <Route path="ctb-feedback" element={<PageTransition><CTBFeedback /></PageTransition>} />
         <Route path="careers" element={<PageTransition><Careers /></PageTransition>} />
         <Route path="contact" element={<PageTransition><Contact /></PageTransition>} />
+        <Route path="sectors/:slug" element={<PageTransition><SectorDetail /></PageTransition>} />
         <Route path="login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="admin" element={<AdminLogin />} />
         <Route path="admin/dashboard" element={<AdminDashboard />} />
         <Route path="article/:id" element={<PageTransition><Article /></PageTransition>} />
+        <Route path="case-study/:slug" element={<PageTransition><CaseStudyDetail /></PageTransition>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
@@ -92,8 +96,8 @@ const App = () => {
               <SkipToContent />
               <ScrollToTop />
               <Helmet>
-                <title>MIPL | Securing India's Critical Infrastructure</title>
-                <meta name="description" content="MIPL provides 25+ years of expertise in Safe Cities, Smart Governance, ICCC Command & Control, and Enterprise Infrastructure Security solutions across India." />
+                <title>MIPL | Security & IT Advisory Services</title>
+                <meta name="description" content="MIPL provides security and IT advisory services for cities, refineries, courts, and large campuses across India." />
                 <meta name="keywords" content="MIPL, security solutions, safe cities, smart governance, ICCC, command and control, enterprise infrastructure security" />
               </Helmet>
               <AnimatedRoutes />

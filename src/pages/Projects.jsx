@@ -3,7 +3,14 @@ import { useCmsData } from "@/hooks/useCmsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { ArrowUpRight, Building2, Landmark, Factory, CreditCard } from "lucide-react";
-
+import { PageHero } from "@/components/PageHero";
+import { ProjectsImpactBanner } from "@/components/projects/ProjectsEnhancements";
+import { ScrollFloat } from "@/components/ScrollFloat";
+import {
+  projectImageById,
+  resolveProjectImage,
+  isTestProject,
+} from "@/data/projectImages";
 const categories = [
   { id: "all", label: "All Projects", icon: null },
   { id: "smart-city", label: "Smart & Safe City", icon: Building2 },
@@ -20,7 +27,7 @@ const projects = [
     client: "Aurangabad Smart City Development Corporation Limited",
     challenge: "Comprehensive smart city infrastructure with integrated security, traffic management, and citizen services.",
     solution: "End-to-end smart city solution with command & control center, city-wide surveillance, and integrated services.",
-    result: "Successfully deployed smart city infrastructure enhancing urban management and citizen services.",
+    result: "Advisory support helped the city improve urban management and public services.",
     image: "/projects/0148.png",
   },
   {
@@ -39,7 +46,7 @@ const projects = [
     category: "government",
     client: "Hon High Court of Madhya Pradesh, Jabalpur",
     challenge: "Surveillance systems for all district courts across Madhya Pradesh as per Supreme Court mandate.",
-    solution: "Centralized surveillance architecture with video management systems deployed across multiple court locations.",
+    solution: "Centralised surveillance planning with video systems across multiple court locations.",
     result: "Comprehensive security coverage for judicial infrastructure with centralized monitoring.",
     image: "/projects/MP_HIGH_COURT_JABALPUR_-_panoramio.jpg",
   },
@@ -201,7 +208,7 @@ const projects = [
     challenge: "Strengthening city security infrastructure.",
     solution: "Integrated safe city surveillance and command center.",
     result: "Improved public safety and crime monitoring.",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&auto=format",
+    image: "/projects/nanded corp.jpg",
   },
   {
     id: 20,
@@ -322,7 +329,7 @@ const projects = [
 //     client: "Aurangabad Smart City Development Corporation Limited",
 //     challenge: "Comprehensive smart city infrastructure with integrated security, traffic management, and citizen services.",
 //     solution: "End-to-end smart city solution with command & control center, city-wide surveillance, and integrated services.",
-//     result: "Successfully deployed smart city infrastructure enhancing urban management and citizen services.",
+//     result: "Advisory support helped the city improve urban management and public services.",
 //     image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&auto=format",
 //   },
 //   {
@@ -341,7 +348,7 @@ const projects = [
 //     category: "government",
 //     client: "High Court of Madhya Pradesh, Jabalpur",
 //     challenge: "Surveillance systems for all district courts across Madhya Pradesh as per Supreme Court mandate.",
-//     solution: "Centralized surveillance architecture with video management systems deployed across multiple court locations.",
+//     solution: "Centralised surveillance planning with video systems across multiple court locations.",
 //     result: "Comprehensive security coverage for judicial infrastructure with centralized monitoring.",
 //     image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format",
 //   },
@@ -643,16 +650,24 @@ const Projects = () => {
   const { data: cmsProjects } = useCmsData("Projects", projects);
 
   // Normalize CMS rows (strings) to match hardcoded shape
-  const allProjects = cmsProjects.map((p) => ({
-    id: p.id || p.title,
-    title: p.title || "",
-    category: p.category || "smart-city",
-    client: p.client || "",
-    challenge: p.challenge || "",
-    solution: p.solution || "",
-    result: p.result || "",
-    image: p.image || "",
-  }));
+  const allProjects = cmsProjects
+    .filter((p) => !isTestProject(p))
+    .map((p) => {
+      const normalized = {
+        id: p.id || p.title,
+        title: p.title || "",
+        category: p.category || "smart-city",
+        client: p.client || "",
+        challenge: p.challenge || "",
+        solution: p.solution || "",
+        result: p.result || "",
+        image: p.image || "",
+      };
+      return {
+        ...normalized,
+        image: resolveProjectImage(normalized),
+      };
+    });
 
   const filteredProjects = activeCategory === "all"
     ? allProjects
@@ -660,30 +675,14 @@ const Projects = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Our Work</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Our Clients
-            </h1>
-            <p className="text-xl text-slate-600">
-              MIPL can design and deliver security projects in a wide variety of domains including 
-              safe cities, shopping malls, commercial establishments, petroleum establishments, ports, 
-              airports and industrial environments. Each of these segments needs a unique approach to 
-              security, which the MIPL team is able to offer through the significant risk experience 
-              of our team members.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Our Work"
+        title="Projects across India."
+        description="Safe cities, refineries, ports, courts, campuses, and enterprise facilities."
+        image={projectImageById[1]}
+      />
 
-
+      <ProjectsImpactBanner />
 
       {/* Filter Bar */}
       <section className="py-8 border-b border-gray-200 bg-white">
@@ -710,43 +709,43 @@ const Projects = () => {
       {/* Projects Grid */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div layout className="card-grid-equal grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  whileHover={{ y: -8 }}
-                  className="group cursor-pointer"
-                  onClick={() => setSelectedProject(project)}
-                >
-                  <div className="overflow-hidden bg-slate-50 border border-gray-200 rounded-xl">
-                    <div className="relative h-48 overflow-hidden bg-white">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute bottom-4 left-4">
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
-                          {categories.find(c => c.id === project.category)?.label}
-                        </span>
+              {filteredProjects.map((project, index) => (
+                <ScrollFloat key={project.id} strength={34 + (index % 3) * 6} className="h-full min-h-0">
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    whileHover={{ y: -8 }}
+                    className="group h-full cursor-pointer"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <div className="card-fill overflow-hidden bg-slate-50 border border-gray-200 rounded-xl">
+                      <div className="relative h-56 shrink-0 overflow-hidden bg-slate-100 sm:h-60">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="h-full w-full object-cover object-center"
+                        />
+                        <div className="absolute bottom-4 left-4 z-10">
+                          <span className="rounded-full border border-[#E9863C]/40 bg-[#E9863C]/90 px-3 py-1 text-xs font-medium text-white">
+                            {categories.find(c => c.id === project.category)?.label}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-1 flex-col p-6">
+                        <h3 className="text-lg font-semibold mb-2 text-slate-900 group-hover:text-primary transition-colors line-clamp-2">
+                          {project.title}
+                        </h3>
+                        <p className="mt-auto text-sm text-slate-600 line-clamp-2">
+                          {project.client}
+                        </p>
                       </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 mb-4">
-                        {project.client}
-                      </p>
-  
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </ScrollFloat>
               ))}
             </AnimatePresence>
           </motion.div>
@@ -770,11 +769,11 @@ const Projects = () => {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2 bg-white rounded-xl border border-gray-200 shadow-xl"
             >
-              <div className="relative h-64 bg-white">
+              <div className="relative h-64 overflow-hidden bg-slate-100 sm:h-72">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover object-center"
                 />
               </div>
               <div className="p-8">

@@ -97,7 +97,7 @@ export const chatbotKnowledge = {
     specialized: {
       securityConsultancy: "MIPL is the consultant of choice for several large organizations for designing and managing enterprise-class security technology solutions. We advise safe city and smart city programs and are involved in AI & IoT applications in security management.",
       
-      trava: "TRAVA (Threat and Risk Analysis & Vulnerability Assessment) is our proprietary risk analysis tool that detects vulnerabilities in hardware, software, and networks. It checks data handling practices and helps organizations conduct audits, implement changes, and train human resources.",
+      securityAudits: "MIPL conducts threat and risk analysis and vulnerability assessments — reviewing hardware, software, networks, and data handling. We help organizations plan audits, implement improvements, and train staff.",
       
       egovernance: "We provide unparalleled expertise in designing security & eGovernance programs with two decades of experience in IT & security solutions across government enterprises and large industrial premises.",
       

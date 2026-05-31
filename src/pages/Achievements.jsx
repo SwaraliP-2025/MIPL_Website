@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Award, Trophy, Star, Target, CheckCircle } from "lucide-react";
 import { useCmsData } from "@/hooks/useCmsData";
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
+import { EditorialProjectStrip } from "@/components/home/EditorialProjectStrip";
+import { AboutAwardsGrid } from "@/components/about/AboutAwardsGrid";
 
 const iconMap = {
   Trophy,
@@ -16,7 +20,7 @@ const defaultAchievements = [
   { year: "2015", title: "Security Excellence Awards - Finalist", location: "London, UK", description: "Second consecutive year as finalist, showcasing consistent excellence in security management.", category: "International Recognition" },
   { year: "2017", title: "Security Excellence Awards - Finalist", location: "London, UK", description: "Recognized as finalist for innovative security solutions and implementations in the international arena.", category: "International Recognition" },
   { year: "2017", title: "Nanded Safe City Project", location: "Nanded, Maharashtra", description: "Implemented comprehensive safe city solution recognized nationally and internationally for its innovative approach and effectiveness.", category: "Safe City Projects" },
-  { year: "2017", title: "Kolhapur Safe City Project", location: "Kolhapur, Maharashtra", description: "Delivered integrated surveillance and security management system for enhanced public safety recognized nationally and internationally.", category: "Safe City Projects" },
+  { year: "2017", title: "Kolhapur Safe City Project", location: "Kolhapur, Maharashtra", description: "Advised on city surveillance and safety planning, recognised nationally and internationally.", category: "Safe City Projects" },
 ];
 
 const defaultHighlights = [
@@ -35,52 +39,42 @@ const Achievements = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Recognition & Excellence</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Our Achievements
-            </h1>
-            <p className="text-xl text-slate-600">
-              Over two decades of excellence, innovation, and recognition in security management 
-              and technology implementation across India and internationally.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Recognition & Excellence"
+        title="Award-winning advisory work."
+        description="National and international recognition for safe cities, control rooms, and public-sector assignments."
+        image="/awards/ICCC Awards3.png"
+      />
 
       {/* Highlights */}
       <section className="py-16 border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card-grid-equal grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {highlights.map((highlight, index) => {
               const IconComponent = iconMap[highlight.icon] || Trophy;
               return (
-              <motion.div
-                key={highlight.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-6 text-center bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <IconComponent className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-2 text-slate-900">{highlight.title}</h3>
-                <p className="text-sm text-slate-600">{highlight.description}</p>
-              </motion.div>
+              <ScrollFloat key={highlight.title} strength={32} className="h-full min-h-0">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card-fill p-6 text-center bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <IconComponent className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="font-semibold mb-2 text-slate-900">{highlight.title}</h3>
+                  <p className="flex-1 text-sm text-slate-600">{highlight.description}</p>
+                </motion.div>
+              </ScrollFloat>
               );
             })}
           </div>
         </div>
       </section>
+
+      <AboutAwardsGrid />
 
       {/* Achievements Timeline */}
       <section className="py-24 bg-white">
@@ -99,15 +93,15 @@ const Achievements = () => {
 
           <div className="max-w-5xl mx-auto space-y-8">
             {achievements.map((achievement, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="p-8 bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
-              >
-                <div className="flex flex-col md:flex-row gap-6">
+              <ScrollFloat key={index} strength={36}>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="p-8 bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
+                >
+                  <div className="flex flex-col md:flex-row gap-6">
                   {/* Year Badge */}
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -137,8 +131,9 @@ const Achievements = () => {
                       {achievement.description}
                     </p>
                   </div>
-                </div>
-              </motion.div>
+                  </div>
+                </motion.div>
+              </ScrollFloat>
             ))}
           </div>
         </div>
@@ -147,12 +142,13 @@ const Achievements = () => {
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-12 text-center max-w-3xl mx-auto bg-slate-50 border border-gray-200 rounded-xl"
-          >
+          <ScrollFloat strength={36}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-12 text-center max-w-3xl mx-auto bg-slate-50 border border-gray-200 rounded-xl"
+            >
             <h2 className="text-3xl font-bold mb-4 text-slate-900">Ready to Work with Award-Winning Experts?</h2>
             <p className="text-slate-600 mb-8">
               Let our proven track record of excellence work for your security needs
@@ -166,9 +162,23 @@ const Achievements = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-          </motion.div>
+            </motion.div>
+          </ScrollFloat>
         </div>
       </section>
+
+      <EditorialProjectStrip
+        eyebrow="Award-Winning Work"
+        title="Projects behind the recognition."
+        images={[
+          { image: "/projects/0148.png", label: "Smart City ICCC" },
+          { image: "/projects/nanded corp.jpg", label: "Nanded Safe City" },
+          { image: "/awards/summit.jpg", label: "Industry Summit" },
+          { image: "/projects/privi.jpg", label: "Industrial Security" },
+          { image: "/projects/amravti corp.jpg", label: "Amravati Corporation" },
+          { image: "/projects/gujrat board.jpg", label: "Gujarat Board" },
+        ]}
+      />
     </Layout>
   );
 };

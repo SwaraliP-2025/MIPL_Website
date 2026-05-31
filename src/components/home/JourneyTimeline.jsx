@@ -48,7 +48,7 @@ export const JourneyTimeline = () => {
             Our Journey of Excellence
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
-            25+ years of shaping India's security and smart governance landscape
+            Shaping India's security and smart governance landscape
           </p>
         </motion.div>
 

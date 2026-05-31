@@ -6,7 +6,7 @@ import { useCmsData } from "@/hooks/useCmsData";
 
 const defaultServices = [
   { id: 1, iconImage: "sec_cons.png", title: "Security Consultancy", description: "MIPL is the consultant of choice for several large organisations for designing and managing enterprise-class security technology solutions.", gradient: "from-blue-500/20 to-cyan-500/20" },
-  { id: 2, iconImage: "secaudit.png", title: "Security Audits", description: "MIPL conducts risk analysis and security audits using TRAVA. It detects if there are any vulnerabilities.", gradient: "from-purple-500/20 to-pink-500/20" },
+  { id: 2, iconImage: "secaudit.png", title: "Security Audits", description: "MIPL conducts risk analysis and security audits — identifying vulnerabilities in hardware, software, and operations.", gradient: "from-purple-500/20 to-pink-500/20" },
   { id: 3, iconImage: "egov.png", title: "eGovernance Consultancy", description: "MIPL provides unparalleled expertise in designing security & eGovernance programs.", gradient: "from-green-500/20 to-emerald-500/20" },
   { id: 4, iconImage: "smartcity.png", title: "Smart City", description: "MIPL can work with municipal bodies in designing, implementing and maintaining a Smart City.", gradient: "from-orange-500/20 to-amber-500/20" },
   { id: 5, iconImage: "sectrain.png", title: "Security Training", description: "MIPL can provide handholding and training programs related to generic technology.", gradient: "from-red-500/20 to-rose-500/20" },

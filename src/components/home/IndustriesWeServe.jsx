@@ -57,7 +57,7 @@ export function IndustriesWeServe({ industries = defaultIndustries }) {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="card-grid-equal grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {industries.map((industry, index) => (
             <motion.div
               key={industry.title}
@@ -65,7 +65,7 @@ export function IndustriesWeServe({ industries = defaultIndustries }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-xl bg-slate-50 border border-gray-200 hover:border-[#E9863C]/50 transition-all"
+              className="card-fill group relative overflow-hidden rounded-xl bg-slate-50 border border-gray-200 hover:border-[#E9863C]/50 transition-all"
             >
               {/* Image */}
               {industry.image && (
@@ -79,9 +79,9 @@ export function IndustriesWeServe({ industries = defaultIndustries }) {
               )}
               
               {/* Content */}
-              <div className="p-6">
+              <div className="flex flex-1 flex-col p-6">
                 <h3 className="text-xl font-semibold mb-3 text-slate-900 group-hover:text-[#E9863C] transition-colors">{industry.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed text-justify">
+                <p className="flex-1 text-sm text-slate-600 leading-relaxed text-justify line-clamp-6">
                   {industry.description}
                 </p>
               </div>

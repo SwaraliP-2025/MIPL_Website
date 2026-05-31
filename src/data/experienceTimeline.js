@@ -1,0 +1,111 @@
+export const experienceStats = [
+  { value: "25+", label: "Years of Service" },
+  { value: "50+", label: "Major Assignments" },
+  { value: "10+", label: "Cities & Sites" },
+  { value: "8+", label: "National Awards" },
+];
+
+export const experienceMilestones = [
+  {
+    year: "2000",
+    title: "Founded in Thane",
+    tag: "Origins",
+    caption: "Started as an independent security and IT advisory firm.",
+    image: "/projects/mipl-founded-2000.jpg",
+    alt: "MIPL office at Lodha Supremus, Thane — founded 2000",
+  },
+  {
+    year: "2010",
+    title: "First Safe City",
+    tag: "City Safety",
+    caption: "Advised on city-wide safety and control-room planning.",
+    image: "/projects/nanded corp.jpg",
+    alt: "Nanded Safe City advisory work",
+  },
+  {
+    year: "2012",
+    title: "Oil & Gas Scale",
+    tag: "Energy Sector",
+    caption: "Security advisory for HPCL, MRPL and refineries.",
+    image: "/projects/Hydrocracker_Units.jpg",
+    alt: "MRPL refinery security advisory",
+  },
+  {
+    year: "2015",
+    title: "Online Government Services",
+    tag: "Digital Services",
+    caption: "Advised on Udaan iMEGA and municipal platforms.",
+    image: "/projects/kolh corp.jpg",
+    alt: "Kolhapur municipal corporation advisory",
+  },
+  {
+    year: "2017",
+    title: "Judiciary & Courts",
+    tag: "Public Buildings",
+    caption: "Security planning for 201 court premises.",
+    image: "/projects/MP_HIGH_COURT_JABALPUR_-_panoramio.jpg",
+    alt: "Madhya Pradesh High Court security advisory",
+  },
+  {
+    year: "2018",
+    title: "Refinery Control Room",
+    tag: "Industrial Safety",
+    caption: "Advised on India's first refinery control room.",
+    image: "/projects/hpclmum.jpg",
+    alt: "HPCL Mumbai refinery control room advisory",
+  },
+  {
+    year: "2019",
+    title: "Smart City Programs",
+    tag: "Smart Cities",
+    caption: "Advisory work in Aurangabad, Nanded and more cities.",
+    image: "/projects/0148.png",
+    alt: "Aurangabad Smart City ASCDCL ICCC",
+  },
+  {
+    year: "2020",
+    title: "Court Security Guidelines",
+    tag: "Court Safety",
+    caption: "Advised on Supreme Court-directed court security.",
+    image: "/projects/MH legislative.jpg",
+    alt: "Maharashtra Vidhan Bhavan security advisory",
+  },
+  {
+    year: "2024",
+    title: "National Recognition",
+    tag: "Awards",
+    caption: "Honoured for control-room and industry work.",
+    image: "/awards/ICCC Awards3.png",
+    imageFit: "contain",
+    timelineSide: "left",
+    alt: "MIPL ICCC infrastructure award",
+  },
+  {
+    year: "2026",
+    title: "25 Years Strong",
+    tag: "Today",
+    caption: "Still helping keep important places safe across India.",
+    image: "/projects/JNPT.jpg",
+    alt: "JNPT port security advisory — nationwide client work",
+  },
+];
+
+export const clientLogos = [
+  { name: "HPCL", image: "/clients/hpcl-logo.png", type: "PSU" },
+  { name: "IOCL", image: "/clients/iocl-logo.png", type: "PSU" },
+  { name: "MRPL", image: "/clients/mrpl-logo.jpg", type: "PSU" },
+  { name: "JNPT", image: "/clients/jnpt-logo.png", type: "PSU" },
+  { name: "Nayara Energy", image: "/clients/nayara-logo.jpg", type: "Energy PSU" },
+  { name: "Maharashtra Government", image: "/clients/maharashtra-logo.png", type: "Government" },
+  { name: "Gujarat Police", image: "/clients/gujarat-police-logo.jpg", type: "Government" },
+  { name: "ASCDCL Smart City", image: "/clients/ascdcl-logo.png", type: "Government SPV" },
+];
+
+export const projectShowcaseImages = [
+  { image: "/projects/suratdiam.jpg", label: "Surat Diamond Bourse" },
+  { image: "/projects/JNPT.jpg", label: "JNPT" },
+  { image: "/projects/kolh corp.jpg", label: "Kolhapur Corporation" },
+  { image: "/projects/navi mum corp.jpg", label: "Navi Mumbai" },
+  { image: "/projects/IIM Ban.jpg", label: "IIM Bangalore" },
+  { image: "/projects/Nayara.jpg", label: "Nayara Energy" },
+];

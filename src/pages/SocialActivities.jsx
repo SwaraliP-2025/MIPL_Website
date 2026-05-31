@@ -1,348 +1,223 @@
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { Heart, Users, GraduationCap, HandHeart, Award, Target } from "lucide-react";
-
-const initiatives = [
-  {
-    icon: GraduationCap,
-    title: "Aatman Educational Society",
-    role: "Founder Trustee",
-    description: "Founded and managing a non-profit trust dedicated to inclusive education and supporting children with learning differences and disabilities.",
-    impact: "Providing quality education to children who need specialized learning support",
-    year: "Ongoing"
-  },
-  {
-    icon: Users,
-    title: "Aatman Academy",
-    role: "Managing Trustee",
-    description: "An inclusive school specifically designed for children with learning differences and disabilities, offering specialized curriculum and support systems.",
-    impact: "Empowering differently-abled children with education and life skills",
-    year: "Ongoing"
-  },
-  {
-    icon: Award,
-    title: "SECONA",
-    role: "Founder Chairman",
-    description: "SECONA (Security Consultants' Association) is the first association in India creating a unique collaboration platform for independent security consultants. SECONA has launched a|s|t|r|a, the Academy of Security Technology Training Research and Application.",
-    impact: "Establishing professional standards and best practices in security consulting",
-    year: "Ongoing"
-  },
-  // {
-  //   icon: HandHeart,
-  //   title: "Community Security Awareness",
-  //   role: "Program Lead",
-  //   description: "Conducting regular awareness programs on security, safety, and emergency preparedness for communities and organizations.",
-  //   impact: "Educating thousands on personal and community safety measures",
-  //   year: "Ongoing"
-  // },
-  // {
-  //   icon: Target,
-  //   title: "Skill Development Initiatives",
-  //   role: "Mentor & Advisor",
-  //   description: "Supporting skill development programs in security management and technology for youth and professionals.",
-  //   impact: "Creating employment opportunities in the security sector",
-  //   year: "Ongoing"
-  // },
-  // {
-  //   icon: Heart,
-  //   title: "Educational Support Programs",
-  //   role: "Contributor",
-  //   description: "Providing educational support and resources to underprivileged students pursuing careers in technology and security.",
-  //   impact: "Enabling access to quality education for deserving students",
-  //   year: "Ongoing"
-  // },
-];
-
-const impactStats = [
-  { value: "500+", label: "Students Supported", icon: Users },
-  { value: "50+", label: "Awareness Programs", icon: Target },
-  { value: "15+", label: "Years of Service", icon: Heart },
-  { value: "10+", label: "Community Initiatives", icon: HandHeart },
-];
+import { PageHero } from "@/components/PageHero";
+import { ScrollFloat } from "@/components/ScrollFloat";
+import { EditorialProjectStrip } from "@/components/home/EditorialProjectStrip";
+import {
+  aatmanHero,
+  aatmanHighlights,
+  aatmanLeadStory,
+  aatmanStories,
+  aatmanPhotoGrid,
+  aatmanGalleryMosaic,
+} from "@/data/aatmanAcademy";
+import {
+  seconaHero,
+  seconaLeadStory,
+  seconaStories,
+  seconaTrainingAudiences,
+  seconaPhotoGrid,
+} from "@/data/secona";
+import { socialPageHero, socialDualPillars } from "@/data/socialContributions";
+import { EditorialStory, EditorialPhotoGrid } from "@/components/social/EditorialStory";
+import { ArrowDown, Award, ExternalLink, Users } from "lucide-react";
 
 const SocialActivities = () => {
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-white">
+      <PageHero
+        eyebrow={socialPageHero.eyebrow}
+        title={socialPageHero.title}
+        description={socialPageHero.description}
+        image={socialPageHero.image}
+        imagePosition={socialPageHero.imagePosition}
+      />
+
+      {/* Two pillars — MIPL social work */}
+      <section className="border-b border-slate-200 bg-white py-16">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="text-primary font-medium mb-4 block">Giving Back to Society</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900">
-              Social Activities & Community Impact
-            </h1>
-            <p className="text-xl text-slate-600">
-              Beyond business, we are committed to making a positive impact on society through 
-              education, community service, and social welfare initiatives.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Impact Stats */}
-      <section className="py-16 border-b border-gray-200 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {impactStats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-6 text-center bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
-              >
-                <stat.icon className="w-8 h-8 text-primary mx-auto mb-3" />
-                <div className="text-3xl font-bold gradient-text mb-2">{stat.value}</div>
-                <p className="text-sm text-slate-600">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Main Initiatives */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="mb-10 text-center"
           >
-            <h2 className="text-3xl font-bold mb-4">Our Social Initiatives</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Making a difference through dedicated programs and community engagement
+            <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#E9863C]">
+              By MIPL leadership
             </p>
+            <h2 className="text-3xl font-black text-[#0f172a] md:text-4xl">
+              Two missions. One commitment to service.
+            </h2>
           </motion.div>
-
-          <div className="max-w-5xl mx-auto space-y-8">
-            {initiatives.map((initiative, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-8 bg-slate-50 border border-gray-200 rounded-xl hover:border-primary/50 group"
-              >
-                <div className="flex flex-col md:flex-row gap-6">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <initiative.icon className="w-10 h-10 text-primary" />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                      <div>
-                        <h3 className="text-2xl font-bold mb-1 text-slate-900">{initiative.title}</h3>
-                        <span className="text-sm text-primary font-medium">{initiative.role}</span>
-                      </div>
-                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
-                        {initiative.year}
-                      </span>
-                    </div>
-                    <p className="text-slate-600 leading-relaxed mb-4">
-                      {initiative.description}
+          <div className="card-grid-equal mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+            {socialDualPillars.map((pillar, index) => (
+              <ScrollFloat key={pillar.id} strength={36 + index * 4} className="h-full min-h-0">
+                <a
+                  href={`#${pillar.id}`}
+                  className="card-fill group flex flex-col overflow-hidden border border-slate-200 bg-slate-50 transition-colors hover:border-[#E9863C]/50"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={pillar.image}
+                      alt={pillar.name}
+                      className="h-full w-full object-contain object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 to-transparent" />
+                    <p className="absolute bottom-4 left-4 text-xl font-black text-white">
+                      {pillar.name}
                     </p>
-                    <div className="flex items-start gap-2 p-4 rounded-lg bg-primary/5 border border-primary/10">
-                      <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium mb-1">Impact</p>
-                        <p className="text-sm text-slate-600">{initiative.impact}</p>
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </motion.div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="text-sm font-semibold text-[#E9863C]">{pillar.tagline}</p>
+                    <p className="mt-3 flex-1 text-sm leading-7 text-slate-600">{pillar.summary}</p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0f172a] group-hover:text-[#E9863C]">
+                      {pillar.cta}
+                      <ArrowDown className="h-4 w-4" />
+                    </span>
+                  </div>
+                </a>
+              </ScrollFloat>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Aatman Academy Spotlight */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-12 bg-slate-50 border border-gray-200 rounded-xl"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <GraduationCap className="w-8 h-8 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-3xl font-bold text-slate-900">Aatman Academy</h2>
-                  <p className="text-primary font-medium">Inclusive Education for All</p>
-                </div>
-              </div>
-              
-              <p className="text-slate-600 leading-relaxed mb-6">
-                Aatman Academy stands as a beacon of hope for children with learning differences and 
-                disabilities. Our inclusive approach ensures that every child receives personalized 
-                attention, specialized curriculum, and the support they need to thrive academically 
-                and socially.
-              </p>
+      {/* ——— AATMAN ACADEMY ——— */}
+      <div id="aatman" className="scroll-mt-28 border-b border-slate-200 bg-white">
+        <div className="border-b border-slate-200 bg-[#0f172a] px-6 py-10 text-center md:px-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#E9863C]">
+            {aatmanHero.title}
+          </p>
+          <h2 className="mt-2 text-2xl font-black text-white md:text-3xl">{aatmanHero.headline}</h2>
+          <p className="mx-auto mt-2 max-w-lg text-sm text-white/75">{aatmanHero.tagline}</p>
+        </div>
 
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">100+</div>
-                  <p className="text-sm text-slate-600">Students Enrolled</p>
+        <section className="mx-auto max-w-6xl px-6 py-10 md:px-10 lg:px-14">
+          <EditorialStory featured {...aatmanLeadStory} strength={52} />
+          <div className="mb-12 grid grid-cols-2 gap-6 border-y border-slate-200 py-8 lg:grid-cols-4">
+            {aatmanHighlights.map((stat, index) => (
+              <ScrollFloat key={stat.label} strength={18 + index * 2}>
+                <div className="text-center">
+                  <div className="text-2xl font-black text-[#E9863C]">{stat.value}</div>
+                  <p className="mt-1 text-xs font-medium text-slate-600">{stat.label}</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">20+</div>
-                  <p className="text-sm text-slate-600">Specialized Educators</p>
-                </div>
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">95%</div>
-                  <p className="text-sm text-slate-600">Success Rate</p>
-                </div>
-              </div>
+              </ScrollFloat>
+            ))}
+          </div>
+          {aatmanStories.map((story, index) => (
+            <EditorialStory
+              key={story.headline}
+              {...story}
+              reverse={index % 2 === 1}
+              strength={38 + index * 2}
+            />
+          ))}
+        </section>
 
-              {/* Image Gallery */}
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-4 text-slate-900">Glimpses of Aatman Academy</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="aspect-square rounded-lg bg-gradient-to-br from-primary/20 to-blue-500/20 flex items-center justify-center border border-primary/20">
-                      <GraduationCap className="w-12 h-12 text-primary/50" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <EditorialPhotoGrid title="Life at Aatman — official gallery" photos={aatmanPhotoGrid} />
 
-              <a
-                href="https://aatmanacademy.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-primary-foreground font-semibold rounded-lg transition-all"
+        <section className="bg-white px-4 py-12 md:px-10 lg:px-14">
+          <div className="mx-auto max-w-6xl">
+            <h3 className="mb-8 text-center text-xl font-black text-[#0f172a] md:text-2xl">
+              More from the academy
+            </h3>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+              {aatmanGalleryMosaic.map((item, index) => (
+                <ScrollFloat
+                  key={item.label}
+                  strength={24 + index * 2}
+                  className={`overflow-hidden border border-slate-200 bg-[#f1f5f9] ${item.span ?? ""}`}
+                >
+                  <div className="flex aspect-square items-center justify-center p-2 md:p-3">
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="border-t border-slate-200 bg-white px-2 py-2 text-center text-xs font-semibold text-slate-700">
+                    {item.label}
+                  </p>
+                </ScrollFloat>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* ——— SECONA ——— */}
+      <div id="secona" className="scroll-mt-28 border-t border-slate-200 bg-white">
+        <div className="border-b border-slate-200 bg-[#0f172a] px-6 py-10 text-center md:px-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#E9863C]">
+            {seconaHero.title}
+          </p>
+          <h2 className="mt-2 text-2xl font-black text-white md:text-3xl">{seconaHero.subtitle}</h2>
+        </div>
+
+        <section className="mx-auto max-w-6xl px-6 py-10 md:px-10 lg:px-14">
+          <EditorialStory featured {...seconaLeadStory} strength={52} />
+
+          <div className="mb-12 flex flex-wrap justify-center gap-3 border-y border-slate-200 py-8">
+            {seconaTrainingAudiences.map((audience) => (
+              <span
+                key={audience}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700"
               >
-                Visit Aatman Academy
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            </motion.div>
+                <Users className="h-4 w-4 text-[#E9863C]" />
+                {audience}
+              </span>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* SECONA Spotlight */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-12 bg-slate-50 border border-gray-200 rounded-xl"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Award className="w-8 h-8 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-3xl font-bold text-slate-900">SECONA</h2>
-                  <p className="text-primary font-medium">Security Consultants' Association</p>
-                </div>
-              </div>
-              
-              <p className="text-slate-600 leading-relaxed mb-6">
-                SECONA is the first association in India which has created a unique collaboration platform for independent security consultants to tackle various challenges faced by Indian security industry. SECONA has also launched a|s|t|r|a, the Academy of Security Technology Training Research and Application.
-              </p>
+          {seconaStories.map((story, index) => (
+            <EditorialStory
+              key={story.headline}
+              {...story}
+              reverse={index % 2 === 1}
+              strength={38 + index * 2}
+            />
+          ))}
+        </section>
 
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">500+</div>
-                  <p className="text-sm text-slate-600">Security Professionals Trained</p>
-                </div>
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">20+</div>
-                  <p className="text-sm text-slate-600">Years of Industry Leadership</p>
-                </div>
-                <div className="text-center p-4 rounded-lg bg-primary/5">
-                  <div className="text-2xl font-bold text-primary mb-1">100+</div>
-                  <p className="text-sm text-slate-600">White Papers & Guidelines</p>
-                </div>
-              </div>
+        <EditorialPhotoGrid title="SECONA in the field" photos={seconaPhotoGrid} />
 
-              {/* Image Gallery */}
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-4 text-slate-900">Glimpses of SECONA & ASTRA</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="aspect-square rounded-lg bg-gradient-to-br from-orange-500/20 to-primary/20 flex items-center justify-center border border-orange-500/20">
-                      <Award className="w-12 h-12 text-orange-500/50" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://www.secona.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-primary-foreground font-semibold rounded-lg transition-all"
-                >
-                  Visit SECONA
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-                <a
-                  href="https://www.sourcesecurity.com/companies/secona.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-primary text-primary hover:bg-primary/10 font-semibold rounded-lg transition-all"
-                >
-                  View White Papers
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section 
-      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-[#0f172a] to-[#1a2f5a]">
-        <SubtleNetworkBackground />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass-card p-12 text-center max-w-3xl mx-auto"
+        <section className="border-t border-slate-200 bg-[#0f172a] px-6 py-14 text-center md:px-10">
+          <a
+            href={seconaHero.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#E9863C] px-8 py-3.5 text-sm font-semibold text-white hover:bg-[#d67734]"
           >
-            <h2 className="text-3xl font-bold mb-4">Join Us in Making a Difference</h2>
-            <p className="text-muted-foreground mb-8">
-              Partner with us in our social initiatives or learn more about how you can contribute
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-primary hover:bg-blue-600 text-primary-foreground font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl"
-            >
-              Get Involved
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          </motion.div>
-        </div>
-      </section>*/}
+            Visit secona.org
+            <ExternalLink className="h-4 w-4" />
+          </a>
+          <a
+            href={seconaHero.shieldAwardsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-3 inline-flex items-center gap-2 border border-white/30 px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Shield Awards
+            <Award className="h-4 w-4" />
+          </a>
+        </section>
+      </div>
+
+      <EditorialProjectStrip
+        eyebrow="Community in action"
+        title="Impact beyond the project site."
+        ctaHref="/about"
+        ctaLabel="About MIPL"
+        images={[
+          { image: "/social-activities/aatman/gallery-students-01.jpg", label: "Aatman students" },
+          { image: "/social-activities/aatman/gallery-classroom-01.jpg", label: "Classroom" },
+          { image: "/social-activities/secona/shield-awards-banner.jpg", label: "Shield Awards" },
+          { image: "/social-activities/aatman/gallery-activities-01.jpg", label: "Activities" },
+          { image: "/social-activities/secona/initiative-1.jpg", label: "SECONA training" },
+          { image: "/social-activities/aatman/gallery-students-07.jpg", label: "Inclusive school" },
+        ]}
+      />
     </Layout>
   );
 };

@@ -19,7 +19,7 @@ const defaultServices = [
     id: 2,
     iconImage: "secaudit.png",
     title: "Security Audits",
-    description: "MIPL conducts risk analysis and security audits using TRAVA. It detects if there are any vulnerabilities in the hardware or software.",
+    description: "MIPL conducts risk analysis and security audits. It detects vulnerabilities in hardware, software, and operations.",
     gradient: "from-purple-500/20 to-pink-500/20",
   },
   {

@@ -50,12 +50,12 @@ export const TrustedInIndiaSection = () => {
             Trusted Across India's Digital Transformation Journey
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Delivering enterprise consulting and intelligent infrastructure solutions at national scale
+            Advisory services for smart governance and technology planning at national scale
           </p>
         </motion.div>
 
         {/* Trust Points Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="card-grid-equal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {trustPoints.map((point, idx) => {
             const Icon = point.icon;
             return (
@@ -65,7 +65,7 @@ export const TrustedInIndiaSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-[#E9863C]/50 transition-all group"
+                className="card-fill p-6 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-[#E9863C]/50 transition-all group"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 rounded-lg bg-gradient-to-br from-[#E9863C] to-[#f5a85c] group-hover:scale-110 transition-transform">
@@ -77,7 +77,7 @@ export const TrustedInIndiaSection = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{point.title}</h3>
-                <p className="text-slate-400 text-sm">{point.description}</p>
+                <p className="flex-1 text-slate-400 text-sm">{point.description}</p>
               </motion.div>
             );
           })}
@@ -93,7 +93,7 @@ export const TrustedInIndiaSection = () => {
         >
           <p className="text-slate-600 text-lg">
             <span className="text-[#E9863C] font-bold">Engineering India's Intelligent Future</span>
-            {" "}through enterprise consulting, AI transformation, and national-scale digital infrastructure
+            {" "}through practical advisory work, smart technology planning, and support across India
           </p>
         </motion.div>
       </div>
